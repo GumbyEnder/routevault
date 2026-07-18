@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecosystem • RouteVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .heading-font { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
+        .routevault-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .dark-card { background-color: #18181b; border: 1px solid #27272a; }
+        .harness-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .harness-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+        .metric-badge { font-size: 0.75rem; padding: 0.125rem 0.5rem; border-radius: 9999px; font-weight: 500; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <!-- Nav -->
+    <nav class="border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-8 flex items-center justify-between h-20">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
+                    <i class="fa-solid fa-route text-white text-2xl"></i>
+                </div>
+                <a href="index.html" class="text-3xl font-semibold tracking-tighter">RouteVault</a>
+            </div>
+            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                <a href="models.html" class="hover:text-white transition-colors">Models</a>
+                <a href="ecosystem.html" class="text-white font-semibold">Tools &amp; Harnesses</a>
+                <a href="how-we-score.html" class="hover:text-white transition-colors">How We Score</a>
+                <a href="#" class="hover:text-white transition-colors">Pricing</a>
+            </div>
+            <div class="flex items-center gap-x-4">
+                <button onclick="window.location.href='index.html'" class="px-5 py-2.5 text-sm font-medium text-zinc-300 hover:text-white">Home</button>
+                <button class="px-5 py-2.5 bg-white text-zinc-950 hover:bg-zinc-100 transition-all text-sm font-semibold rounded-2xl">Start for free</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="max-w-7xl mx-auto px-8 pt-12 pb-8">
+        <div class="flex items-end justify-between">
+            <div>
+                <span class="uppercase tracking-[2px] text-xs font-semibold text-indigo-400">Curated discovery</span>
+                <h1 class="text-6xl font-semibold tracking-tighter heading-font">Tools &amp; Harnesses</h1>
+                <p class="text-xl text-zinc-400 mt-2 max-w-md">Production-ready wrappers that make the best models actually usable.</p>
+            </div>
+            <div class="text-right">
+                <div class="text-sm text-zinc-400">47 harnesses • 12,840 active users</div>
+                <button onclick="filterHarnesses('all')" class="mt-2 text-xs px-4 py-1.5 border border-zinc-700 rounded-2xl hover:bg-zinc-900">Show all</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="max-w-7xl mx-auto px-8 mb-6">
+        <div class="flex flex-wrap gap-2">
+            <button onclick="filterHarnesses('all')" class="filter-btn active px-4 py-1.5 text-sm bg-white text-zinc-950 rounded-2xl font-medium">All</button>
+            <button onclick="filterHarnesses('orchestration')" class="filter-btn px-4 py-1.5 text-sm bg-zinc-900 border border-zinc-800 rounded-2xl hover:bg-zinc-800">Orchestration</button>
+            <button onclick="filterHarnesses('cli')" class="filter-btn px-4 py-1.5 text-sm bg-zinc-900 border border-zinc-800 rounded-2xl hover:bg-zinc-800">CLI</button>
+            <button onclick="filterHarnesses('security')" class="filter-btn px-4 py-1.5 text-sm bg-zinc-900 border border-zinc-800 rounded-2xl hover:bg-zinc-800">Security</button>
+            <button onclick="filterHarnesses('router')" class="filter-btn px-4 py-1.5 text-sm bg-zinc-900 border border-zinc-800 rounded-2xl hover:bg-zinc-800">Routers</button>
+        </div>
+    </div>
+
+    <!-- Harness Grid -->
+    <div class="max-w-7xl mx-auto px-8 pb-16">
+        <div id="harness-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            
+            <!-- Hermes -->
+            <div class="harness-card dark-card p-7 rounded-3xl border border-zinc-800" data-category="orchestration">
+                <div class="flex justify-between mb-4">
+                    <div class="flex items-center gap-x-3">
+                        <div class="w-10 h-10 bg-indigo-500/10 text-indigo-400 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-robot text-2xl"></i></div>
+                        <div>
+                            <div class="font-semibold text-2xl">Hermes</div>
+                            <div class="text-xs text-emerald-400">• Production • 4.9</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-zinc-400 mb-5">The loyal multi-agent orchestrator. Handles complex workflows with zero friction.</p>
+                <div class="flex gap-2 text-xs mb-5">
+                    <div class="metric-badge bg-zinc-800 text-zinc-300">12.4k users</div>
+                    <div class="metric-badge bg-zinc-800 text-zinc-300">340 models</div>
+                </div>
+                <div class="flex gap-2">
+                    <a href="https://github.com/nousresearch/hermes-agent" target="_blank" class="flex-1 text-center py-2.5 text-xs font-semibold border border-zinc-700 rounded-2xl">GitHub</a>
+                    <button onclick="tryWithRouteVault(this, 'Hermes')" class="flex-1 text-center py-2.5 text-xs font-semibold bg-white text-zinc-950 rounded-2xl">Try with RouteVault</button>
+                </div>
+            </div>
+
+            <!-- PicoClaw -->
+            <div class="harness-card dark-card p-7 rounded-3xl border border-zinc-800" data-category="cli">
+                <div class="flex justify-between mb-4">
+                    <div class="flex items-center gap-x-3">
+                        <div class="w-10 h-10 bg-orange-500/10 text-orange-400 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-terminal text-2xl"></i></div>
+                        <div>
+                            <div class="font-semibold text-2xl">PicoClaw</div>
+                            <div class="text-xs text-emerald-400">• Production • 4.8</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-zinc-400 mb-5">Tiny but mighty CLI harness for local experimentation and fast iteration.</p>
+                <div class="flex gap-2 text-xs mb-5">
+                    <div class="metric-badge bg-zinc-800 text-zinc-300">9.1k users</div>
+                    <div class="metric-badge bg-zinc-800 text-zinc-300">187 models</div>
+                </div>
+                <div class="flex gap-2">
+                    <a href="#" class="flex-1 text-center py-2.5 text-xs font-semibold border border-zinc-700 rounded-2xl">GitHub</a>
+                    <button onclick="tryWithRouteVault(this, 'PicoClaw')" class="flex-1 text-center py-2.5 text-xs font-semibold bg-white text-zinc-950 rounded-2xl">Try with RouteVault</button>
+                </div>
+            </div>
+
+            <!-- OpenClaw -->
+            <div class="harness-card dark-card p-7 rounded-3xl border border-zinc-800" data-category="router">
+                <div class="flex justify-between mb-4">
+                    <div class="flex items-center gap-x-3">
+                        <div class="w-10 h-10 bg-sky-500/10 text-sky-400 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-globe text-2xl"></i></div>
+                        <div>
+                            <div class="font-semibold text-2xl">OpenClaw</div>
+                            <div class="text-xs text-emerald-400">• Production • 4.7</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-zinc-400 mb-5">Fully open-source model router with community-driven scoring.</p>
+                <div class="flex gap-2 text-xs mb-5">
+                    <div class="metric-badge bg-zinc-800 text-zinc-300">14.2k users</div>
+                    <div class="metric-badge bg-zinc-800 text-zinc-300">412 models</div>
+                </div>
+                <div class="flex gap-2">
+                    <a href="#" class="flex-1 text-center py-2.5 text-xs font-semibold border border-zinc-700 rounded-2xl">GitHub</a>
+                    <button onclick="tryWithRouteVault(this, 'OpenClaw')" class="flex-1 text-center py-2.5 text-xs font-semibold bg-white text-zinc-950 rounded-2xl">Try with RouteVault</button>
+                </div>
+            </div>
+
+            <!-- RouteGuard -->
+            <div class="harness-card dark-card p-7 rounded-3xl border border-zinc-800" data-category="security">
+                <div class="flex justify-between mb-4">
+                    <div class="flex items-center gap-x-3">
+                        <div class="w-10 h-10 bg-violet-500/10 text-violet-400 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-shield-halved text-2xl"></i></div>
+                        <div>
+                            <div class="font-semibold text-2xl">RouteGuard</div>
+                            <div class="text-xs text-emerald-400">• Production • 4.9</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-zinc-400 mb-5">Enterprise security harness with audit trails and policy enforcement.</p>
+                <div class="flex gap-2 text-xs mb-5">
+                    <div class="metric-badge bg-zinc-800 text-zinc-300">6.8k users</div>
+                    <div class="metric-badge bg-zinc-800 text-zinc-300">291 models</div>
+                </div>
+                <div class="flex gap-2">
+                    <a href="#" class="flex-1 text-center py-2.5 text-xs font-semibold border border-zinc-700 rounded-2xl">GitHub</a>
+                    <button onclick="tryWithRouteVault(this, 'RouteGuard')" class="flex-1 text-center py-2.5 text-xs font-semibold bg-white text-zinc-950 rounded-2xl">Try with RouteVault</button>
+                </div>
+            </div>
+
+            <!-- More harnesses -->
+            <div class="harness-card dark-card p-7 rounded-3xl border border-zinc-800" data-category="orchestration">
+                <div class="flex justify-between mb-4">
+                    <div class="flex items-center gap-x-3">
+                        <div class="w-10 h-10 bg-rose-500/10 text-rose-400 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-project-diagram text-2xl"></i></div>
+                        <div>
+                            <div class="font-semibold text-2xl">ClawNet</div>
+                            <div class="text-xs text-emerald-400">• Production • 4.6</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-zinc-400 mb-5">Graph-based multi-model routing for complex agent networks.</p>
+                <div class="flex gap-2 text-xs mb-5">
+                    <div class="metric-badge bg-zinc-800 text-zinc-300">4.2k users</div>
+                    <div class="metric-badge bg-zinc-800 text-zinc-300">219 models</div>
+                </div>
+                <div class="flex gap-2">
+                    <a href="#" class="flex-1 text-center py-2.5 text-xs font-semibold border border-zinc-700 rounded-2xl">GitHub</a>
+                    <button onclick="tryWithRouteVault(this, 'ClawNet')" class="flex-1 text-center py-2.5 text-xs font-semibold bg-white text-zinc-950 rounded-2xl">Try with RouteVault</button>
+                </div>
+            </div>
+
+            <div class="harness-card dark-card p-7 rounded-3xl border border-zinc-800" data-category="cli">
+                <div class="flex justify-between mb-4">
+                    <div class="flex items-center gap-x-3">
+                        <div class="w-10 h-10 bg-teal-500/10 text-teal-400 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-laptop-code text-2xl"></i></div>
+                        <div>
+                            <div class="font-semibold text-2xl">EchoCLI</div>
+                            <div class="text-xs text-emerald-400">• Production • 4.5</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-zinc-400 mb-5">Fast CLI with live streaming and smart context management.</p>
+                <div class="flex gap-2 text-xs mb-5">
+                    <div class="metric-badge bg-zinc-800 text-zinc-300">3.1k users</div>
+                    <div class="metric-badge bg-zinc-800 text-zinc-300">98 models</div>
+                </div>
+                <div class="flex gap-2">
+                    <a href="#" class="flex-1 text-center py-2.5 text-xs font-semibold border border-zinc-700 rounded-2xl">GitHub</a>
+                    <button onclick="tryWithRouteVault(this, 'EchoCLI')" class="flex-1 text-center py-2.5 text-xs font-semibold bg-white text-zinc-950 rounded-2xl">Try with RouteVault</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterHarnesses(category) {
+            const cards = document.querySelectorAll('#harness-grid .harness-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(b => b.classList.remove('active', 'bg-white', 'text-zinc-950'));
+            buttons.forEach(b => b.classList.add('bg-zinc-900', 'border', 'border-zinc-800'));
+            
+            const activeBtn = Array.from(buttons).find(b => b.textContent.toLowerCase().includes(category === 'all' ? 'all' : category));
+            if (activeBtn) {
+                activeBtn.classList.add('active', 'bg-white', 'text-zinc-950');
+                activeBtn.classList.remove('bg-zinc-900', 'border', 'border-zinc-800');
+            }
+            
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = card.dataset.category === category ? 'block' : 'none';
+                }
+            });
+        }
+        
+        function tryWithRouteVault(el, name) {
+            const orig = el.innerHTML;
+            el.innerHTML = 'Added to stack!';
+            el.disabled = true;
+            setTimeout(() => {
+                alert(`${name} added to your RouteVault stack. (Static mockup)`);
+                el.innerHTML = orig;
+                el.disabled = false;
+            }, 1200);
+        }
+        
+        // Boot
+        window.onload = () => {
+            console.log('%c[Ecosystem] Page loaded', 'color:#52525b');
+        };
+    </script>
+</body>
+</html>

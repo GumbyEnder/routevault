@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create account • RouteVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', system_ui, sans-serif; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-md px-6">
+        <div class="flex items-center justify-center gap-x-3 mb-10">
+            <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
+                <i class="fa-solid fa-route text-white text-2xl"></i>
+            </div>
+            <span class="text-3xl font-semibold tracking-tighter">RouteVault</span>
+        </div>
+
+        <div class="dark-card p-8 rounded-3xl border border-zinc-800">
+            <h1 class="text-3xl font-semibold tracking-tight mb-6">Create your account</h1>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="text-xs text-zinc-400">Full name</label>
+                    <input type="text" value="Gumby Ender" class="w-full mt-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="text-xs text-zinc-400">Email</label>
+                    <input type="email" value="gumbyender@routevault.ai" class="w-full mt-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="text-xs text-zinc-400">Password</label>
+                    <input type="password" value="••••••••" class="w-full mt-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500">
+                </div>
+            </div>
+
+            <button onclick="window.location.href='admin-dashboard.html'" class="mt-8 w-full py-3.5 bg-white text-zinc-950 font-semibold rounded-3xl text-sm">Create account</button>
+            
+            <div class="text-center text-xs text-zinc-500 mt-4">
+                Already have an account? <a href="login.html" class="text-indigo-400 hover:underline">Sign in</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How We Score • RouteVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .heading-font { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
+        .routevault-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .dark-card { background-color: #18181b; border: 1px solid #27272a; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <!-- Nav -->
+    <nav class="border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-8 flex items-center justify-between h-20">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
+                    <i class="fa-solid fa-route text-white text-2xl"></i>
+                </div>
+                <a href="index.html" class="text-3xl font-semibold tracking-tighter">RouteVault</a>
+            </div>
+            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                <a href="models.html" class="hover:text-white transition-colors">Models</a>
+                <a href="ecosystem.html" class="hover:text-white transition-colors">Tools &amp; Harnesses</a>
+                <a href="how-we-score.html" class="text-white font-semibold">How We Score</a>
+                <a href="#" class="hover:text-white transition-colors">Pricing</a>
+            </div>
+            <div class="flex items-center gap-x-4">
+                <button onclick="window.location.href='index.html'" class="px-5 py-2.5 text-sm font-medium text-zinc-300 hover:text-white">Home</button>
+                <button class="px-5 py-2.5 bg-white text-zinc-950 hover:bg-zinc-100 transition-all text-sm font-semibold rounded-2xl">Start for free</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-8 pt-12 pb-16">
+        <div class="max-w-3xl mb-12">
+            <span class="uppercase tracking-[2px] text-xs font-semibold text-indigo-400">Transparency first</span>
+            <h1 class="text-6xl font-semibold tracking-tighter heading-font mt-2">How we score every model</h1>
+            <p class="text-xl text-zinc-400 mt-4">We translate technical benchmarks into real-world value so normal humans can make confident decisions.</p>
+        </div>
+
+        <!-- The 4 Pillars -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-16">
+            <div class="dark-card p-8 rounded-3xl">
+                <div class="text-5xl font-semibold text-emerald-400 mb-1">42%</div>
+                <div class="font-semibold text-lg">Quality</div>
+                <div class="text-sm text-zinc-400 mt-2">Human preference studies + MMLU, GPQA, LiveBench</div>
+                <div class="mt-6 text-xs">For Researchers: the single biggest factor in choosing a model.</div>
+            </div>
+            <div class="dark-card p-8 rounded-3xl">
+                <div class="text-5xl font-semibold text-amber-400 mb-1">28%</div>
+                <div class="font-semibold text-lg">Speed</div>
+                <div class="text-sm text-zinc-400 mt-2">Tokens/sec + first-token latency</div>
+                <div class="mt-6 text-xs">For Junior Developers: speed often matters more than raw intelligence.</div>
+            </div>
+            <div class="dark-card p-8 rounded-3xl">
+                <div class="text-5xl font-semibold text-sky-400 mb-1">18%</div>
+                <div class="font-semibold text-lg">Cost Efficiency</div>
+                <div class="text-sm text-zinc-400 mt-2">Price per million tokens + context cost</div>
+                <div class="mt-6 text-xs">For Budget users: we heavily weight this so you never overpay.</div>
+            </div>
+            <div class="dark-card p-8 rounded-3xl">
+                <div class="text-5xl font-semibold text-violet-400 mb-1">12%</div>
+                <div class="font-semibold text-lg">Safety &amp; Reliability</div>
+                <div class="text-sm text-zinc-400 mt-2">Guardrails, refusal rate, uptime</div>
+                <div class="mt-6 text-xs">For everyone: no model is useful if it hallucinates or goes down.</div>
+            </div>
+        </div>
+
+        <!-- Consumer Examples -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">What this means for you</h2>
+            <div class="grid md:grid-cols-3 gap-5">
+                <div class="dark-card p-6 rounded-3xl">
+                    <div class="font-semibold mb-1">Budget Developer</div>
+                    <div class="text-xs text-zinc-400 mb-4">Weight: Cost 45% • Speed 30%</div>
+                    <p class="text-sm">You’ll see deepseek-r1 and grok-4-fast at the top. We deliberately de-prioritize expensive frontier models for you.</p>
+                </div>
+                <div class="dark-card p-6 rounded-3xl">
+                    <div class="font-semibold mb-1">Project Planner</div>
+                    <div class="text-xs text-zinc-400 mb-4">Weight: Quality 55% • Speed 20%</div>
+                    <p class="text-sm">Claude-4 and Llama-3.3-70b rise to the top because planning tasks reward reasoning depth over raw speed.</p>
+                </div>
+                <div class="dark-card p-6 rounded-3xl">
+                    <div class="font-semibold mb-1">Researcher</div>
+                    <div class="text-xs text-zinc-400 mb-4">Weight: Quality 65% • Safety 15%</div>
+                    <p class="text-sm">We surface models with the highest GPQA and LiveBench scores. Cost is almost irrelevant here.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center text-sm text-zinc-500">
+            Scores update every 4 hours from live benchmarks and real user feedback. 
+            <a href="#" class="underline">View full methodology</a>
+        </div>
+    </div>
+</body>
+</html>

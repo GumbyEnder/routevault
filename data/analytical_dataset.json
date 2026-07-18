@@ -1,0 +1,1310 @@
+{
+  "generated_at": "2026-05-17T17:55:49.199155+00:00",
+  "model_count": 17,
+  "snapshot_count": 1530,
+  "trends_30d_count": 17,
+  "trends_60d_count": 17,
+  "trends_90d_count": 17,
+  "models": [
+    {
+      "model_id": "claude-3.7-sonnet",
+      "provider": "Anthropic",
+      "rv_label": "Project Planner",
+      "context_k": 200,
+      "release_date": null,
+      "current_input_price": 3.0,
+      "current_output_price": 15.0,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "gpt-4o",
+      "provider": "OpenAI",
+      "rv_label": "Researcher",
+      "context_k": 128,
+      "release_date": null,
+      "current_input_price": 2.5,
+      "current_output_price": 10.0,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "claude-3.5-sonnet",
+      "provider": "Anthropic",
+      "rv_label": "Senior Developer",
+      "context_k": 200,
+      "release_date": null,
+      "current_input_price": 3.0,
+      "current_output_price": 15.0,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "o1-preview",
+      "provider": "OpenAI",
+      "rv_label": "Unknown",
+      "context_k": 128,
+      "release_date": null,
+      "current_input_price": 15.0,
+      "current_output_price": 60.0,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "gemini-2.5-pro",
+      "provider": "Google",
+      "rv_label": "Researcher",
+      "context_k": 1000,
+      "release_date": null,
+      "current_input_price": 1.25,
+      "current_output_price": 5.0,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "grok-2-1212",
+      "provider": "xAI",
+      "rv_label": "Project Planner",
+      "context_k": 128,
+      "release_date": null,
+      "current_input_price": 2.0,
+      "current_output_price": 2.0,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "deepseek-r1",
+      "provider": "DeepSeek",
+      "rv_label": "Unknown",
+      "context_k": 128,
+      "release_date": null,
+      "current_input_price": 0.55,
+      "current_output_price": 2.19,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "deepseek-v3",
+      "provider": "DeepSeek",
+      "rv_label": "Budget Everyday",
+      "context_k": 128,
+      "release_date": null,
+      "current_input_price": 0.14,
+      "current_output_price": 0.28,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "llama-3.1-405b",
+      "provider": "Meta",
+      "rv_label": "Researcher",
+      "context_k": 128,
+      "release_date": null,
+      "current_input_price": 0.8,
+      "current_output_price": 0.8,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "mistral-large-latest",
+      "provider": "Mistral",
+      "rv_label": "Senior Developer",
+      "context_k": 128,
+      "release_date": null,
+      "current_input_price": 2.0,
+      "current_output_price": 6.0,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "qwen2.5-72b",
+      "provider": "Alibaba",
+      "rv_label": "Unknown",
+      "context_k": 128,
+      "release_date": null,
+      "current_input_price": 0.25,
+      "current_output_price": 0.25,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "o1-mini",
+      "provider": "OpenAI",
+      "rv_label": "Junior Developer",
+      "context_k": 128,
+      "release_date": null,
+      "current_input_price": 1.1,
+      "current_output_price": 4.4,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "command-r-plus",
+      "provider": "Cohere",
+      "rv_label": "Project Planner",
+      "context_k": 128,
+      "release_date": null,
+      "current_input_price": 2.5,
+      "current_output_price": 10.0,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "jamba-1.5-large",
+      "provider": "AI21",
+      "rv_label": "Researcher",
+      "context_k": 256,
+      "release_date": null,
+      "current_input_price": 2.0,
+      "current_output_price": 8.0,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "gemini-2.5-flash",
+      "provider": "Google",
+      "rv_label": "Budget Everyday",
+      "context_k": 1000,
+      "release_date": null,
+      "current_input_price": 0.075,
+      "current_output_price": 0.3,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "gpt-4o-mini",
+      "provider": "OpenAI",
+      "rv_label": "Budget Everyday",
+      "context_k": 128,
+      "release_date": null,
+      "current_input_price": 0.15,
+      "current_output_price": 0.6,
+      "description": null,
+      "is_deprecated": false
+    },
+    {
+      "model_id": "phi-4",
+      "provider": "Microsoft",
+      "rv_label": "Budget Everyday",
+      "context_k": 16,
+      "release_date": null,
+      "current_input_price": 0.07,
+      "current_output_price": 0.14,
+      "description": null,
+      "is_deprecated": false
+    }
+  ],
+  "latest_snapshots": [
+    {
+      "model_id": "claude-3.7-sonnet",
+      "date": "2026-05-14",
+      "input_price": 3.0859,
+      "output_price": 20.7439,
+      "benchmarks": {
+        "reasoning": 71.0,
+        "coding": 72.0,
+        "tool_use": 66.0
+      },
+      "total_price": 23.8298,
+      "value_score": null,
+      "price_performance_ratio": 2.9401211927922177
+    },
+    {
+      "model_id": "gpt-4o",
+      "date": "2026-05-14",
+      "input_price": 1.7486,
+      "output_price": 8.512,
+      "benchmarks": {
+        "reasoning": 77.0,
+        "coding": 78.0,
+        "tool_use": 72.0
+      },
+      "total_price": 10.2606,
+      "value_score": null,
+      "price_performance_ratio": 7.413065512738046
+    },
+    {
+      "model_id": "claude-3.5-sonnet",
+      "date": "2026-05-14",
+      "input_price": 2.2208,
+      "output_price": 10.3322,
+      "benchmarks": {
+        "reasoning": 69.0,
+        "coding": 70.0,
+        "tool_use": 64.0
+      },
+      "total_price": 12.553,
+      "value_score": null,
+      "price_performance_ratio": 5.422010674739106
+    },
+    {
+      "model_id": "o1-preview",
+      "date": "2026-05-14",
+      "input_price": 11.4619,
+      "output_price": 75.1325,
+      "benchmarks": {
+        "reasoning": 78.0,
+        "coding": 79.0,
+        "tool_use": 73.0
+      },
+      "total_price": 86.5944,
+      "value_score": null,
+      "price_performance_ratio": 0.8899247526398937
+    },
+    {
+      "model_id": "gemini-2.5-pro",
+      "date": "2026-05-14",
+      "input_price": 1.0593,
+      "output_price": 3.3238,
+      "benchmarks": {
+        "reasoning": 71.0,
+        "coding": 72.0,
+        "tool_use": 66.0
+      },
+      "total_price": 4.3831,
+      "value_score": null,
+      "price_performance_ratio": 15.984691200292028
+    },
+    {
+      "model_id": "grok-2-1212",
+      "date": "2026-05-14",
+      "input_price": 1.8086,
+      "output_price": 1.3,
+      "benchmarks": {
+        "reasoning": 69.0,
+        "coding": 70.0,
+        "tool_use": 64.0
+      },
+      "total_price": 3.1086,
+      "value_score": null,
+      "price_performance_ratio": 21.894904458598727
+    },
+    {
+      "model_id": "deepseek-r1",
+      "date": "2026-05-14",
+      "input_price": 0.4701,
+      "output_price": 1.9501,
+      "benchmarks": {
+        "reasoning": 72.0,
+        "coding": 73.0,
+        "tool_use": 67.0
+      },
+      "total_price": 2.4202,
+      "value_score": null,
+      "price_performance_ratio": 29.36224278985208
+    },
+    {
+      "model_id": "deepseek-v3",
+      "date": "2026-05-14",
+      "input_price": 0.1057,
+      "output_price": 0.1887,
+      "benchmarks": {
+        "reasoning": 84.0,
+        "coding": 85.0,
+        "tool_use": 79.0
+      },
+      "total_price": 0.2944,
+      "value_score": null,
+      "price_performance_ratio": 282.1416440217391
+    },
+    {
+      "model_id": "llama-3.1-405b",
+      "date": "2026-05-14",
+      "input_price": 0.5818,
+      "output_price": 0.9527,
+      "benchmarks": {
+        "reasoning": 86.0,
+        "coding": 87.0,
+        "tool_use": 81.0
+      },
+      "total_price": 1.5345,
+      "value_score": null,
+      "price_performance_ratio": 55.43336591723688
+    },
+    {
+      "model_id": "mistral-large-latest",
+      "date": "2026-05-14",
+      "input_price": 1.3414,
+      "output_price": 4.6296,
+      "benchmarks": {
+        "reasoning": 67.0,
+        "coding": 68.0,
+        "tool_use": 62.0
+      },
+      "total_price": 5.971,
+      "value_score": null,
+      "price_performance_ratio": 11.063892145369286
+    },
+    {
+      "model_id": "qwen2.5-72b",
+      "date": "2026-05-14",
+      "input_price": 0.2952,
+      "output_price": 0.1982,
+      "benchmarks": {
+        "reasoning": 76.0,
+        "coding": 77.0,
+        "tool_use": 71.0
+      },
+      "total_price": 0.4934,
+      "value_score": null,
+      "price_performance_ratio": 152.13315768139438
+    },
+    {
+      "model_id": "o1-mini",
+      "date": "2026-05-14",
+      "input_price": 0.8216,
+      "output_price": 3.8239,
+      "benchmarks": {
+        "reasoning": 83.0,
+        "coding": 84.0,
+        "tool_use": 78.0
+      },
+      "total_price": 4.6455,
+      "value_score": null,
+      "price_performance_ratio": 17.66494457001399
+    },
+    {
+      "model_id": "command-r-plus",
+      "date": "2026-05-14",
+      "input_price": 2.4323,
+      "output_price": 11.5991,
+      "benchmarks": {
+        "reasoning": 69.0,
+        "coding": 70.0,
+        "tool_use": 64.0
+      },
+      "total_price": 14.0314,
+      "value_score": null,
+      "price_performance_ratio": 4.850727653691007
+    },
+    {
+      "model_id": "jamba-1.5-large",
+      "date": "2026-05-14",
+      "input_price": 2.7951,
+      "output_price": 10.969,
+      "benchmarks": {
+        "reasoning": 73.0,
+        "coding": 74.0,
+        "tool_use": 68.0
+      },
+      "total_price": 13.7641,
+      "value_score": null,
+      "price_performance_ratio": 5.2355402823286665
+    },
+    {
+      "model_id": "gemini-2.5-flash",
+      "date": "2026-05-14",
+      "input_price": 0.0748,
+      "output_price": 0.2615,
+      "benchmarks": {
+        "reasoning": 85.0,
+        "coding": 86.0,
+        "tool_use": 80.0
+      },
+      "total_price": 0.33630000000000004,
+      "value_score": null,
+      "price_performance_ratio": 249.9628308058281
+    },
+    {
+      "model_id": "gpt-4o-mini",
+      "date": "2026-05-14",
+      "input_price": 0.1992,
+      "output_price": 0.6227,
+      "benchmarks": {
+        "reasoning": 70.0,
+        "coding": 71.0,
+        "tool_use": 65.0
+      },
+      "total_price": 0.8219000000000001,
+      "value_score": null,
+      "price_performance_ratio": 84.02786227034919
+    },
+    {
+      "model_id": "phi-4",
+      "date": "2026-05-14",
+      "input_price": 0.0656,
+      "output_price": 0.1288,
+      "benchmarks": {
+        "reasoning": 83.0,
+        "coding": 84.0,
+        "tool_use": 78.0
+      },
+      "total_price": 0.19440000000000002,
+      "value_score": null,
+      "price_performance_ratio": 422.1322016460905
+    }
+  ],
+  "value_trends_30d": [
+    {
+      "model_id": "claude-3.7-sonnet",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 23.3498,
+      "end_price": 23.8298,
+      "price_change_pct": 2.06,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": false,
+      "value_change_score": -1.32,
+      "summary": "Relatively stable value over the period (change: -1.32)."
+    },
+    {
+      "model_id": "gpt-4o",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 13.265,
+      "end_price": 10.2606,
+      "price_change_pct": -22.65,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": true,
+      "value_change_score": 15.55,
+      "summary": "Significantly better value: price dropped 22.65% while performance held or improved."
+    },
+    {
+      "model_id": "claude-3.5-sonnet",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 14.0628,
+      "end_price": 12.553,
+      "price_change_pct": -10.74,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": true,
+      "value_change_score": 4.65,
+      "summary": "Significantly better value: price dropped 10.74% while performance held or improved."
+    },
+    {
+      "model_id": "o1-preview",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 75.81139999999999,
+      "end_price": 86.5944,
+      "price_change_pct": 14.22,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": false,
+      "value_change_score": -1.48,
+      "summary": "Relatively stable value over the period (change: -1.48)."
+    },
+    {
+      "model_id": "gemini-2.5-pro",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 4.7911,
+      "end_price": 4.3831,
+      "price_change_pct": -8.52,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": true,
+      "value_change_score": 10.15,
+      "summary": "Improved value over time (+10.15)."
+    },
+    {
+      "model_id": "grok-2-1212",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 3.2167000000000003,
+      "end_price": 3.1086,
+      "price_change_pct": -3.36,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": true,
+      "value_change_score": 2.19,
+      "summary": "Improved value over time (+2.19)."
+    },
+    {
+      "model_id": "deepseek-r1",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 2.5505999999999998,
+      "end_price": 2.4202,
+      "price_change_pct": -5.11,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": true,
+      "value_change_score": 8.5,
+      "summary": "Improved value over time (+8.5)."
+    },
+    {
+      "model_id": "deepseek-v3",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 0.4229,
+      "end_price": 0.2944,
+      "price_change_pct": -30.39,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": true,
+      "value_change_score": 818.62,
+      "summary": "Significantly better value: price dropped 30.39% while performance held or improved."
+    },
+    {
+      "model_id": "llama-3.1-405b",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 2.0888,
+      "end_price": 1.5345,
+      "price_change_pct": -26.54,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": true,
+      "value_change_score": 139.25,
+      "summary": "Significantly better value: price dropped 26.54% while performance held or improved."
+    },
+    {
+      "model_id": "mistral-large-latest",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 6.2466,
+      "end_price": 5.971,
+      "price_change_pct": -4.41,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": true,
+      "value_change_score": 2.22,
+      "summary": "Improved value over time (+2.22)."
+    },
+    {
+      "model_id": "qwen2.5-72b",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 0.5226,
+      "end_price": 0.4934,
+      "price_change_pct": -5.59,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": true,
+      "value_change_score": 53.19,
+      "summary": "Improved value over time (+53.19)."
+    },
+    {
+      "model_id": "o1-mini",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 3.9486,
+      "end_price": 4.6455,
+      "price_change_pct": 17.65,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": false,
+      "value_change_score": -35.43,
+      "summary": "Worse value: price increased 17.65% with limited performance gains."
+    },
+    {
+      "model_id": "command-r-plus",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 13.372900000000001,
+      "end_price": 14.0314,
+      "price_change_pct": 4.92,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": false,
+      "value_change_score": -3.64,
+      "summary": "Relatively stable value over the period (change: -3.64)."
+    },
+    {
+      "model_id": "jamba-1.5-large",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 12.3856,
+      "end_price": 13.7641,
+      "price_change_pct": 11.13,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": false,
+      "value_change_score": -7.18,
+      "summary": "Relatively stable value over the period (change: -7.18)."
+    },
+    {
+      "model_id": "gemini-2.5-flash",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 0.2745,
+      "end_price": 0.33630000000000004,
+      "price_change_pct": 22.51,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": false,
+      "value_change_score": -623.95,
+      "summary": "Worse value: price increased 22.51% with limited performance gains."
+    },
+    {
+      "model_id": "gpt-4o-mini",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 0.742,
+      "end_price": 0.8219000000000001,
+      "price_change_pct": 10.77,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": false,
+      "value_change_score": -113.04,
+      "summary": "Relatively stable value over the period (change: -113.04)."
+    },
+    {
+      "model_id": "phi-4",
+      "window_days": 30,
+      "start_date": "2026-04-14",
+      "end_date": "2026-05-14",
+      "start_price": 0.2056,
+      "end_price": 0.19440000000000002,
+      "price_change_pct": -5.45,
+      "benchmark_movement": {
+        "reasoning": -2.0,
+        "coding": -1.0,
+        "tool_use": -2.0
+      },
+      "value_improved": true,
+      "value_change_score": 149.09,
+      "summary": "Improved value over time (+149.09)."
+    }
+  ],
+  "value_trends_60d": [
+    {
+      "model_id": "claude-3.7-sonnet",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 19.679,
+      "end_price": 23.8298,
+      "price_change_pct": 21.09,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": false,
+      "value_change_score": -7.9,
+      "summary": "Worse value: price increased 21.09% with limited performance gains."
+    },
+    {
+      "model_id": "gpt-4o",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 17.0734,
+      "end_price": 10.2606,
+      "price_change_pct": -39.9,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": true,
+      "value_change_score": 27.66,
+      "summary": "Significantly better value: price dropped 39.9% while performance held or improved."
+    },
+    {
+      "model_id": "claude-3.5-sonnet",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 14.1374,
+      "end_price": 12.553,
+      "price_change_pct": -11.21,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": true,
+      "value_change_score": 3.73,
+      "summary": "Significantly better value: price dropped 11.21% while performance held or improved."
+    },
+    {
+      "model_id": "o1-preview",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 69.9635,
+      "end_price": 86.5944,
+      "price_change_pct": 23.77,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": false,
+      "value_change_score": -2.59,
+      "summary": "Worse value: price increased 23.77% with limited performance gains."
+    },
+    {
+      "model_id": "gemini-2.5-pro",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 5.6825,
+      "end_price": 4.3831,
+      "price_change_pct": -22.87,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": true,
+      "value_change_score": 30.72,
+      "summary": "Significantly better value: price dropped 22.87% while performance held or improved."
+    },
+    {
+      "model_id": "grok-2-1212",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 3.4318,
+      "end_price": 3.1086,
+      "price_change_pct": -9.42,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": true,
+      "value_change_score": 10.93,
+      "summary": "Improved value over time (+10.93)."
+    },
+    {
+      "model_id": "deepseek-r1",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 2.8195,
+      "end_price": 2.4202,
+      "price_change_pct": -14.16,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": true,
+      "value_change_score": 29.81,
+      "summary": "Significantly better value: price dropped 14.16% while performance held or improved."
+    },
+    {
+      "model_id": "deepseek-v3",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 0.489,
+      "end_price": 0.2944,
+      "price_change_pct": -39.8,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": true,
+      "value_change_score": 1055.59,
+      "summary": "Significantly better value: price dropped 39.8% while performance held or improved."
+    },
+    {
+      "model_id": "llama-3.1-405b",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 2.3057999999999996,
+      "end_price": 1.5345,
+      "price_change_pct": -33.45,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": true,
+      "value_change_score": 171.13,
+      "summary": "Significantly better value: price dropped 33.45% while performance held or improved."
+    },
+    {
+      "model_id": "mistral-large-latest",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 5.398,
+      "end_price": 5.971,
+      "price_change_pct": 10.62,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": false,
+      "value_change_score": -17.93,
+      "summary": "Relatively stable value over the period (change: -17.93)."
+    },
+    {
+      "model_id": "qwen2.5-72b",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 0.5298,
+      "end_price": 0.4934,
+      "price_change_pct": -6.87,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": true,
+      "value_change_score": 41.71,
+      "summary": "Improved value over time (+41.71)."
+    },
+    {
+      "model_id": "o1-mini",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 3.9119,
+      "end_price": 4.6455,
+      "price_change_pct": 18.75,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": false,
+      "value_change_score": -41.68,
+      "summary": "Worse value: price increased 18.75% with limited performance gains."
+    },
+    {
+      "model_id": "command-r-plus",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 13.1692,
+      "end_price": 14.0314,
+      "price_change_pct": 6.55,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": false,
+      "value_change_score": -5.71,
+      "summary": "Relatively stable value over the period (change: -5.71)."
+    },
+    {
+      "model_id": "jamba-1.5-large",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 11.2671,
+      "end_price": 13.7641,
+      "price_change_pct": 22.16,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": false,
+      "value_change_score": -14.57,
+      "summary": "Worse value: price increased 22.16% with limited performance gains."
+    },
+    {
+      "model_id": "gemini-2.5-flash",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 0.27699999999999997,
+      "end_price": 0.33630000000000004,
+      "price_change_pct": 21.41,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": false,
+      "value_change_score": -655.91,
+      "summary": "Worse value: price increased 21.41% with limited performance gains."
+    },
+    {
+      "model_id": "gpt-4o-mini",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 0.5365,
+      "end_price": 0.8219000000000001,
+      "price_change_pct": 53.2,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": false,
+      "value_change_score": -509.59,
+      "summary": "Worse value: price increased 53.2% with limited performance gains."
+    },
+    {
+      "model_id": "phi-4",
+      "window_days": 60,
+      "start_date": "2026-03-15",
+      "end_date": "2026-05-14",
+      "start_price": 0.22820000000000001,
+      "end_price": 0.19440000000000002,
+      "price_change_pct": -14.81,
+      "benchmark_movement": {
+        "reasoning": -4.0,
+        "coding": -2.0,
+        "tool_use": -4.0
+      },
+      "value_improved": true,
+      "value_change_score": 479.72,
+      "summary": "Significantly better value: price dropped 14.81% while performance held or improved."
+    }
+  ],
+  "value_trends_90d": [
+    {
+      "model_id": "claude-3.7-sonnet",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 20.018700000000003,
+      "end_price": 23.8298,
+      "price_change_pct": 19.04,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": false,
+      "value_change_score": -7.77,
+      "summary": "Worse value: price increased 19.04% with limited performance gains."
+    },
+    {
+      "model_id": "gpt-4o",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 13.7639,
+      "end_price": 10.2606,
+      "price_change_pct": -25.45,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": true,
+      "value_change_score": 15.74,
+      "summary": "Significantly better value: price dropped 25.45% while performance held or improved."
+    },
+    {
+      "model_id": "claude-3.5-sonnet",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 16.528299999999998,
+      "end_price": 12.553,
+      "price_change_pct": -24.05,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": true,
+      "value_change_score": 10.44,
+      "summary": "Significantly better value: price dropped 24.05% while performance held or improved."
+    },
+    {
+      "model_id": "o1-preview",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 81.91720000000001,
+      "end_price": 86.5944,
+      "price_change_pct": 5.71,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": false,
+      "value_change_score": -1.04,
+      "summary": "Relatively stable value over the period (change: -1.04)."
+    },
+    {
+      "model_id": "gemini-2.5-pro",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 6.5176,
+      "end_price": 4.3831,
+      "price_change_pct": -32.75,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": true,
+      "value_change_score": 45.76,
+      "summary": "Significantly better value: price dropped 32.75% while performance held or improved."
+    },
+    {
+      "model_id": "grok-2-1212",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 4.0462,
+      "end_price": 3.1086,
+      "price_change_pct": -23.17,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": true,
+      "value_change_score": 40.08,
+      "summary": "Significantly better value: price dropped 23.17% while performance held or improved."
+    },
+    {
+      "model_id": "deepseek-r1",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 2.8095,
+      "end_price": 2.4202,
+      "price_change_pct": -13.86,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": true,
+      "value_change_score": 25.31,
+      "summary": "Significantly better value: price dropped 13.86% while performance held or improved."
+    },
+    {
+      "model_id": "deepseek-v3",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 0.4777,
+      "end_price": 0.2944,
+      "price_change_pct": -38.37,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": true,
+      "value_change_score": 992.82,
+      "summary": "Significantly better value: price dropped 38.37% while performance held or improved."
+    },
+    {
+      "model_id": "llama-3.1-405b",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 1.5883,
+      "end_price": 1.5345,
+      "price_change_pct": -3.39,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": false,
+      "value_change_score": -8.49,
+      "summary": "Relatively stable value over the period (change: -8.49)."
+    },
+    {
+      "model_id": "mistral-large-latest",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 8.6937,
+      "end_price": 5.971,
+      "price_change_pct": -31.32,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": true,
+      "value_change_score": 29.71,
+      "summary": "Significantly better value: price dropped 31.32% while performance held or improved."
+    },
+    {
+      "model_id": "qwen2.5-72b",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 0.48230000000000006,
+      "end_price": 0.4934,
+      "price_change_pct": 2.3,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": false,
+      "value_change_score": -124.89,
+      "summary": "Relatively stable value over the period (change: -124.89)."
+    },
+    {
+      "model_id": "o1-mini",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 5.3376,
+      "end_price": 4.6455,
+      "price_change_pct": -12.97,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": true,
+      "value_change_score": 14.8,
+      "summary": "Significantly better value: price dropped 12.97% while performance held or improved."
+    },
+    {
+      "model_id": "command-r-plus",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 11.9911,
+      "end_price": 14.0314,
+      "price_change_pct": 17.02,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": false,
+      "value_change_score": -11.87,
+      "summary": "Worse value: price increased 17.02% with limited performance gains."
+    },
+    {
+      "model_id": "jamba-1.5-large",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 11.4419,
+      "end_price": 13.7641,
+      "price_change_pct": 20.3,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": false,
+      "value_change_score": -14.42,
+      "summary": "Worse value: price increased 20.3% with limited performance gains."
+    },
+    {
+      "model_id": "gemini-2.5-flash",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 0.34809999999999997,
+      "end_price": 0.33630000000000004,
+      "price_change_pct": -3.39,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": false,
+      "value_change_score": -39.69,
+      "summary": "Relatively stable value over the period (change: -39.69)."
+    },
+    {
+      "model_id": "gpt-4o-mini",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 0.8776,
+      "end_price": 0.8219000000000001,
+      "price_change_pct": -6.35,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": true,
+      "value_change_score": 4.01,
+      "summary": "Improved value over time (+4.01)."
+    },
+    {
+      "model_id": "phi-4",
+      "window_days": 90,
+      "start_date": "2026-02-14",
+      "end_date": "2026-05-14",
+      "start_price": 0.2187,
+      "end_price": 0.19440000000000002,
+      "price_change_pct": -11.11,
+      "benchmark_movement": {
+        "reasoning": -5.0,
+        "coding": -3.0,
+        "tool_use": -5.0
+      },
+      "value_improved": true,
+      "value_change_score": 271.3,
+      "summary": "Significantly better value: price dropped 11.11% while performance held or improved."
+    }
+  ]
+}

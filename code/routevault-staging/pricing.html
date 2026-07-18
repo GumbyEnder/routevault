@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing • RouteVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .heading-font { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
+        .dark-card { background-color: #18181b; border: 1px solid #27272a; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <nav class="border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-8 flex items-center justify-between h-20">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
+                    <i class="fa-solid fa-route text-white text-2xl"></i>
+                </div>
+                <a href="index.html" class="text-3xl font-semibold tracking-tighter">RouteVault</a>
+            </div>
+            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                <a href="models.html" class="hover:text-white transition-colors">Models</a>
+                <a href="ecosystem.html" class="hover:text-white transition-colors">Tools &amp; Harnesses</a>
+                <a href="how-we-score.html" class="hover:text-white transition-colors">How We Score</a>
+                <a href="pricing.html" class="text-white font-semibold">Pricing</a>
+            </div>
+            <div class="flex items-center gap-x-4">
+                <button onclick="window.location.href='login.html'" class="px-5 py-2.5 text-sm font-medium text-zinc-300 hover:text-white">Log in</button>
+                <button onclick="window.location.href='register.html'" class="px-5 py-2.5 bg-white text-zinc-950 hover:bg-zinc-100 transition-all text-sm font-semibold rounded-2xl">Start for free</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-8 pt-12 pb-16">
+        <div class="text-center mb-12">
+            <h1 class="text-6xl font-semibold tracking-tighter heading-font">Simple pricing.<br>Powerful results.</h1>
+            <p class="text-xl text-zinc-400 mt-4">Start free. Upgrade when you need more power.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <!-- Free -->
+            <div class="dark-card p-8 rounded-3xl">
+                <div class="text-sm font-medium text-zinc-400">Free</div>
+                <div class="text-5xl font-semibold mt-1">$0</div>
+                <div class="text-sm text-zinc-400">forever</div>
+                <div class="mt-8 space-y-3 text-sm">
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 50 model queries / month</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Basic comparison table</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 1 saved stack</div>
+                </div>
+                <button onclick="window.location.href='register.html'" class="mt-8 w-full py-3 border border-zinc-700 hover:bg-zinc-900 rounded-3xl text-sm font-semibold">Start free</button>
+            </div>
+
+            <!-- Pro -->
+            <div class="dark-card p-8 rounded-3xl border-2 border-indigo-500 relative">
+                <div class="absolute -top-3 right-6 bg-indigo-500 text-xs px-3 py-1 rounded-full font-medium">Most popular</div>
+                <div class="text-sm font-medium text-indigo-400">Pro</div>
+                <div class="text-5xl font-semibold mt-1">$19</div>
+                <div class="text-sm text-zinc-400">per month</div>
+                <div class="mt-8 space-y-3 text-sm">
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Unlimited queries</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Full model radar &amp; history</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 20 saved stacks</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Export CSV &amp; reports</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Priority support</div>
+                </div>
+                <button onclick="window.location.href='register.html'" class="mt-8 w-full py-3 bg-white text-zinc-950 rounded-3xl text-sm font-semibold">Go Pro</button>
+            </div>
+
+            <!-- Enterprise -->
+            <div class="dark-card p-8 rounded-3xl">
+                <div class="text-sm font-medium text-zinc-400">Enterprise</div>
+                <div class="text-5xl font-semibold mt-1">Custom</div>
+                <div class="text-sm text-zinc-400">contact us</div>
+                <div class="mt-8 space-y-3 text-sm">
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Everything in Pro</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> SSO &amp; team seats</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Custom model weights</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Dedicated support</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> On-prem option</div>
+                </div>
+                <button onclick="alert('Sales contact form would open here')" class="mt-8 w-full py-3 border border-zinc-700 hover:bg-zinc-900 rounded-3xl text-sm font-semibold">Talk to sales</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

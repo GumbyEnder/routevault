@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Model • RouteVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .heading-font { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
+        .dark-card { background-color: #18181b; border: 1px solid #27272a; }
+        .quiz-option {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .quiz-option:hover {
+            background-color: #27272a;
+            border-color: #6366f1;
+        }
+        .quiz-option.selected {
+            background-color: #312e81;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 1px #6366f1;
+        }
+        .routevault-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <!-- Nav -->
+    <nav class="border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-8 flex items-center justify-between h-20">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
+                    <i class="fa-solid fa-route text-white text-2xl"></i>
+                </div>
+                <a href="index.html" class="text-3xl font-semibold tracking-tighter">RouteVault</a>
+            </div>
+            <a href="index.html" class="text-sm text-zinc-400 hover:text-white flex items-center gap-x-2">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Back to home</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="max-w-3xl mx-auto px-8 pt-16 pb-12">
+        
+        <!-- Progress -->
+        <div class="mb-8">
+            <div class="flex justify-between text-xs text-zinc-400 mb-2 px-1">
+                <div>Question <span id="current-q">1</span> of 4</div>
+                <div>Find your ideal model match</div>
+            </div>
+            <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                <div id="progress-bar" 
+                     class="h-1 bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-300"
+                     style="width: 25%"></div>
+            </div>
+        </div>
+
+        <!-- Question Container -->
+        <div id="question-screen">
+            <div id="question-title" class="text-4xl font-semibold tracking-tight mb-3"></div>
+            <p id="question-subtitle" class="text-xl text-zinc-400 mb-8"></p>
+
+            <!-- Options -->
+            <div id="options-container" class="space-y-3"></div>
+
+            <!-- Navigation -->
+            <div class="mt-8 flex items-center justify-between">
+                <button onclick="prevQuestion()" id="prev-btn"
+                        class="px-6 py-3 text-sm font-medium text-zinc-400 hover:text-white flex items-center gap-x-2 disabled:opacity-30">
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </button>
+                <button onclick="nextQuestion()" id="next-btn"
+                        class="px-8 py-3 bg-white text-zinc-950 font-semibold text-sm rounded-2xl disabled:bg-zinc-800 disabled:text-zinc-400">
+                    Continue
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="hidden">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-3xl bg-emerald-900 text-emerald-400 text-sm mb-4">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Match complete</span>
+                </div>
+                <h1 class="text-5xl tracking-tighter font-semibold">Your 3 best models</h1>
+                <p class="text-xl text-zinc-400 mt-3">Based on your answers, here are the models that fit you best.</p>
+            </div>
+
+            <div id="recommendations" class="grid gap-4"></div>
+
+            <div class="mt-8 flex justify-center gap-x-4">
+                <button onclick="restartQuiz()" 
+                        class="px-8 py-3.5 border border-zinc-700 hover:bg-zinc-900 rounded-2xl text-sm font-medium flex items-center gap-x-2">
+                    <i class="fa-solid fa-redo"></i> Retake quiz
+                </button>
+                <a href="models.html" 
+                   class="px-8 py-3.5 bg-white text-zinc-950 font-semibold rounded-2xl text-sm hover:bg-zinc-200">
+                    Explore all models →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                id: 1,
+                title: "What's your main use case?",
+                subtitle: "Be honest — this changes everything.",
+                options: [
+                    { value: "research", label: "Deep research, analysis & long-form work", icon: "fa-search" },
+                    { value: "planning", label: "Project planning, agentic work & real projects", icon: "fa-tasks" },
+                    { value: "coding", label: "Coding, debugging, architecture", icon: "fa-code" },
+                    { value: "chat", label: "Everyday chat, quick answers & high volume", icon: "fa-comments" }
+                ]
+            },
+            {
+                id: 2,
+                title: "How important is price for you?",
+                subtitle: "We'll heavily weight cost-efficient models if price matters.",
+                options: [
+                    { value: "cheap", label: "Very important — keep me under $10/month", icon: "fa-dollar-sign" },
+                    { value: "balanced", label: "Balanced — good value, not cheapest", icon: "fa-balance-scale" },
+                    { value: "premium", label: "I want the best performance, price secondary", icon: "fa-gem" }
+                ]
+            },
+            {
+                id: 3,
+                title: "Do you work with large context or long documents?",
+                subtitle: "This determines whether we recommend long-context models.",
+                options: [
+                    { value: "yes", label: "Yes — I regularly need 100k+ context", icon: "fa-file-alt" },
+                    { value: "sometimes", label: "Sometimes — a few big files per week", icon: "fa-file" },
+                    { value: "no", label: "Not really — standard conversation is fine", icon: "fa-comment-dots" }
+                ]
+            },
+            {
+                id: 4,
+                title: "How much reasoning & planning do you need?",
+                subtitle: "Higher reasoning = stronger complex-task performance.",
+                options: [
+                    { value: "high", label: "Heavy — multi-step agents, complex planning", icon: "fa-brain" },
+                    { value: "medium", label: "Moderate — some planning + reliable outputs", icon: "fa-cogs" },
+                    { value: "low", label: "Low — quick answers are enough", icon: "fa-bolt" }
+                ]
+            }
+        ];
+
+        let answers = {};
+        let currentQuestion = 1;
+        let allModels = []; // loaded from data/models.json
+
+        function showQuestion(qNum) {
+            const q = questions.find(q => q.id === qNum);
+            document.getElementById("question-title").textContent = q.title;
+            document.getElementById("question-subtitle").textContent = q.subtitle;
+            
+            const container = document.getElementById("options-container");
+            container.innerHTML = "";
+
+            q.options.forEach(opt => {
+                const div = document.createElement("div");
+                div.className = `quiz-option flex items-center gap-x-4 p-6 dark-card border border-zinc-700 rounded-3xl cursor-pointer ${answers[qNum] === opt.value ? 'selected' : ''}`;
+                div.innerHTML = `
+                    <i class="fa-solid ${opt.icon} text-2xl text-indigo-400 w-9"></i>
+                    <div class="flex-1 text-lg">${opt.label}</div>
+                    <i class="fa-solid fa-check text-indigo-400 hidden ${answers[qNum] === opt.value ? '' : 'hidden'}"></i>
+                `;
+                div.onclick = () => selectOption(qNum, opt.value, div);
+                container.appendChild(div);
+            });
+
+            document.getElementById("current-q").textContent = qNum;
+            document.getElementById("progress-bar").style.width = `${(qNum / questions.length) * 100}%`;
+            
+            document.getElementById("prev-btn").disabled = qNum === 1;
+            document.getElementById("next-btn").textContent = qNum === questions.length ? "See my results" : "Continue";
+        }
+
+        function selectOption(qNum, value, element) {
+            answers[qNum] = value;
+            
+            // visually select
+            document.querySelectorAll("#options-container .quiz-option").forEach(el => {
+                el.classList.remove("selected");
+                el.querySelector(".fa-check")?.classList.add("hidden");
+            });
+            element.classList.add("selected");
+            element.querySelector(".fa-check")?.classList.remove("hidden");
+        }
+
+        function nextQuestion() {
+            if (!answers[currentQuestion]) {
+                alert("Please select an answer.");
+                return;
+            }
+            if (currentQuestion < questions.length) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            } else {
+                showResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function showResults() {
+            document.getElementById("question-screen").classList.add("hidden");
+            document.getElementById("results-screen").classList.remove("hidden");
+
+            const recContainer = document.getElementById("recommendations");
+            recContainer.innerHTML = "";
+
+            const recommendations = getRealRecommendations(answers);
+
+            recommendations.forEach(model => {
+                const card = document.createElement("div");
+                card.className = "dark-card p-7 rounded-3xl flex justify-between items-start";
+                card.innerHTML = `
+                    <div class="flex-1">
+                        <div class="flex items-center gap-x-2 flex-wrap">
+                            <span class="font-semibold text-xl">${model.name}</span>
+                            <span class="px-3 py-0.5 text-xs bg-zinc-900 text-indigo-400 rounded-full">${model.label}</span>
+                        </div>
+                        
+                        <div class="text-sm text-zinc-400 mt-1.5">${model.reason}</div>
+                        
+                        <div class="mt-3 flex flex-wrap items-center gap-x-4 text-xs">
+                            <span class="text-emerald-400 font-medium">${model.estCost}</span>
+                            <span class="text-zinc-500">•</span>
+                            <span class="text-zinc-400">${model.context}k context</span>
+                            <span class="text-zinc-500">•</span>
+                            <span class="text-zinc-400">$${model.input}/$${model.output} per M</span>
+                        </div>
+                    </div>
+                    <button onclick="addToStack('${model.name}')" 
+                            class="ml-4 px-6 py-2.5 text-sm font-medium bg-zinc-900 hover:bg-zinc-800 text-zinc-300 rounded-2xl flex-shrink-0 self-start">
+                        Add to my stack
+                    </button>
+                `;
+                recContainer.appendChild(card);
+            });
+        }
+
+        /**
+         * Real scoring engine — aligned with the dual-layer weighting system
+         * from "How do we weight models.md" (Technical + Consumer/RouteVault Scale)
+         */
+        function getRealRecommendations(userAnswers) {
+            if (!allModels || allModels.length === 0) {
+                return [
+                    { name: "claude-3.7-sonnet", label: "Project Planner", reason: "Excellent long reasoning + agentic performance", estCost: "~$28/mo", context: "200", input: 3.00, output: 15.00 },
+                    { name: "gemini-2.5-pro", label: "Researcher", reason: "1000k+ context — perfect for long documents", estCost: "~$21/mo", context: "1000", input: 1.25, output: 5.00 },
+                    { name: "deepseek-v3", label: "Budget Everyday", reason: "Outstanding price-to-performance", estCost: "~$4/mo", context: "128", input: 0.14, output: 0.28 }
+                ];
+            }
+
+            const use = userAnswers[1];
+            const pricePref = userAnswers[2];
+            const contextPref = userAnswers[3];
+            const reasoningPref = userAnswers[4];
+
+            const scored = allModels.map(model => {
+                let score = 45;
+
+                const label = (model.rv_label || "").toLowerCase();
+                const inp = model.current_input_price || 0;
+                const out = model.current_output_price || 0;
+                const totalPrice = inp + out;
+                const ctx = model.context_k || 128;
+
+                // === Consumer Layer (RouteVault Scale) matching ===
+                if (use === "research" || use === "planning") {
+                    if (label.includes("research") || label.includes("planner") || label.includes("thinker")) score += 28;
+                    if (label.includes("dev")) score += 8;
+                }
+                if (use === "coding") {
+                    if (label.includes("dev") || label.includes("coder")) score += 25;
+                    if (label.includes("planner")) score += 10;
+                }
+                if (use === "chat") {
+                    if (label.includes("budget") || label.includes("everyday")) score += 22;
+                }
+
+                // === Technical Layer bonuses ===
+                // Reasoning & Planning
+                if (reasoningPref === "high") {
+                    if (label.includes("research") || label.includes("planner") || label.includes("thinker")) score += 22;
+                    if (ctx >= 128) score += 8;
+                } else if (reasoningPref === "low") {
+                    if (label.includes("budget") || label.includes("everyday")) score += 12;
+                }
+
+                // Context
+                if (contextPref === "yes") {
+                    if (ctx >= 200) score += 18;
+                    else if (ctx >= 128) score += 10;
+                }
+                if (contextPref === "no" && ctx <= 128) score += 12;
+
+                // Price sensitivity (Technical + Consumer)
+                if (pricePref === "cheap") {
+                    if (totalPrice < 1.0) score += 32;
+                    else if (totalPrice < 2.5) score += 18;
+                    else if (totalPrice > 6) score -= 25;
+                } else if (pricePref === "balanced") {
+                    if (totalPrice >= 1.5 && totalPrice <= 5) score += 12;
+                } else if (pricePref === "premium") {
+                    if (totalPrice > 5) score += 14;
+                    if (label.includes("research") || label.includes("planner")) score += 8;
+                }
+
+                // === Build rich reason ===
+                let reasonParts = [];
+                if (label.includes("research") || label.includes("planner")) reasonParts.push("strong reasoning & planning");
+                if (ctx >= 200) reasonParts.push(`${ctx}k context`);
+                if (pricePref === "cheap" && totalPrice < 2) reasonParts.push("excellent value");
+
+                const reason = reasonParts.length > 0 
+                    ? reasonParts.join(" · ") 
+                    : `${model.rv_label || "Solid generalist"} for your profile`;
+
+                // Monthly cost estimate (rough but data-driven)
+                const estMonthly = Math.max(2, Math.round(totalPrice * 3.2));
+
+                return {
+                    name: model.model_id,
+                    label: model.rv_label || "Model",
+                    reason: reason,
+                    estCost: `~$${estMonthly}/mo`,
+                    context: ctx,
+                    input: inp,
+                    output: out,
+                    totalPrice: totalPrice,
+                    score: Math.round(score)
+                };
+            });
+
+            scored.sort((a, b) => b.score - a.score);
+            return scored.slice(0, 3);
+        }
+
+        function addToStack(modelName) {
+            alert(`"${modelName}" added to your stack!\n\n(In a real version this would save to your RouteVault account + Hermes profile)`);
+            // Future: could POST to an API or update localStorage
+        }
+
+        function restartQuiz() {
+            answers = {};
+            currentQuestion = 1;
+            document.getElementById("results-screen").classList.add("hidden");
+            document.getElementById("question-screen").classList.remove("hidden");
+            showQuestion(1);
+        }
+
+        // Boot
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const res = await fetch('data/models.json');
+                const data = await res.json();
+                allModels = data.models || [];
+                console.log(`[RouteVault Quiz] Loaded ${allModels.length} models from data/models.json`);
+            } catch (e) {
+                console.warn("Could not load models.json, falling back to static recommendations.");
+                allModels = [];
+            }
+            showQuestion(1);
+        });
+    </script>
+</body>
+</html>

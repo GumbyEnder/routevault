@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Models • RouteVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .heading-font { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
+        .dark-card { background-color: #18181b; border: 1px solid #27272a; }
+        .model-row { transition: background-color 0.1s ease; }
+        .model-row:hover { background-color: #18181b; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <!-- Demo Data Banner -->
+    <div class="bg-indigo-600/20 border-b border-indigo-500/30 px-4 py-2 text-center">
+        <p class="text-sm text-indigo-200">
+            <i class="fa-solid fa-flask mr-2"></i>
+            Demo data: price history is illustrative (synthetic), not live market prices.
+        </p>
+    </div>
+    <!-- Nav -->
+    <nav class="border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-8 flex items-center justify-between h-20">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
+                    <i class="fa-solid fa-route text-white text-2xl"></i>
+                </div>
+                <a href="index.html" class="text-3xl font-semibold tracking-tighter">RouteVault</a>
+            </div>
+            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                <a href="models.html" class="text-white font-semibold">Models</a>
+                <a href="ecosystem.html" class="hover:text-white transition-colors">Tools &amp; Harnesses</a>
+                <a href="how-we-score.html" class="hover:text-white transition-colors">How We Score</a>
+                <a href="#" class="hover:text-white transition-colors">Pricing</a>
+            </div>
+            <div class="flex items-center gap-x-4">
+                <button onclick="window.location.href='index.html'" class="px-5 py-2.5 text-sm font-medium text-zinc-300 hover:text-white">Home</button>
+                <button class="px-5 py-2.5 bg-white text-zinc-950 hover:bg-zinc-100 transition-all text-sm font-semibold rounded-2xl">Start for free</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-8 pt-12 pb-8">
+        <div class="flex items-end justify-between mb-8">
+            <div>
+                <span class="uppercase tracking-[2px] text-xs font-semibold text-indigo-400">187 models tracked</span>
+                <h1 class="text-6xl font-semibold tracking-tighter heading-font">All Models</h1>
+            </div>
+            <div class="text-right text-sm text-zinc-400">Last updated: just now</div>
+        </div>
+
+        <!-- Search + Filters -->
+        <div class="flex flex-wrap gap-3 mb-6">
+            <div class="flex-1 min-w-[280px]">
+                <input type="text" id="search" placeholder="Search models or providers..." 
+                       class="w-full bg-zinc-900 border border-zinc-800 rounded-2xl px-5 py-3 text-sm focus:outline-none focus:border-indigo-500" onkeyup="filterModels()">
+            </div>
+            <div class="flex gap-2">
+                <button onclick="filterByCategory(this, 'all')" class="active px-4 py-2.5 text-sm bg-white text-zinc-950 rounded-2xl font-medium">All</button>
+                <button onclick="filterByCategory(this, 'Researcher')" class="px-4 py-2.5 text-sm bg-zinc-900 border border-zinc-800 rounded-2xl">Researcher</button>
+                <button onclick="filterByCategory(this, 'Project Planner')" class="px-4 py-2.5 text-sm bg-zinc-900 border border-zinc-800 rounded-2xl">Project Planner</button>
+                <button onclick="filterByCategory(this, 'Junior Developer')" class="px-4 py-2.5 text-sm bg-zinc-900 border border-zinc-800 rounded-2xl">Junior Dev</button>
+                <button onclick="filterByCategory(this, 'Budget')" class="px-4 py-2.5 text-sm bg-zinc-900 border border-zinc-800 rounded-2xl">Budget</button>
+            </div>
+        </div>
+
+        <!-- Models Table -->
+        <div class="dark-card rounded-3xl overflow-hidden border border-zinc-800">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="border-b border-zinc-800 bg-zinc-900">
+                        <th class="px-8 py-4 text-left font-semibold text-xs tracking-wider text-zinc-400">MODEL</th>
+                        <th class="px-4 py-4 text-left font-semibold text-xs tracking-wider text-zinc-400">CATEGORY</th>
+                        <th onclick="sortTable('monthly')" class="px-4 py-4 text-center font-semibold text-xs tracking-wider text-zinc-400 cursor-pointer hover:text-white">MONTHLY <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+                        <th onclick="sortTable('score')" class="px-4 py-4 text-center font-semibold text-xs tracking-wider text-zinc-400 cursor-pointer hover:text-white">RV SCORE <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+                        <th class="px-4 py-4 text-center font-semibold text-xs tracking-wider text-zinc-400">SPEED</th>
+                        <th onclick="sortTable('pp')" class="px-4 py-4 text-center font-semibold text-xs tracking-wider text-zinc-400 cursor-pointer hover:text-white">P/P <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+                        <th class="px-8 py-4 text-right font-semibold text-xs tracking-wider text-zinc-400"></th>
+                    </tr>
+                </thead>
+                <tbody id="model-table" class="divide-y divide-zinc-800">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const models = [
+            { name: "grok-4-1-fast-reasoning", provider: "xAI", category: "Budget", monthly: "$12", score: 94, speed: "Very Fast", pp: 9.1, id: "grok-4-1-fast-reasoning" },
+            { name: "claude-4-opus", provider: "Anthropic", category: "Researcher", monthly: "$85", score: 98, speed: "Medium", pp: 7.8, id: "claude-4-opus" },
+            { name: "llama-3.3-70b", provider: "Meta", category: "Project Planner", monthly: "$29", score: 91, speed: "Fast", pp: 8.6, id: "llama-3.3-70b" },
+            { name: "deepseek-r1", provider: "DeepSeek", category: "Budget", monthly: "$8", score: 89, speed: "Very Fast", pp: 9.4, id: "deepseek-r1" },
+            { name: "gpt-4o", provider: "OpenAI", category: "Researcher", monthly: "$72", score: 96, speed: "Fast", pp: 7.5, id: "gpt-4o" },
+            { name: "gemini-2.0-flash", provider: "Google", category: "Junior Developer", monthly: "$19", score: 87, speed: "Very Fast", pp: 9.2, id: "gemini-2.0-flash" },
+            { name: "qwen2.5-72b", provider: "Alibaba", category: "Project Planner", monthly: "$24", score: 88, speed: "Fast", pp: 8.3, id: "qwen2.5-72b" },
+            { name: "mistral-large-2", provider: "Mistral", category: "Researcher", monthly: "$48", score: 93, speed: "Fast", pp: 7.9, id: "mistral-large-2" },
+        ];
+
+        function renderModels(filtered) {
+            const tbody = document.getElementById('model-table');
+            tbody.innerHTML = '';
+            filtered.forEach(m => {
+                const row = document.createElement('tr');
+                row.className = 'model-row';
+                row.innerHTML = `
+                    <td class="px-8 py-5">
+                        <div class="font-semibold">${m.name}</div>
+                        <div class="text-xs text-zinc-500">${m.provider} • 128k context</div>
+                    </td>
+                    <td class="px-4 py-5">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-zinc-800 text-zinc-300">${m.category}</span>
+                    </td>
+                    <td class="px-4 py-5 text-center font-medium">${m.monthly}</td>
+                    <td class="px-4 py-5 text-center"><span class="font-semibold text-emerald-400">${m.score}</span></td>
+                    <td class="px-4 py-5 text-center text-emerald-400">${m.speed}</td>
+                    <td class="px-4 py-5 text-center font-medium">${m.pp}</td>
+                    <td class="px-8 py-5 text-right">
+                        <a href="model-detail.html?id=${m.id}" class="px-5 py-1.5 text-xs font-semibold border border-zinc-700 hover:bg-white hover:text-zinc-950 transition-colors rounded-2xl">View details</a>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function filterModels() {
+            const term = document.getElementById('search').value.toLowerCase();
+            const filtered = models.filter(m => 
+                m.name.toLowerCase().includes(term) || 
+                m.provider.toLowerCase().includes(term)
+            );
+            renderModels(filtered);
+        }
+
+        function filterByCategory(btn, cat) {
+            document.querySelectorAll('button').forEach(b => b.classList.remove('active', 'bg-white', 'text-zinc-950'));
+            document.querySelectorAll('button').forEach(b => b.classList.add('bg-zinc-900', 'border', 'border-zinc-800'));
+            btn.classList.add('active', 'bg-white', 'text-zinc-950');
+            btn.classList.remove('bg-zinc-900', 'border', 'border-zinc-800');
+
+            let filtered = models;
+            if (cat !== 'all') {
+                filtered = models.filter(m => m.category === cat);
+            }
+            renderModels(filtered);
+        }
+
+        function sortTable(column) {
+            const tbody = document.getElementById('model-table');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            rows.sort((a, b) => {
+                let valA, valB;
+                if (column === 'monthly') {
+                    valA = parseFloat(a.cells[2].textContent.replace('$', ''));
+                    valB = parseFloat(b.cells[2].textContent.replace('$', ''));
+                } else if (column === 'score') {
+                    valA = parseInt(a.cells[3].textContent);
+                    valB = parseInt(b.cells[3].textContent);
+                } else if (column === 'pp') {
+                    valA = parseFloat(a.cells[5].textContent);
+                    valB = parseFloat(b.cells[5].textContent);
+                } else {
+                    return 0;
+                }
+                return valB - valA; // descending
+            });
+            
+            tbody.innerHTML = '';
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        window.onload = () => {
+            renderModels(models);
+        };
+    </script>
+</body>
+</html>

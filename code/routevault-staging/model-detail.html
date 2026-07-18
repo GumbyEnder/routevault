@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Detail • RouteVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .heading-font { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
+        .dark-card { background-color: #18181b; border: 1px solid #27272a; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <!-- Nav -->
+    <nav class="border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-8 flex items-center justify-between h-20">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
+                    <i class="fa-solid fa-route text-white text-2xl"></i>
+                </div>
+                <a href="index.html" class="text-3xl font-semibold tracking-tighter">RouteVault</a>
+            </div>
+            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                <a href="models.html" class="hover:text-white transition-colors">Models</a>
+                <a href="ecosystem.html" class="hover:text-white transition-colors">Tools &amp; Harnesses</a>
+                <a href="how-we-score.html" class="hover:text-white transition-colors">How We Score</a>
+                <a href="pricing.html" class="hover:text-white transition-colors">Pricing</a>
+            </div>
+            <div class="flex items-center gap-x-4">
+                <button onclick="window.location.href='models.html'" class="px-5 py-2.5 text-sm font-medium text-zinc-300 hover:text-white">Back to Models</button>
+                <button class="px-5 py-2.5 bg-white text-zinc-950 hover:bg-zinc-100 transition-all text-sm font-semibold rounded-2xl">Add to My Stack</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-8 pt-12">
+        <!-- Header -->
+        <div class="flex items-start justify-between mb-8">
+            <div>
+                <div class="flex items-center gap-x-3 mb-2">
+                    <span class="px-4 py-1 rounded-full text-sm font-medium bg-emerald-900 text-emerald-400">Budget</span>
+                    <span class="text-xs text-zinc-400">xAI • Updated today</span>
+                </div>
+                <h1 class="text-6xl font-semibold tracking-tighter heading-font">grok-4-1-fast-reasoning</h1>
+                <div class="text-2xl text-emerald-400 mt-1">RV Score: <span class="font-semibold">94</span></div>
+            </div>
+            <div class="text-right">
+                <div class="text-sm text-zinc-400">Est. monthly cost</div>
+                <div class="text-4xl font-semibold">$12</div>
+                <div class="text-xs text-emerald-400">for typical developer usage</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left: Overview + Specs -->
+            <div class="lg:col-span-7">
+                <div class="dark-card p-8 rounded-3xl mb-8">
+                    <h3 class="font-semibold text-lg mb-4">Plain English Summary</h3>
+                    <p class="text-zinc-300">Fast, cheap, and surprisingly capable. Perfect for everyday coding, quick research, and high-volume tasks where you want good answers without burning money. The current best “budget frontier” model.</p>
+                    
+                    <div class="mt-8 grid grid-cols-3 gap-6 text-sm">
+                        <div>
+                            <div class="text-xs text-zinc-400">Strengths</div>
+                            <div class="mt-2 space-y-1 text-emerald-400 text-sm">
+                                <div>• Extremely fast</div>
+                                <div>• Excellent value</div>
+                                <div>• Strong reasoning</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-zinc-400">Weaknesses</div>
+                            <div class="mt-2 space-y-1 text-amber-400 text-sm">
+                                <div>• Less creative</div>
+                                <div>• Shorter context</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-zinc-400">Best for</div>
+                            <div class="mt-2 text-sm">Coding, data analysis, quick iterations</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Specs with Visual Bars and Icon -->
+                <div class="dark-card p-8 rounded-3xl">
+                    <h3 class="font-semibold text-lg mb-6">Technical Specs</h3>
+                    <div class="grid grid-cols-2 gap-y-8 text-sm">
+                        <!-- Context Window -->
+                        <div>
+                            <span class="text-zinc-400">Context window</span><br>
+                            <span class="font-medium">128k tokens</span>
+                            <div class="mt-1.5 h-1.5 bg-zinc-800 rounded-full overflow-hidden"><div class="h-1.5 w-[64%] bg-emerald-400 rounded-full"></div></div>
+                            <div class="text-[10px] text-emerald-400 mt-0.5">High (top 35% of models)</div>
+                        </div>
+
+                        <!-- Training Cutoff -->
+                        <div>
+                            <span class="text-zinc-400">Training cutoff</span><br>
+                            <span class="font-medium">Oct 2025</span>
+                            <div class="mt-1.5 h-1.5 bg-zinc-800 rounded-full overflow-hidden"><div class="h-1.5 w-[92%] bg-emerald-400 rounded-full"></div></div>
+                            <div class="text-[10px] text-emerald-400 mt-0.5">Very recent (2 months old)</div>
+                        </div>
+
+                        <!-- Input Price -->
+                        <div>
+                            <span class="text-zinc-400">Input price</span><br>
+                            <span class="font-medium">$0.20 / M tokens</span>
+                            <div class="mt-1.5 h-1.5 bg-zinc-800 rounded-full overflow-hidden"><div class="h-1.5 w-[85%] bg-emerald-400 rounded-full"></div></div>
+                            <div class="text-[10px] text-emerald-400 mt-0.5">Excellent value (bottom 20% cost)</div>
+                        </div>
+
+                        <!-- Output Price -->
+                        <div>
+                            <span class="text-zinc-400">Output price</span><br>
+                            <span class="font-medium">$0.80 / M tokens</span>
+                            <div class="mt-1.5 h-1.5 bg-zinc-800 rounded-full overflow-hidden"><div class="h-1.5 w-[70%] bg-emerald-400 rounded-full"></div></div>
+                            <div class="text-[10px] text-emerald-400 mt-0.5">Strong value (top 30%)</div>
+                        </div>
+
+                        <!-- Vision with Icon -->
+                        <div>
+                            <span class="text-zinc-400">Vision</span><br>
+                            <span class="font-medium"><i class="fa-solid fa-eye text-emerald-400 mr-1"></i> Yes</span>
+                        </div>
+
+                        <!-- Tool Use -->
+                        <div>
+                            <span class="text-zinc-400">Tool use</span><br>
+                            <span class="font-medium">Excellent</span>
+                        </div>
+
+                        <!-- Parameters -->
+                        <div>
+                            <span class="text-zinc-400">Parameters</span><br>
+                            <span class="font-medium">1.8T</span>
+                            <div class="mt-1.5 h-1.5 bg-zinc-800 rounded-full overflow-hidden"><div class="h-1.5 w-[90%] bg-emerald-400 rounded-full"></div></div>
+                            <div class="text-[10px] text-emerald-400 mt-0.5">Frontier scale</div>
+                        </div>
+
+                        <!-- Max Output -->
+                        <div>
+                            <span class="text-zinc-400">Max output</span><br>
+                            <span class="font-medium">32k tokens</span>
+                            <div class="mt-1.5 h-1.5 bg-zinc-800 rounded-full overflow-hidden"><div class="h-1.5 w-[80%] bg-emerald-400 rounded-full"></div></div>
+                            <div class="text-[10px] text-emerald-400 mt-0.5">High capacity</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Radar + Quick Actions -->
+            <div class="lg:col-span-5">
+                <div class="dark-card p-8 rounded-3xl mb-8">
+                    <h3 class="font-semibold text-lg mb-4">Model Radar</h3>
+                    <canvas id="modelRadar" height="220"></canvas>
+                </div>
+
+                <div class="dark-card p-8 rounded-3xl">
+                    <h3 class="font-semibold text-lg mb-4">Compatible Harnesses</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between items-center"><span>Hermes</span> <span class="text-emerald-400 text-xs">Recommended</span></div>
+                        <div class="flex justify-between items-center"><span>PicoClaw</span></div>
+                        <div class="flex justify-between items-center"><span>OpenClaw</span></div>
+                    </div>
+                    <button onclick="alert('Would route this model in a real app')" class="mt-6 w-full py-3 bg-white text-zinc-950 font-semibold rounded-3xl text-sm">Try this model with RouteVault</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing History -->
+        <div class="mt-8 dark-card p-8 rounded-3xl">
+            <h3 class="font-semibold text-lg mb-4">Price Trend (last 90 days)</h3>
+            <div class="h-48"><canvas id="priceChart"></canvas></div>
+        </div>
+    </div>
+
+    <script>
+        function initRadar() {
+            new Chart(document.getElementById('modelRadar'), {
+                type: 'radar',
+                data: {
+                    labels: ['Quality', 'Speed', 'Cost', 'Context', 'Safety'],
+                    datasets: [{
+                        data: [88, 96, 95, 82, 91],
+                        backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                        borderColor: '#6366f1',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    scales: { r: { angleLines: { color: '#27272a' }, grid: { color: '#27272a' }, pointLabels: { color: '#71717a' }, ticks: { display: false } } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function initPriceChart() {
+            const ctx = document.getElementById('priceChart');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Feb 12', 'Feb 26', 'Mar 12', 'Mar 26', 'Apr 12', 'Apr 26', 'May 12'],
+                    datasets: [
+                        {
+                            label: 'Input ($/M)',
+                            data: [0.28, 0.27, 0.26, 0.25, 0.24, 0.22, 0.20],
+                            borderColor: '#6366f1',
+                            borderWidth: 2.5,
+                            tension: 0.35,
+                            pointRadius: 2.5,
+                            pointHoverRadius: 4
+                        },
+                        {
+                            label: 'Output ($/M)',
+                            data: [1.10, 1.05, 1.00, 0.95, 0.90, 0.85, 0.80],
+                            borderColor: '#a5b4fc',
+                            borderWidth: 2.5,
+                            tension: 0.35,
+                            pointRadius: 2.5,
+                            pointHoverRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { color: '#27272a' }, ticks: { color: '#71717a', font: { size: 11 } } },
+                        y: {
+                            grid: { color: '#27272a' },
+                            ticks: { 
+                                color: '#71717a', 
+                                font: { size: 11 },
+                                callback: (val) => '$' + val.toFixed(2)
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { 
+                            display: true, 
+                            position: 'top',
+                            align: 'end',
+                            labels: { color: '#a1a1aa', font: { size: 12 }, usePointStyle: true, padding: 20 }
+                        },
+                        tooltip: { 
+                            backgroundColor: '#18181b', 
+                            titleColor: '#e4e4e7',
+                            bodyColor: '#a1a1aa',
+                            borderColor: '#27272a', 
+                            borderWidth: 1 
+                        }
+                    },
+                    interaction: { intersect: false, mode: 'index' }
+                }
+            });
+        }
+
+        window.onload = () => {
+            initRadar();
+            initPriceChart();
+        };
+    </script>
+</body>
+</html>
