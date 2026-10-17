@@ -1,159 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hermes • RouteVault</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        body { font-family: 'Inter', system_ui, sans-serif; }
-        .heading-font { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
-        .dark-card { background-color: #18181b; border: 1px solid #27272a; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermes pairings • RouteVault</title>
+  <link rel="stylesheet" href="assets/rv.css">
 </head>
-<body class="bg-zinc-950 text-zinc-200">
-    <!-- Nav -->
-    <nav class="border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-8 flex items-center justify-between h-20">
-            <div class="flex items-center gap-x-3">
-                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
-                    <i class="fa-solid fa-route text-white text-2xl"></i>
-                </div>
-                <a href="index.html" class="text-3xl font-semibold tracking-tighter">RouteVault</a>
-            </div>
-            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
-                <a href="models.html" class="hover:text-white transition-colors">Models</a>
-                <a href="ecosystem.html" class="text-white font-semibold">Tools &amp; Harnesses</a>
-                <a href="how-we-score.html" class="hover:text-white transition-colors">How We Score</a>
-            </div>
-            <div class="flex items-center gap-x-4">
-                <button onclick="window.location.href='ecosystem.html'" class="px-5 py-2.5 text-sm font-medium text-zinc-300 hover:text-white">Back to Ecosystem</button>
-                <button onclick="tryWithRouteVault()" class="px-5 py-2.5 bg-white text-zinc-950 hover:bg-zinc-100 transition-all text-sm font-semibold rounded-2xl">Try with RouteVault</button>
-            </div>
-        </div>
-    </nav>
-
-    <div class="max-w-7xl mx-auto px-8 pt-12 pb-16">
-        <!-- Header -->
-        <div class="flex items-start justify-between mb-10">
-            <div>
-                <div class="flex items-center gap-x-4 mb-2">
-                    <div class="w-14 h-14 bg-indigo-500/10 text-indigo-400 rounded-2xl flex items-center justify-center">
-                        <i class="fa-solid fa-robot text-4xl"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-x-3">
-                            <h1 class="text-6xl font-semibold tracking-tighter heading-font">Hermes</h1>
-                            <span class="px-3 py-1 text-xs font-medium bg-emerald-900 text-emerald-400 rounded-full">Production</span>
-                        </div>
-                        <div class="text-emerald-400 mt-1">4.9 • 12,400 users • 340 models supported</div>
-                    </div>
-                </div>
-                <p class="text-xl text-zinc-400 max-w-2xl mt-4">The loyal multi-agent orchestrator trusted by teams who need reliable, complex workflows without the friction.</p>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <!-- Left column: Overview + Metrics -->
-            <div class="lg:col-span-7">
-                <div class="dark-card p-8 rounded-3xl mb-8">
-                    <h3 class="font-semibold text-lg mb-4">What it does</h3>
-                    <p class="text-zinc-300">Hermes turns any model into a reliable team member. It handles planning, tool use, memory, and multi-step reasoning so you can focus on the goal instead of babysitting prompts.</p>
-                    
-                    <div class="mt-8">
-                        <div class="text-xs text-zinc-400 mb-2">Key strengths</div>
-                        <div class="flex flex-wrap gap-2">
-                            <div class="px-4 py-1.5 bg-zinc-900 rounded-2xl text-sm">Multi-agent orchestration</div>
-                            <div class="px-4 py-1.5 bg-zinc-900 rounded-2xl text-sm">Persistent memory</div>
-                            <div class="px-4 py-1.5 bg-zinc-900 rounded-2xl text-sm">Tool calling</div>
-                            <div class="px-4 py-1.5 bg-zinc-900 rounded-2xl text-sm">Error recovery</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dark-card p-8 rounded-3xl">
-                    <h3 class="font-semibold text-lg mb-6">Compatible Models (top 5)</h3>
-                    <div class="space-y-4 text-sm">
-                        <div class="flex justify-between items-center border-b border-zinc-800 pb-4">
-                            <div>
-                                <div class="font-medium">grok-4-1-fast-reasoning</div>
-                                <div class="text-xs text-zinc-500">Best overall performance with Hermes</div>
-                            </div>
-                            <a href="model-detail.html" class="text-xs px-4 py-1 border border-zinc-700 rounded-2xl hover:bg-white hover:text-zinc-950">View</a>
-                        </div>
-                        <div class="flex justify-between items-center border-b border-zinc-800 pb-4">
-                            <div>
-                                <div class="font-medium">claude-4-opus</div>
-                                <div class="text-xs text-zinc-500">Excellent for complex planning</div>
-                            </div>
-                            <a href="model-detail.html" class="text-xs px-4 py-1 border border-zinc-700 rounded-2xl hover:bg-white hover:text-zinc-950">View</a>
-                        </div>
-                        <div class="flex justify-between items-center border-b border-zinc-800 pb-4">
-                            <div>
-                                <div class="font-medium">llama-3.3-70b</div>
-                                <div class="text-xs text-zinc-500">Great value for heavy workflows</div>
-                            </div>
-                            <a href="model-detail.html" class="text-xs px-4 py-1 border border-zinc-700 rounded-2xl hover:bg-white hover:text-zinc-950">View</a>
-                        </div>
-                    </div>
-                    <div class="mt-6 text-xs text-center">
-                        <a href="models.html" class="underline">See all 340 compatible models →</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right: Quick stats + CTA -->
-            <div class="lg:col-span-5">
-                <div class="dark-card p-8 rounded-3xl mb-8">
-                    <h3 class="font-semibold text-lg mb-6">Live metrics</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="text-zinc-400">Active users today</span>
-                                <span class="font-semibold">2,847</span>
-                            </div>
-                            <div class="h-2 bg-zinc-800 rounded-full"><div class="h-2 w-[78%] bg-emerald-400 rounded-full"></div></div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="text-zinc-400">Avg tasks completed / day</span>
-                                <span class="font-semibold">18.4k</span>
-                            </div>
-                            <div class="h-2 bg-zinc-800 rounded-full"><div class="h-2 w-[92%] bg-emerald-400 rounded-full"></div></div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="text-zinc-400">Success rate</span>
-                                <span class="font-semibold">97.3%</span>
-                            </div>
-                            <div class="h-2 bg-zinc-800 rounded-full"><div class="h-2 w-[97%] bg-emerald-400 rounded-full"></div></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dark-card p-8 rounded-3xl">
-                    <div class="text-xs text-zinc-400 mb-4">Official links</div>
-                    <div class="flex flex-col gap-3">
-                        <a href="https://github.com/nousresearch/hermes-agent" target="_blank" class="flex items-center justify-between px-4 py-3 bg-zinc-900 hover:bg-zinc-800 rounded-2xl text-sm">
-                            <span>GitHub repository</span>
-                            <i class="fa-brands fa-github"></i>
-                        </a>
-                        <a href="#" class="flex items-center justify-between px-4 py-3 bg-zinc-900 hover:bg-zinc-800 rounded-2xl text-sm">
-                            <span>Documentation</span>
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
-                    </div>
-                    <button onclick="tryWithRouteVault()" class="mt-6 w-full py-3.5 bg-white text-zinc-950 font-semibold rounded-3xl text-sm">Add Hermes to my stack</button>
-                </div>
-            </div>
-        </div>
+<body>
+  <div id="rv-shell"></div>
+  <main class="rv-wrap">
+    <p class="kicker">Harness</p>
+    <h1>Hermes</h1>
+    <p class="lede">Multi-agent orchestrator. We rank models by tool/agentic index, then intelligence, then price. “Recommended” means agentic ≥ 45, intelligence ≥ 50, context ≥ 128k.</p>
+    <div class="card" style="overflow:auto;margin-top:1.2rem">
+      <table class="explorer" id="tbl"></table>
     </div>
-
-    <script>
-        function tryWithRouteVault() {
-            alert('Hermes has been added to your RouteVault stack. (Static mockup)');
-        }
-    </script>
+  </main>
+  <script src="assets/rv.js"></script>
+  <script>
+    mountNav("ecosystem.html");
+    mountFoot();
+    loadDataset().then((d) => {
+      const rows = [...d.models].sort((a, b) => {
+        const rank = { Recommended: 0, Strong: 1, Usable: 2, Limited: 3 };
+        return (rank[a.hermes_fit] - rank[b.hermes_fit]) || a.total_price - b.total_price;
+      });
+      $("#tbl").innerHTML = `<thead><tr><th>Model</th><th>Fit</th><th>Agentic</th><th>Reason</th><th>Price</th><th></th></tr></thead>
+      <tbody>${rows.map((m) => `<tr>
+        <td class="mono">${m.model_id}<div class="dim">${m.rv_label}</div></td>
+        <td>${m.hermes_fit}</td>
+        <td class="num">${m.benchmarks.tool_use ?? "—"}</td>
+        <td class="num">${m.benchmarks.reasoning ?? "—"}</td>
+        <td class="num">${fmtMoney(m.total_price)}</td>
+        <td><a class="rv-ghost" href="route.html?tier=Project%20Planner&current=${encodeURIComponent(m.model_id)}">Route</a></td>
+      </tr>`).join("")}</tbody>`;
+    });
+  </script>
 </body>
 </html>

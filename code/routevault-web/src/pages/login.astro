@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="Log in • RouteVault">
+  <Nav active="/login" />
+  <div id="rv-shell" hidden></div>
+
+  <script is:inline src="/legacy.js"></script>
+  <script is:inline>
+    window.mountNav = function() { /* SSR nav */ };
+    window.mountFoot = function() { /* SSR foot */ };
+  </script>
+  <main class="rv-wrap" style="max-width:520px">
+    <p class="kicker">Accounts</p>
+    <h1>Log in</h1>
+    <p class="lede">Same Stack, weights, alerts, and resolve history on any browser. Explorer and quiz stay public if you skip this.</p>
+    <form id="form" class="card rv-form" style="padding:1.1rem">
+      <label class="rv-field">Email
+        <input id="email" type="email" required autocomplete="username">
+      </label>
+      <label class="rv-field">Password
+        <input id="password" type="password" required minlength="8" autocomplete="current-password">
+      </label>
+      <div id="err" class="rv-err"></div>
+      <button class="rv-cta" type="submit">Log in</button>
+    </form>
+    <div class="card rv-form" style="padding:1.1rem;margin-top:1rem">
+      <label class="rv-field">Or sign in with a magic link
+        <input id="magic-email" type="email" placeholder="you@example.com" autocomplete="username">
+      </label>
+      <div id="magic-msg" class="muted" style="margin:.4rem 0 0"></div>
+      <button class="rv-ghost" type="button" id="magic-btn" style="margin-top:.5rem">Email me a sign-in link</button>
+    </div>
+    <p class="muted" style="margin-top:1rem">
+      <a href="/register" style="text-decoration:underline">Create an account</a>
+      · <a href="/reset" style="text-decoration:underline">Forgot password</a>
+      · <a href="/stack" style="text-decoration:underline">Keep using this browser only</a>
+    </p>
+  </main>
+  <script is:inline>
+    loadDataset();
+    $("#magic-btn").onclick = async () => {
+      const msg = $("#magic-msg");
+      msg.textContent = "";
+      try {
+        const data = await api("/api/magic/request", {
+          method: "POST",
+          body: JSON.stringify({ email: $("#magic-email").value }),
+        });
+        msg.textContent = data.message || "Check your inbox.";
+      } catch (err) {
+        msg.textContent = err.message || "Something went wrong.";
+      }
+    };
+    const next = qs("next") || "/account";
+    // Do NOT auto-redirect logged-in users away from the form — show it always.
+    // A signed-in visitor landing here just sees the form; submitting re-auths and
+    // goes to `next`. /account remains the destination after successful login.
+    $("#email").value = waitlistEmail();
+    $("#form").onsubmit = async (e) => {
+      e.preventDefault();
+      $("#err").textContent = "";
+      try {
+        const data = await api("/api/login", {
+          method: "POST",
+          body: JSON.stringify({
+            email: $("#email").value,
+            password: $("#password").value,
+            waitlist: waitlistEmail() === $("#email").value.trim().toLowerCase(),
+            local: localProfile(),
+          }),
+        });
+        RV.user = data.user;
+        if (data.needs_merge) {
+          sessionStorage.setItem("rv.merge.pending", "1");
+          sessionStorage.setItem("rv.merge.cloud", JSON.stringify(data.profile));
+          location.href = "/merge";
+          return;
+        }
+        if (data.local_has_data) {
+          await api("/api/profile/merge", {
+            method: "POST",
+            body: JSON.stringify({ strategy: "local", local: localProfile() }),
+          });
+        } else {
+          applyProfile(data.profile);
+        }
+        location.href = next;
+      } catch (err) {
+        $("#err").textContent = err.message;
+      }
+    };
+  </script>
+</Base>

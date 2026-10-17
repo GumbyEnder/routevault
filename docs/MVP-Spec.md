@@ -82,8 +82,8 @@ With the ability to compare current state vs past state.
 ## 5. Out of Scope for MVP
 
 - Quiz / Recommendation engine (secondary)
-- User accounts & authentication
-- Saved stacks / personal dashboards
+- User accounts & authentication *(analytical MVP out; product cut is now `USER-MANAGEMENT-V1A.md`)*
+- Saved stacks / personal dashboards *(local stacks shipped in v0.2; cloud sync is v1a)*
 - Actual model routing / proxying
 - Hermes-specific features (data should be usable by Hermes, but no deep integration yet)
 - Export functionality

@@ -2,17 +2,29 @@
 kanban-plugin: board
 tags: [routevault, saas, ai-models, planning, mockups, go-live]
 status: active
-last-reviewed: 2026-07-17
+last-reviewed: 2026-08-14
 ---
 
 ## Backlog
 
-- [ ] Real price ingest (OpenRouter/providers) replacing synthetic history
+- [x] Real price ingest (OpenRouter live) + OpenRouterList weekly history (≤6 months)
 - [ ] Benchmark snapshots in DB + UI columns (LMSYS, GPQA, SWE-Bench, etc.)
-- [ ] User-configurable weighting sliders (Phase 2)
-- [ ] Implement smart router + recommendation engine (post-v0)
-- [ ] Flesh out harness-detail-hermes with real data
+- [x] User-configurable weighting sliders (Phase 2) — local, Explorer
+- [x] Smart route *resolver* (no proxy) + published equivalence floors
+- [x] Flesh out harness-detail-hermes with live pairings
 - [ ] Attach custom domain routevault.ai when DNS ready
+- [ ] **v1b later:** Pro gate, email/Telegram alert delivery, Team seats / SSO / billing
+
+## To Do (User Management v1a — locked; execute this cut)
+
+- [x] v1a: Identity (email + password, session, logout, password-reset API)
+- [x] v1a: Replace waitlist login/register with real account pages; nav signed-in vs guest
+- [x] v1a: Cloud profile for stack / weights / alerts / resolves (same client shapes)
+- [x] v1a: First-login merge (keep local / use cloud / union) — never silent-overwrite
+- [x] v1a: Guest path unchanged (localStorage still works with no account)
+- [x] v1a: Waitlist email conversion if `routevault.waitlist` matches
+- [x] v1a: Hosted user DB (Railway Postgres) — not CIFS SQLite
+- [x] v1a: DoD — second-browser sync + automated register/login/logout/unauth/merge tests
 
 ## To Do (v0 go-live — execute in order)
 

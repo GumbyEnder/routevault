@@ -1,0 +1,152 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="My Stack • RouteVault">
+  <Nav active="/stack" />
+  <div id="rv-shell" hidden></div>
+  <main class="rv-wrap">
+    <p class="kicker">Your models</p>
+    <h1>My Stack</h1>
+    <p class="lede">Guests keep a stack in this browser. Sign in and the same stack, weights, alerts, and resolve history follow you to any browser. Alerts evaluate when you open this page — email delivery comes later.</p>
+    <div id="list"></div>
+    <section style="margin-top:2rem">
+      <h2>Local alerts</h2>
+      <p class="muted">We evaluate against the current dataset when you open this page. Email/Telegram delivery is not wired.</p>
+      <form id="alert-form" class="card" style="padding:1rem;display:grid;gap:.6rem;max-width:480px">
+        <label>Watch model
+          <select id="alert-model" style="width:100%;margin-top:.25rem;background:var(--bg-2);color:var(--ink);border:1px solid var(--line);padding:.45rem"></select>
+        </label>
+        <label>Notify if 30d price change is below %
+          <input id="alert-pct" type="number" value="-5" style="width:100%;margin-top:.25rem;background:var(--bg-2);color:var(--ink);border:1px solid var(--line);padding:.45rem">
+        </label>
+        <button class="rv-cta" type="submit">Save alert rule</button>
+      </form>
+      <div id="fired" style="margin-top:1rem"></div>
+    </section>
+    <section style="margin-top:2rem">
+      <h2>Share & sync</h2>
+      <div class="card" style="padding:1rem">
+        <p class="muted" style="font-size:.85rem;margin:.2rem 0 .6rem">Copy a link that opens your current Stack in any browser, or get the weekly price digest by email (one email each Monday: value improvers, regressions, biggest drops).</p>
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center">
+          <button class="rv-ghost" id="share-stack">Copy share link</button>
+          <input id="digest-email" type="email" placeholder="you@example.com" style="background:var(--bg-2);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:.4rem">
+          <button class="rv-ghost" id="digest-sub">Email me the weekly digest</button>
+        </div>
+        <div id="share-out" class="muted" style="font-size:.82rem;margin-top:.5rem"></div>
+      </div>
+    </section>
+    <section style="margin-top:2rem">
+      <h2>Would-have-saved card</h2>
+      <p class="muted">If each stacked model were swapped for the cheapest equivalent in its label, here is the monthly sketch.</p>
+      <div class="card" id="savings" style="padding:1.1rem"></div>
+    </section>
+  </main>
+  <script is:inline src="/legacy.js"></script>
+  <script is:inline>
+    window.mountNav = function() { /* SSR nav */ };
+    window.mountFoot = function() { /* SSR foot */ };
+  </script>
+  <script is:inline>
+// Import a shared stack (?stack=id1,id2) once, then clean the URL
+    refreshSession().then((user) => {
+      if (!user) {
+        document.querySelector('main.rv-wrap').innerHTML = `
+          <p class="kicker">Your models</p>
+          <h1>My Stack</h1>
+          <p class="lede">My Stack follows your account — log in to keep models, alerts, and resolve history on any browser.</p>
+          <div class="card" style="padding:1.2rem;max-width:440px">
+            <p class="muted" style="margin:.2rem 0 1rem">Sign in to see your Stack.</p>
+            <a class="rv-cta" href="/login?next=/stack">Log in</a>
+            <a class="rv-ghost" href="/register" style="margin-left:.6rem">Create account</a>
+          </div>`;
+        return;
+      }
+      return initStackPage();
+    });
+    function initStackPage() {
+    const shared = qs("stack");
+    if (shared) {
+      const ids = shared.split(",").map((s) => s.trim()).filter(Boolean);
+      if (ids.length && confirm(`Import ${ids.length} model(s) into this browser's Stack?`)) setStack([...getStack(), ...ids]);
+      history.replaceState(null, "", location.pathname);
+    }
+    $("#share-stack").onclick = async () => {
+      const ids = getStack();
+      if (!ids.length) { $("#share-out").textContent = "Your Stack is empty — add models first."; return; }
+      const url = `${location.origin}${location.pathname}?stack=${ids.join(",")}`;
+      try {
+        await navigator.clipboard.writeText(url);
+        $("#share-out").textContent = "Share link copied — anyone opening it can import this Stack.";
+      } catch (_) { $("#share-out").textContent = url; }
+    };
+    $("#digest-sub").onclick = async () => {
+      const out = $("#share-out");
+      out.textContent = "Subscribing…";
+      try {
+        const d = await api("/api/digest/subscribe", { method: "POST", body: JSON.stringify({ email: $("#digest-email").value }) });
+        out.innerHTML = `<span class="good">●</span> ${d.message}`;
+      } catch (err) { out.textContent = err.message; }
+    };
+    function draw() {
+      const ids = getStack();
+      const rows = ids.map(modelById).filter(Boolean);
+      if (!rows.length) {
+        $("#list").innerHTML = `<p class="muted">Stack is empty. Add models from the explorer, quiz, or detail pages.</p>`;
+      } else {
+        $("#list").innerHTML = rows.map((m) => `<div class="card" style="padding:1rem;margin:.6rem 0;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+          <div>
+            <a class="mono" href="/model/${encodeURIComponent(m.model_id)}">${m.model_id}</a>
+            <div class="muted">${m.rv_label} · ${fmtMoney(m.total_price)} · Δ30 ${fmtPct(m.price_change_30d)}</div>
+          </div>
+          <button class="rv-ghost" onclick="removeFromStack('${m.model_id}');draw()">Remove</button>
+        </div>`).join("");
+      }
+
+      $("#alert-model").innerHTML = (RV.data.models.map((m) => `<option value="${m.model_id}">${m.model_id}</option>`)).join("");
+      const fired = [];
+      for (const rule of getAlerts()) {
+        const m = modelById(rule.model_id);
+        if (!m) continue;
+        if (m.price_change_30d != null && m.price_change_30d <= Number(rule.below)) {
+          fired.push(`${m.model_id} 30d change ${fmtPct(m.price_change_30d)} crossed ${rule.below}%`);
+        }
+      }
+      $("#fired").innerHTML = fired.length
+        ? fired.map((t) => `<div class="card" style="padding:.7rem;margin:.4rem 0">${t}</div>`).join("")
+        : `<p class="dim">No alert fired on this dataset. ${getAlerts().length} rule(s) stored.</p>`;
+
+      let spend = 0, alt = 0;
+      const lines = [];
+      for (const m of rows) {
+        const eq = RV.data.equivalence.find((t) => t.tier === m.rv_label);
+        const cand = eq?.pick ? modelById(eq.pick) : null;
+        spend += m.monthly_est || 0;
+        if (cand) {
+          alt += cand.monthly_est || 0;
+          lines.push(`${m.model_id} ($${m.monthly_est}) → ${cand.model_id} ($${cand.monthly_est})`);
+        } else alt += m.monthly_est || 0;
+      }
+      const saved = Math.max(0, spend - alt);
+      $("#savings").innerHTML = rows.length
+        ? `<div class="display" style="font-size:2rem">$${saved} / mo sketch</div>
+           <p class="muted">Current stack ~$${spend} vs routed equivalents ~$${alt}. Not a bill.</p>
+           ${lines.map((l) => `<div class="mono" style="margin:.3rem 0">${l}</div>`).join("")}`
+        : "Save at least one model to compute a card.";
+    }
+    window.draw = draw;
+    loadDataset().then(() => {
+      draw();
+      $("#alert-form").onsubmit = (e) => {
+        e.preventDefault();
+        addAlert({ model_id: $("#alert-model").value, below: Number($("#alert-pct").value) });
+        toast(RV.user ? "Alert rule saved to your account" : "Alert rule saved in this browser");
+        draw();
+      };
+    });
+    }
+  </script>
+  <script is:inline>
+    document.addEventListener('click', function(e){ var b = e.target.closest('#share-copy, [data-share]'); if (b) fetch('/api/interest', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({type:'stack_add'})}).catch(function(){}); });
+  </script>
+</Base>

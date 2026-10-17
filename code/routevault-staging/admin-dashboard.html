@@ -1,229 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard • RouteVault</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body { font-family: 'Inter', system_ui, sans-serif; }
-        .dark-card { background-color: #18181b; border: 1px solid #27272a; }
-        .stack-card { transition: all 0.2s ease; }
-        .stack-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingest • RouteVault</title>
+  <link rel="stylesheet" href="assets/rv.css">
 </head>
-<body class="bg-zinc-950 text-zinc-200">
-    <nav class="border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-8 flex items-center justify-between h-20">
-            <div class="flex items-center gap-x-3">
-                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
-                    <i class="fa-solid fa-route text-white text-2xl"></i>
-                </div>
-                <a href="index.html" class="text-3xl font-semibold tracking-tighter">RouteVault</a>
-            </div>
-            <div class="flex items-center gap-x-4">
-                <div class="text-sm">gumbyender@routevault.ai</div>
-                <div onclick="showTab('profile'); document.getElementById('profile-tab').scrollIntoView({behavior:'smooth'})" class="w-8 h-8 bg-zinc-700 hover:bg-zinc-600 cursor-pointer rounded-full flex items-center justify-center transition-colors"><i class="fa-solid fa-user text-sm"></i></div>
-            </div>
-        </div>
-    </nav>
-
-    <div class="max-w-7xl mx-auto px-8 pt-10">
-        <div class="flex items-center justify-between mb-8">
-            <h1 class="text-4xl font-semibold tracking-tight">Dashboard</h1>
-            <button onclick="window.location.href='index.html'" class="px-5 py-2 bg-white text-zinc-950 text-sm font-semibold rounded-2xl">Back to site</button>
-        </div>
-
-        <!-- Quick Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-10">
-            <div class="dark-card p-6 rounded-3xl">
-                <div class="text-xs text-zinc-400">Queries this month</div>
-                <div class="text-4xl font-semibold mt-1">1,284</div>
-                <div class="text-emerald-400 text-xs mt-1">+18% from last month</div>
-            </div>
-            <div class="dark-card p-6 rounded-3xl">
-                <div class="text-xs text-zinc-400">Saved stacks</div>
-                <div class="text-4xl font-semibold mt-1">7</div>
-            </div>
-            <div class="dark-card p-6 rounded-3xl">
-                <div class="text-xs text-zinc-400">Favorite model</div>
-                <div class="text-2xl font-semibold mt-1">grok-4-fast</div>
-            </div>
-            <div class="dark-card p-6 rounded-3xl">
-                <div class="text-xs text-zinc-400">Monthly spend</div>
-                <div class="text-4xl font-semibold mt-1">$12</div>
-            </div>
-        </div>
-
-        <!-- Tabs -->
-        <div class="flex gap-2 mb-6 border-b border-zinc-800">
-            <button onclick="showTab('dashboard')" class="px-6 py-3 font-medium text-sm border-b-2 border-white">Overview</button>
-            <button onclick="showTab('settings')" class="px-6 py-3 font-medium text-sm text-zinc-400 hover:text-white">Settings</button>
-            <button onclick="showTab('profile')" class="px-6 py-3 font-medium text-sm text-zinc-400 hover:text-white">Profile</button>
-        </div>
-
-        <!-- Overview Tab -->
-        <div id="dashboard-tab">
-            
-            <!-- My Saved Stack - SEXY VERSION -->
-            <div class="mb-10">
-                <div class="flex items-end justify-between mb-4">
-                    <div>
-                        <h3 class="font-semibold text-xl">My Saved Stack</h3>
-                        <div class="text-emerald-400 text-sm">3 models • $47/mo saved vs Claude alone</div>
-                    </div>
-                    <button onclick="alert('Stack comparison modal would open')" class="text-xs px-4 py-2 border border-zinc-700 rounded-2xl hover:bg-zinc-900">Compare all</button>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    <!-- Stack Card 1: grok-4-fast -->
-                    <div class="stack-card dark-card p-6 rounded-3xl">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <div class="font-semibold">grok-4-1-fast-reasoning</div>
-                                <div class="text-xs text-emerald-400">Budget • 94 RV</div>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-lg font-semibold">$12</div>
-                                <div class="text-[10px] text-zinc-400">/mo</div>
-                            </div>
-                        </div>
-                        <div class="flex gap-2 mb-4">
-                            <div class="px-2 py-0.5 bg-emerald-900 text-emerald-400 text-xs rounded">Fastest</div>
-                            <div class="px-2 py-0.5 bg-emerald-900 text-emerald-400 text-xs rounded">Best value</div>
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="alert('Removed from stack')" class="flex-1 text-xs py-1.5 border border-zinc-700 rounded-2xl hover:bg-zinc-900">Remove</button>
-                            <button onclick="window.location.href='model-detail.html'" class="flex-1 text-xs py-1.5 bg-white text-zinc-950 rounded-2xl">Route</button>
-                        </div>
-                    </div>
-
-                    <!-- Stack Card 2: claude-4 -->
-                    <div class="stack-card dark-card p-6 rounded-3xl">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <div class="font-semibold">claude-4-opus</div>
-                                <div class="text-xs text-violet-400">Researcher • 98 RV</div>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-lg font-semibold">$85</div>
-                                <div class="text-[10px] text-zinc-400">/mo</div>
-                            </div>
-                        </div>
-                        <div class="flex gap-2 mb-4">
-                            <div class="px-2 py-0.5 bg-violet-900 text-violet-400 text-xs rounded">Deepest</div>
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="alert('Removed from stack')" class="flex-1 text-xs py-1.5 border border-zinc-700 rounded-2xl hover:bg-zinc-900">Remove</button>
-                            <button onclick="window.location.href='model-detail.html'" class="flex-1 text-xs py-1.5 bg-white text-zinc-950 rounded-2xl">Route</button>
-                        </div>
-                    </div>
-
-                    <!-- Stack Card 3: llama -->
-                    <div class="stack-card dark-card p-6 rounded-3xl">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <div class="font-semibold">llama-3.3-70b</div>
-                                <div class="text-xs text-amber-400">Project Planner • 91 RV</div>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-lg font-semibold">$29</div>
-                                <div class="text-[10px] text-zinc-400">/mo</div>
-                            </div>
-                        </div>
-                        <div class="flex gap-2 mb-4">
-                            <div class="px-2 py-0.5 bg-amber-900 text-amber-400 text-xs rounded">Great balance</div>
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="alert('Removed from stack')" class="flex-1 text-xs py-1.5 border border-zinc-700 rounded-2xl hover:bg-zinc-900">Remove</button>
-                            <button onclick="window.location.href='model-detail.html'" class="flex-1 text-xs py-1.5 bg-white text-zinc-950 rounded-2xl">Route</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Stack Totals -->
-                <div class="mt-6 dark-card p-6 rounded-3xl flex items-center justify-between">
-                    <div>
-                        <div class="text-sm text-zinc-400">Stack total</div>
-                        <div class="text-3xl font-semibold">$126 <span class="text-sm text-zinc-400">/mo</span></div>
-                    </div>
-                    <div class="text-right">
-                        <div class="text-emerald-400 text-sm">You save $47/mo</div>
-                        <div class="text-xs text-zinc-400">vs using Claude alone</div>
-                    </div>
-                    <button onclick="alert('Full comparison report opened')" class="px-6 py-2 bg-white text-zinc-950 text-sm font-semibold rounded-2xl">View full report</button>
-                </div>
-            </div>
-
-            <!-- Recommended Swaps -->
-            <div class="dark-card p-8 rounded-3xl mb-10">
-                <h3 class="font-semibold mb-4">Recommended swaps for your stack</h3>
-                <div class="text-sm text-emerald-400 mb-4">+12% better price/performance</div>
-                <div class="flex items-center gap-4 text-sm">
-                    <div>deepseek-r1 <span class="text-emerald-400">(+$3/mo, 9.4 P/P)</span></div>
-                    <button onclick="alert('Swap executed in mock')" class="px-4 py-1 text-xs bg-emerald-900 text-emerald-400 rounded-2xl">Swap in</button>
-                </div>
-            </div>
-
-            <!-- Recent activity -->
-            <div class="dark-card p-8 rounded-3xl">
-                <h3 class="font-semibold mb-4">Recent activity</h3>
-                <div class="space-y-4 text-sm">
-                    <div class="flex justify-between"><div>Compared 4 models</div><div class="text-zinc-400">2h ago</div></div>
-                    <div class="flex justify-between"><div>Added Hermes to stack</div><div class="text-zinc-400">Yesterday</div></div>
-                    <div class="flex justify-between"><div>Exported report</div><div class="text-zinc-400">Mar 28</div></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Settings Tab -->
-        <div id="settings-tab" class="hidden">
-            <div class="dark-card p-8 rounded-3xl">
-                <h3 class="font-semibold mb-6">Preferences</h3>
-                <div class="space-y-6 max-w-md">
-                    <div class="flex justify-between items-center">
-                        <div>Email notifications</div>
-                        <div class="w-10 h-5 bg-emerald-400 rounded-full relative"><div class="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full"></div></div>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <div>Weekly model updates</div>
-                        <div class="w-10 h-5 bg-emerald-400 rounded-full relative"><div class="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full"></div></div>
-                    </div>
-                    <div>
-                        <div class="text-xs text-zinc-400 mb-1">Default consumer category</div>
-                        <select class="bg-zinc-900 border border-zinc-700 rounded-2xl px-4 py-2 text-sm w-full">
-                            <option>Budget</option>
-                            <option>Project Planner</option>
-                            <option>Researcher</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Profile Tab -->
-        <div id="profile-tab" class="hidden">
-            <div class="dark-card p-8 rounded-3xl max-w-md">
-                <h3 class="font-semibold mb-6">Profile</h3>
-                <div class="space-y-4">
-                    <div><label class="text-xs text-zinc-400">Name</label><input value="Gumby Ender" class="w-full mt-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-4 py-2 text-sm"></div>
-                    <div><label class="text-xs text-zinc-400">Email</label><input value="gumbyender@routevault.ai" class="w-full mt-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-4 py-2 text-sm"></div>
-                    <div><label class="text-xs text-zinc-400">Company</label><input value="OpenClaw Labs" class="w-full mt-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-4 py-2 text-sm"></div>
-                </div>
-                <button class="mt-6 px-6 py-2 bg-white text-zinc-950 rounded-2xl text-sm font-semibold">Save changes</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function showTab(tab) {
-            document.getElementById('dashboard-tab').classList.add('hidden');
-            document.getElementById('settings-tab').classList.add('hidden');
-            document.getElementById('profile-tab').classList.add('hidden');
-            document.getElementById(tab + '-tab').classList.remove('hidden');
-        }
-    </script>
+<body>
+  <div id="rv-shell"></div>
+  <main class="rv-wrap">
+    <p class="kicker">Internal</p>
+    <h1>Ingest snapshot</h1>
+    <pre id="out" class="mono card" style="padding:1rem;overflow:auto;font-size:.8rem"></pre>
+  </main>
+  <script src="assets/rv.js"></script>
+  <script>
+    mountNav("models.html");
+    mountFoot();
+    loadDataset().then((d) => {
+      $("#out").textContent = JSON.stringify({
+        generated_at: d.generated_at,
+        as_of: d.as_of,
+        honesty: d.honesty,
+        ingest: d.ingest,
+        db_counts: d.db_counts,
+        model_count: d.model_count,
+        equivalence: d.equivalence,
+      }, null, 2);
+    });
+  </script>
 </body>
 </html>

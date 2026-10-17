@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="Create account • RouteVault">
+  <Nav active="/register" />
+  <div id="rv-shell" hidden></div>
+
+  <script is:inline src="/legacy.js"></script>
+  <script is:inline>
+    window.mountNav = function() { /* SSR nav */ };
+    window.mountFoot = function() { /* SSR foot */ };
+  </script>
+  <main class="rv-wrap" style="max-width:520px">
+    <p class="kicker">Free cloud backup</p>
+    <h1>Create an account</h1>
+    <p class="lede">No card. Signed-in means your Stack, weights, alerts, and resolve history follow you.</p>
+    <form id="form" class="card rv-form" style="padding:1.1rem">
+      <label class="rv-field">Email
+        <input id="email" type="email" required autocomplete="username">
+      </label>
+      <label class="rv-field">Password (8+ characters)
+        <input id="password" type="password" required minlength="8" autocomplete="new-password">
+      </label>
+      <div id="err" class="rv-err"></div>
+      <button class="rv-cta" type="submit">Create account</button>
+    </form>
+    <p class="muted" style="margin-top:1rem">
+      Already have one? <a href="/login" style="text-decoration:underline">Log in</a>
+      · or <a href="/stack" style="text-decoration:underline">stay a guest</a>
+    </p>
+  </main>
+  <script is:inline>
+    loadDataset();
+    // No auto-redirect for signed-in visitors — always show the form.
+    $("#email").value = waitlistEmail();
+    $("#form").onsubmit = async (e) => {
+      e.preventDefault();
+      $("#err").textContent = "";
+      try {
+        const email = $("#email").value;
+        const data = await api("/api/register", {
+          method: "POST",
+          body: JSON.stringify({
+            email,
+            password: $("#password").value,
+            waitlist: waitlistEmail() === email.trim().toLowerCase(),
+            local: localProfile(),
+          }),
+        });
+        RV.user = data.user;
+        if (data.local_has_data) {
+          await api("/api/profile/merge", {
+            method: "POST",
+            body: JSON.stringify({ strategy: "local", local: localProfile() }),
+          });
+        }
+        applyProfile(localProfile());
+        toast("Account created. This browser’s stack is now yours in the cloud.");
+        location.href = "/account";
+      } catch (err) {
+        $("#err").textContent = err.message;
+      }
+    };
+  </script>
+</Base>

@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="Pricing • RouteVault">
+  <Nav active="/pricing" />
+  <div id="rv-shell" hidden></div>
+  <main class="rv-wrap">
+    <p class="kicker">Pricing</p>
+    <h1>Simple tiers. No token markup.</h1>
+    <p class="lede">The tracker is free — no account needed. Pro and Team are coming soon. If we later add an optional routing proxy, it would take 3–5% on routed volume only — never a markup on the model's list price.</p>
+    <div class="grid-3" style="margin-top:1.4rem">
+      <div class="card" style="padding:1.2rem">
+        <div class="dim">Free</div>
+        <div class="display" style="font-size:2.6rem">$0</div>
+        <ul class="muted">
+          <li>Full explorer + trends</li>
+          <li>Quiz and published floors</li>
+          <li>One local stack</li>
+          <li>Route resolver (copy the id)</li>
+        </ul>
+        <a class="rv-cta" href="/quiz">Start</a>
+      </div>
+      <div class="card" style="padding:1.2rem;border-color:#5a4a18">
+        <div class="dim">Pro · Coming Soon</div>
+        <ul class="muted">
+          <li>Custom quality-floor rules</li>
+          <li>Multi-provider targets</li>
+          <li>Saved weighting profiles</li>
+          <li>Weekly price digest email</li>
+        </ul>
+        <a class="rv-ghost" href="/register">Join the waitlist</a>
+      </div>
+      <div class="card" style="padding:1.2rem">
+        <div class="dim">Team · Coming Soon</div>
+        <ul class="muted">
+          <li>Seats and shared rules</li>
+          <li>Audit log of resolves</li>
+          <li>Volume discount on future proxy</li>
+          <li>SSO when a team actually asks</li>
+        </ul>
+        <a class="rv-ghost" href="/register">Join the waitlist</a>
+      </div>
+    </div>
+    <p class="dim" style="margin-top:1.4rem">Platform fee applies only if you later opt into a RouteVault proxy. BYOK stays free.</p>
+  </main>
+  <script is:inline src="/legacy.js"></script>
+  <script is:inline>
+    window.mountNav = function() { /* SSR nav */ };
+    window.mountFoot = function() { /* SSR foot */ };
+  </script>
+  <script is:inline>
+
+  </script>
+</Base>

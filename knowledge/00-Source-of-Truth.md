@@ -3,14 +3,14 @@ status: active
 owner: GumbyEnder
 steward_agent: any (NAS-shared)
 created: 2026-05-02
-last-reviewed: 2026-07-17
+last-reviewed: 2026-08-14
 tags: [project, routevault, source-of-truth, handoff]
 ---
 
 # RouteVault — 00 Source of Truth
 
-**Status:** Phase 1 mockups complete · Phase 2 data started · **Not public yet** · Handoff ready 2026-07-17  
-**Goal (near-term):** Ship a **static public v0** at `routevault.ai` (or interim host) ASAP.  
+**Status:** v1a live on Railway · accounts + cloud sync · live OpenRouter prices + AA indexes · router is resolver-only  
+**Goal (near-term):** Keep Railway durable host; attach custom domain `routevault.ai` when DNS ready. v1b later.  
 **Product:** Consumer-friendly AI model intelligence — scores, prices, history, recommendations; future smart router.
 
 ---
@@ -22,7 +22,8 @@ tags: [project, routevault, source-of-truth, handoff]
 3. `/mnt/nas/agents/Projects/RouteVault/knowledge/TAKEOVER-PLAN.md` — detailed takeover
 4. `/mnt/nas/agents/Projects/RouteVault/docs/MVP-Spec.md` — analytical MVP (May 15 pivot)
 5. [[How do we weight models]] + [[Business Model]] — product thesis
-6. [[Kanban/RouteVault]] — task board
+6. `docs/USER-MANAGEMENT-V1A.md` — locked accounts cut (next product work)
+7. [[Kanban/RouteVault]] — task board
 
 **ACK rule:** First reply from a takeover agent must confirm they read this SoT + Go-Live plan and state the exact code path they will edit.
 
@@ -163,4 +164,4 @@ python3 -m http.server 8765
 | 2026-05-15 | Consolidated under `~/agents/routevault`; analytical MVP spec |
 | 2026-07-17 | **All code/data moved to NAS** `/mnt/nas/agents/Projects/RouteVault/`; SoT + Go-Live written; local paths stubbed |
 
-**Next owner action:** Execute [[01-Go-Live-Plan]] Phase A–C (preview → host → public URL).
+**Next owner action:** Optional: attach `routevault.ai` DNS. Do not start v1b until a billing or Team request lands.

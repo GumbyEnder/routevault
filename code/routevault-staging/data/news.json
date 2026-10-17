@@ -1,0 +1,738 @@
+{
+  "generated_at": "2026-10-17T19:49:10.668027+00:00",
+  "honesty": {
+    "kind": "ai_tech_rss",
+    "politics_filtered": true,
+    "note": "Headlines from AI/tech feeds. Politics keywords dropped. Not a full-text news product."
+  },
+  "count": 80,
+  "items": [
+    {
+      "id": "f0e990140e4608bcfaaaf842a8043428cb8c56e9",
+      "url": "https://philippdubach.com/posts/ai-in-2030/",
+      "title": "Eight and One Predictions for AI in 2030",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T19:45:39+00:00",
+      "summary": "Article URL: https://philippdubach.com/posts/ai-in-2030/ Comments URL: https://news.ycombinator.com/item?id=50134412 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "95186c4cb469bb788231d2f37e32822c1f7ad1a1",
+      "url": "https://comptroller.nyc.gov/reports/letter-to-anthropic-re-planned-initial-public-offering/",
+      "title": "Letter to Anthropic Re: Planned Initial Public Offering",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T19:38:35+00:00",
+      "summary": "Article URL: https://comptroller.nyc.gov/reports/letter-to-anthropic-re-planned-initial-public-offering/ Comments URL: https://news.ycombinator.com/item?id=50134363 Points: 4 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "8fdee7ba6692b1dc6301258ca70a970ad70c9727",
+      "url": "https://kairos-experiment.com/checks.html",
+      "title": "Three LLM judges couldn't tell an AI agent's real memory from a counterfeit one",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T19:31:26+00:00",
+      "summary": "Article URL: https://kairos-experiment.com/checks.html Comments URL: https://news.ycombinator.com/item?id=50134298 Points: 4 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "537220e3d837bafbbde75f9267861f3a6402ed5f",
+      "url": "https://twitter.com/beeechimblind/status/2111227318534279501",
+      "title": "Israel makes propaganda video featuring AI generated IAMDDB without her consent",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T19:26:43+00:00",
+      "summary": "Article URL: https://twitter.com/beeechimblind/status/2111227318534279501 Comments URL: https://news.ycombinator.com/item?id=50134241 Points: 7 # Comments: 1",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "ee475da769715ba4cb3cd2e1b5749198adc8da4f",
+      "url": "https://twitter.com/onloglogn/status/2111170954944823685",
+      "title": "Apple releases RSI-Inference: evaluating agents for self-improving LLM inference",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T19:23:11+00:00",
+      "summary": "Article URL: https://twitter.com/onloglogn/status/2111170954944823685 Comments URL: https://news.ycombinator.com/item?id=50134215 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "b0acfed240231fd18eea692da8811408e5a879a2",
+      "url": "https://newsletter.danielpaleka.com/p/the-math-that-openai-keeps-for-itself",
+      "title": "The math that OpenAI keeps for itself",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T19:22:52+00:00",
+      "summary": "Article URL: https://newsletter.danielpaleka.com/p/the-math-that-openai-keeps-for-itself Comments URL: https://news.ycombinator.com/item?id=50134211 Points: 1 # Comments: 1",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "a1acea54508da333b5bb961d0e2ca130c4e19efe",
+      "url": "https://github.com/Annora998/inboxwall",
+      "title": "Show HN: InBox Wall \u2013 A local-first, open-source email sanitizer for AI agents",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T19:15:11+00:00",
+      "summary": "An open-source, local-first MCP server designed to sanitize email HTML and protect local AI agents from hidden CSS/Unicode prompt injections before the LLM processes the data. Comments URL: https://news.ycombinator.com/item?id=50134132 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "6129bde3f1d5df64e98d980e55a5bf30dbe7b571",
+      "url": "https://www.politico.com/news/2026/10/16/anthropic-ai-safety-01124654",
+      "title": "Anthropic pitches its own AI safety bill to lawmakers",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T19:15:11+00:00",
+      "summary": "Article URL: https://www.politico.com/news/2026/10/16/anthropic-ai-safety-01124654 Comments URL: https://news.ycombinator.com/item?id=50134131 Points: 4 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "1bdf47f6e0ffb37a4faa7006a9fd58771bbaf3c2",
+      "url": "https://globalnews.ca/news/12098107/canadian-ai-company-caseway-turns-away-u-s/",
+      "title": "Canadian AI company turns away from U.S. government work amid trade tensions",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T19:13:02+00:00",
+      "summary": "Article URL: https://globalnews.ca/news/12098107/canadian-ai-company-caseway-turns-away-u-s/ Comments URL: https://news.ycombinator.com/item?id=50134108 Points: 4 # Comments: 1",
+      "ingested_at": "2026-10-13T01:10:12.563402+00:00"
+    },
+    {
+      "id": "c869f6b357e15e2ea6c75080fbd8370652b97d70",
+      "url": "https://janlukas.blog/thoughts/2026/10/selfhosting-ai-chats",
+      "title": "Selfhosting my AI chats: more privacy and sovereignty",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T19:08:23+00:00",
+      "summary": "Article URL: https://janlukas.blog/thoughts/2026/10/selfhosting-ai-chats Comments URL: https://news.ycombinator.com/item?id=50134060 Points: 2 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "b42d86e566c8fcc792616f87f325d6beb249fcfa",
+      "url": "https://www.lawfaremedia.org/article/why-anthropic-is-asking-for-a-rehearing-en-banc",
+      "title": "Why Anthropic Is Asking for a Rehearing En Banc",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T19:00:45+00:00",
+      "summary": "Article URL: https://www.lawfaremedia.org/article/why-anthropic-is-asking-for-a-rehearing-en-banc Comments URL: https://news.ycombinator.com/item?id=50133989 Points: 3 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "e3e9b39d3a166e481e9de941d6917571e9fcc3e2",
+      "url": "https://nono.sh",
+      "title": "Nono: Agent runtime security. Kernel-enforced boundaries for AI agents",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T18:58:22+00:00",
+      "summary": "Article URL: https://nono.sh Comments URL: https://news.ycombinator.com/item?id=50133964 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "51c1c9a5e48bf7637c8c9efcde7a29492b0c2357",
+      "url": "https://techcrunch.com/2026/10/17/replit-is-no-longer-working-with-anthropic-ceo-says/",
+      "title": "Replit is no longer working with Anthropic, CEO says",
+      "source": "TechCrunch AI",
+      "published_at": "2026-10-17T18:48:08+00:00",
+      "summary": "Over the weekend, Masad clarified that OpenAI would replace Anthropic as its default model provider. Claude will still be available to customers on the platform.",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "a23d7ba4d33635baea0735b025cce61c19ef9a66",
+      "url": "https://mihaisplace.com/blog/ai-can-write-the-code-who-verifies-it",
+      "title": "AI Can Write the Code. Who Verifies It?",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T18:31:30+00:00",
+      "summary": "Article URL: https://mihaisplace.com/blog/ai-can-write-the-code-who-verifies-it Comments URL: https://news.ycombinator.com/item?id=50133713 Points: 11 # Comments: 16",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "685c7d936a3b439649d1661446e934132e6c5f28",
+      "url": "https://www.uptokey.com/",
+      "title": "Local-first AI proxy with keys in your OS vault",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T18:22:59+00:00",
+      "summary": "Article URL: https://www.uptokey.com/ Comments URL: https://news.ycombinator.com/item?id=50133635 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "c355f8d3ad7a473172828d7786e692fc4de84cf8",
+      "url": "https://forgemesh.io/blog/pay-per-crawl-every-stack",
+      "title": "Show HN: Pay-per-Crawl \u2013 make AI crawlers pay per page in USDC, for 10 stacks",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T18:16:03+00:00",
+      "summary": "Article URL: https://forgemesh.io/blog/pay-per-crawl-every-stack Comments URL: https://news.ycombinator.com/item?id=50133559 Points: 4 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "9ec9f1a194a5de23ee9e3d928cf49a3edca023db",
+      "url": "https://thenextweb.com/news/torvalds-ai-assisted-by-tag-utterly-stupid-open-source-summit",
+      "title": "Torvalds calls AI disclosure rules 'utterly stupid' as Linux drops its tag",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T18:15:43+00:00",
+      "summary": "Article URL: https://thenextweb.com/news/torvalds-ai-assisted-by-tag-utterly-stupid-open-source-summit Comments URL: https://news.ycombinator.com/item?id=50133555 Points: 5 # Comments: 2",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "91baad517c75e74857c4727709e5c0f81d1510af",
+      "url": "https://news.ycombinator.com/item?id=50133388",
+      "title": "Pareto frontier lines for AI are great but where are the Pareto planes?",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T18:00:41+00:00",
+      "summary": "Pareto frontier lines are used a lot for comparing tradeoffs between two different attributes in AI models. I want to be able to see the Pareto frontier planes for 3 attributes (which probably look closer to a bumpy dome, similar to how pareto lines are actually more like bumpy curves). And although you wouldn't be able to visualize a pareto cube/tesseract for 4+ attributes, it might still be useful in some way. Comments URL: https://news.ycombinator.com/item?id=50133388 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "dc6ceabd0c8bb5227f9103fa35c02c4ca92b74ba",
+      "url": "https://tezgrid.com/",
+      "title": "Show HN: TezGrid \u2013 Experimenting with AI inference on idle computers and Macs",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T17:50:18+00:00",
+      "summary": "Article URL: https://tezgrid.com/ Comments URL: https://news.ycombinator.com/item?id=50133290 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "3f9ae14153fda13b3bf53c4b732a60a8979fd8c0",
+      "url": "https://www.nbcnews.com/news/us-news/anthropic-says-model-submitted-false-cold-case-tip-philadelphia-police-rcna603213",
+      "title": "Anthropic says its AI model submitted a false case tip to Philadelphia police",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T17:48:41+00:00",
+      "summary": "Article URL: https://www.nbcnews.com/news/us-news/anthropic-says-model-submitted-false-cold-case-tip-philadelphia-police-rcna603213 Comments URL: https://news.ycombinator.com/item?id=50133269 Points: 4 # Comments: 0",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "b133be1f7f0571a3d51423f16a84d0de761ac301",
+      "url": "https://playbitty.com/",
+      "title": "Show HN: Bitty \u2013 Turn AI coding wait time into brain breaks",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T17:32:27+00:00",
+      "summary": "Article URL: https://playbitty.com/ Comments URL: https://news.ycombinator.com/item?id=50133119 Points: 2 # Comments: 1",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "ac0eba5f39915c2126dfb359a39af8c6b0da8fff",
+      "url": "https://www.theverge.com/tech/1013409/meta-removes-language-that-may-have-allowed-it-to-scrape-news-sites",
+      "title": "Meta removes language that may have allowed it to scrape news sites",
+      "source": "The Verge AI",
+      "published_at": "2026-10-17T15:04:36+00:00",
+      "summary": "After backlash, Meta is updating its terms again to remove language that suggested it could scrape content from sites, including news sites, to train its AI. Specifically, the following language no longer appears on the commercial terms page: \u2026 Meta may use any content from such domains, web pages, or URLs to provide, develop, improve, [\u2026]",
+      "ingested_at": "2026-10-17T19:49:10.668027+00:00"
+    },
+    {
+      "id": "3fb8a58837fba64d3396698e92c8ae74a9ef0170",
+      "url": "https://arxiv.org/abs/2610.22139",
+      "title": "Are You Sure Your LLM Is Sure?",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T13:39:04+00:00",
+      "summary": "Article URL: https://arxiv.org/abs/2610.22139 Comments URL: https://news.ycombinator.com/item?id=50131085 Points: 2 # Comments: 1",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "0ef9500972b148cd9e396d7ec80daabdbdd78c65",
+      "url": "https://www.businessinsider.com/microsoft-ai-ceo-new-model-beats-openai-using-less-compute-2026-10",
+      "title": "Microsoft AI chief says the company beat OpenAI's models, using less compute",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T13:37:39+00:00",
+      "summary": "Article URL: https://www.businessinsider.com/microsoft-ai-ceo-new-model-beats-openai-using-less-compute-2026-10 Comments URL: https://news.ycombinator.com/item?id=50131072 Points: 1 # Comments: 2",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "e6707ae4321ba089f2512633990317d220e871a9",
+      "url": "https://github.com/SRKRZ23/vramkit",
+      "title": "Show HN: Vramkit \u2013 lossless VRAM compression for LLM inference, on a MacBook",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T13:32:41+00:00",
+      "summary": "Article URL: https://github.com/SRKRZ23/vramkit Comments URL: https://news.ycombinator.com/item?id=50131035 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "27463d79fa2e81f76cf9db79059aab1daa3b6a8d",
+      "url": "https://arxiv.org/abs/2610.22350",
+      "title": "FDE-Gym: The Last Mile of AI Delivery",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T13:31:22+00:00",
+      "summary": "Article URL: https://arxiv.org/abs/2610.22350 Comments URL: https://news.ycombinator.com/item?id=50131027 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "456f8362c771e990ba48cc9607bf0166d292d554",
+      "url": "https://pirateface.co/rescue",
+      "title": "Rescue AI models with one click",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T13:11:45+00:00",
+      "summary": "Article URL: https://pirateface.co/rescue Comments URL: https://news.ycombinator.com/item?id=50130865 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "53eb62947d70f2c0309f15c1973279cc185bcf22",
+      "url": "https://developers.google.com/edge/foresight",
+      "title": "AI Edge Foresight",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T13:08:59+00:00",
+      "summary": "Article URL: https://developers.google.com/edge/foresight Comments URL: https://news.ycombinator.com/item?id=50130847 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-12T07:20:00.434712+00:00"
+    },
+    {
+      "id": "79619743255e89a10aca34b40659d0156cc48c5c",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1013195/ai-agents-blocked-web",
+      "title": "Websites are closing their doors to AI agents",
+      "source": "The Verge AI",
+      "published_at": "2026-10-17T13:00:00+00:00",
+      "summary": "Autonomous agents are the hottest thing in AI. OpenAI, Meta, Google, Instinct, and others promise their agents can scour the internet on your behalf, doing anything from booking a dinner reservation and cleaning out your inbox to buying new shoes. But what happens when the rest of the internet won't play nice? In recent weeks, [\u2026]",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "d0baf8ed33987d81ecea3eaa1e231496074183de",
+      "url": "https://medium.com/@GiovambattistaVieri/strip-digital-signatures-from-pdfs-before-feeding-them-to-ai-linux-guide-611a023f8d7e",
+      "title": "Strip Digital Signatures from PDFs Before Feeding Them to AI (LinuxGuide)",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T12:39:09+00:00",
+      "summary": "Article URL: https://medium.com/@GiovambattistaVieri/strip-digital-signatures-from-pdfs-before-feeding-them-to-ai-linux-guide-611a023f8d7e Comments URL: https://news.ycombinator.com/item?id=50130587 Points: 2 # Comments: 0",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "7da4eb98ce7db0f4e26d7fdb5ab639a735f7436a",
+      "url": "https://www.ft.com/content/45ea3dd0-080d-49a2-86e9-df0148929bf4",
+      "title": "What happens when AI can read our minds?",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T12:18:14+00:00",
+      "summary": "Article URL: https://www.ft.com/content/45ea3dd0-080d-49a2-86e9-df0148929bf4 Comments URL: https://news.ycombinator.com/item?id=50130461 Points: 1 # Comments: 1",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "b1b6be640f6131640b10d8716779292141d7945a",
+      "url": "https://macyou.co/mac-llm-calculator",
+      "title": "Show HN: Which Mac runs which LLM, and how fast",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T12:15:57+00:00",
+      "summary": "Article URL: https://macyou.co/mac-llm-calculator Comments URL: https://news.ycombinator.com/item?id=50130442 Points: 11 # Comments: 4",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "4a0aa56e7a022546cb45b21d5b17063f48f5f7bb",
+      "url": "https://www.science.org/content/article/ai-triggers-tsunami-submissions-computer-science-conferences-impose-caps",
+      "title": "As AI triggers a tsunami, computer science conferences impose caps",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T11:44:09+00:00",
+      "summary": "Article URL: https://www.science.org/content/article/ai-triggers-tsunami-submissions-computer-science-conferences-impose-caps Comments URL: https://news.ycombinator.com/item?id=50130206 Points: 3 # Comments: 1",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "7ffe05fe190bd6007a5528356d907cd210bceacf",
+      "url": "https://github.com/rajbos/ai-engineering-fluency",
+      "title": "AI Engineering Fluency Extension for VS Code / JetBrains / Visual Studio, NPM",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T11:42:54+00:00",
+      "summary": "Article URL: https://github.com/rajbos/ai-engineering-fluency Comments URL: https://news.ycombinator.com/item?id=50130191 Points: 1 # Comments: 1",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "acbf29a736c2176da99801f72e3993ae8e83c668",
+      "url": "https://arstechnica.com/science/2026/10/science-says-your-boss-should-talk-less-in-meetings/",
+      "title": "Science says your boss should talk less in meetings",
+      "source": "Ars Technica",
+      "published_at": "2026-10-17T11:15:11+00:00",
+      "summary": "Research suggests listening more while talking less. Killing aimless meetings can help, too.",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "ce6de6f9e4f4e31c1301cc5725b2370f9880cecc",
+      "url": "https://www.anthropic.com/research/ai-expectations-gap",
+      "title": "The AI Expectations Gap",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T11:06:19+00:00",
+      "summary": "Article URL: https://www.anthropic.com/research/ai-expectations-gap Comments URL: https://news.ycombinator.com/item?id=50129987 Points: 2 # Comments: 0",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "8bef9ae3cc5592309f37de9da1a0f3592ce36b1d",
+      "url": "https://arstechnica.com/gaming/2026/10/why-biowares-neverwinter-nights-still-has-thousands-of-active-players/",
+      "title": "Why BioWare's Neverwinter Nights still has thousands of active players",
+      "source": "Ars Technica",
+      "published_at": "2026-10-17T11:00:21+00:00",
+      "summary": "The single-player is just OK, but according to the players, that doesn't matter.",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "d2cbbca3d6e933bb11f7e118a453da6e9dbdeccf",
+      "url": "https://arxiv.org/abs/2609.19391",
+      "title": "MAGS: Machine-checked guarantees on specified safety properties in AI code",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T10:04:47+00:00",
+      "summary": "Article URL: https://arxiv.org/abs/2609.19391 Comments URL: https://news.ycombinator.com/item?id=50129603 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "1bc6e1d933ad2c67baed169933947dfa5f8f9450",
+      "url": "https://embedids.linuscent.com/main/",
+      "title": "EmbedIDS: Open-source intrusion detection for embedded systems and physical AI",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T09:58:19+00:00",
+      "summary": "Article URL: https://embedids.linuscent.com/main/ Comments URL: https://news.ycombinator.com/item?id=50129568 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "b72510596e4b4e99e6f1d219872180b8bdff7a1b",
+      "url": "https://news.research.gatech.edu/2026/10/13/deleted-ai-chats-may-leave-clues-behind",
+      "title": "Deleted AI Chats May Leave Clues Behind",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T09:38:18+00:00",
+      "summary": "Article URL: https://news.research.gatech.edu/2026/10/13/deleted-ai-chats-may-leave-clues-behind Comments URL: https://news.ycombinator.com/item?id=50129462 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "d0f11237d1f3614e7cd965f105b91604a7983fd7",
+      "url": "https://techcrunch.com/2026/10/16/replit-is-no-longer-working-with-anthropic-ceo-says/",
+      "title": "Replit is no longer working with Anthropic, CEO says",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T08:56:42+00:00",
+      "summary": "Article URL: https://techcrunch.com/2026/10/16/replit-is-no-longer-working-with-anthropic-ceo-says/ Comments URL: https://news.ycombinator.com/item?id=50129206 Points: 2 # Comments: 1",
+      "ingested_at": "2026-10-17T01:46:00.714855+00:00"
+    },
+    {
+      "id": "db1a08f4252f189d376f95f70cc21e9f85ec59ef",
+      "url": "https://github.com/abhij1306/CiteLadder",
+      "title": "Show HN: CiteLadder \u2013 open-source AI search visibility tracker",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T08:49:44+00:00",
+      "summary": "Article URL: https://github.com/abhij1306/CiteLadder Comments URL: https://news.ycombinator.com/item?id=50129168 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "d3b47ecfb5f186e00a4cee579800fd14bfb03f5e",
+      "url": "https://news.ycombinator.com/item?id=50129150",
+      "title": "Ask HN: Local AI product situation",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T08:46:16+00:00",
+      "summary": "Right now it seems every company wants you to buy their fancy new expensive computer to run local AI models. Why would we want to buy a whole new computer to run local AI models? Why not create a device which has its own memory and chip designed specifically to run models and it plugs into your existing computer thunderbolt port (or event USB 3.2 as loading the model is one time process). Comments URL: https://news.ycombinator.com/item?id=50129150 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T13:48:00.507989+00:00"
+    },
+    {
+      "id": "71361b2b293ad89737de8c09646741b8c6040880",
+      "url": "https://gizmodo.com/researchers-stranded-an-ai-agent-on-a-virtual-island-things-got-very-weird-2000825998",
+      "title": "Researchers Stranded an AI Agent on a Virtual Island",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T07:45:09+00:00",
+      "summary": "Article URL: https://gizmodo.com/researchers-stranded-an-ai-agent-on-a-virtual-island-things-got-very-weird-2000825998 Comments URL: https://news.ycombinator.com/item?id=50128876 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "0f1b2bd1b6a1e52f16778b4574ab07bc3e962fcf",
+      "url": "https://www.ft.com/content/cb4034e1-475f-40b9-a5f9-256e91aacb89",
+      "title": "Anthropic offers Blackstone double-digit yield in latest chip financing",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T07:24:59+00:00",
+      "summary": "Article URL: https://www.ft.com/content/cb4034e1-475f-40b9-a5f9-256e91aacb89 Comments URL: https://news.ycombinator.com/item?id=50128784 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "b53e9e0056c025421163756316aa7b9e7e12b8e0",
+      "url": "https://www.404media.co/video-game-reverse-engineering-community-shuts-down-because-ai-has-made-it-too-easy/",
+      "title": "Decomp.dev Shuts Down Because AI Has Made It Too Easy to Decompile Games",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T06:44:13+00:00",
+      "summary": "Article URL: https://www.404media.co/video-game-reverse-engineering-community-shuts-down-because-ai-has-made-it-too-easy/ Comments URL: https://news.ycombinator.com/item?id=50128576 Points: 3 # Comments: 1",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "9406b91ee95752af26899fb140a197aa0ae98b4c",
+      "url": "https://raymyers.org/post/math-dumped-openai/",
+      "title": "Why Math Dumped OpenAI",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T06:19:44+00:00",
+      "summary": "Article URL: https://raymyers.org/post/math-dumped-openai/ Comments URL: https://news.ycombinator.com/item?id=50128468 Points: 4 # Comments: 0",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "6e4cba2f39d3a26399c7b2a041759f6d83629c80",
+      "url": "https://nikvdp.com/notes/cost-per-task-is-the-number-to-watch/",
+      "title": "OpenAI outperforms Chinese models in cost per task",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T06:18:18+00:00",
+      "summary": "Article URL: https://nikvdp.com/notes/cost-per-task-is-the-number-to-watch/ Comments URL: https://news.ycombinator.com/item?id=50128463 Points: 2 # Comments: 1",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "63afd6d0b90f0a56e05eb249c5ff0bd02d021bfb",
+      "url": "https://news.ycombinator.com/item?id=50128412",
+      "title": "Ask HN: What is the most useful thing AI has done for you?",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T06:06:44+00:00",
+      "summary": "I had a deep conversation with a friend about what is the most useful thing AI has created/done for either of us. For my private life, AI helped me to diagnose and root caused a running toilet, and avoided the high cost of a plumber. It even help to select the replacement parts and how to replace them. Of course, on the tech side, AI is helping me build a healthcare company. What was yours? Comments URL: https://news.ycombinator.com/item?id=50128412 Points: 3 # Comments: 3",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "54c67adf8ae3a360fb873429a54e8b7bf5c5db62",
+      "url": "https://alkjash.github.io/ai-risk/",
+      "title": "Existential Risk from AI: An Exposition for Mathematicians",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T05:52:06+00:00",
+      "summary": "Article URL: https://alkjash.github.io/ai-risk/ Comments URL: https://news.ycombinator.com/item?id=50128351 Points: 3 # Comments: 0",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "b500103d5090d682d68fb1c9eb53748777eafc54",
+      "url": "https://www.youtube.com/watch?v=-RDpqweadlE",
+      "title": "Mapping the China AI Ecosystem with Rui Ma [video]",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T05:35:59+00:00",
+      "summary": "Article URL: https://www.youtube.com/watch?v=-RDpqweadlE Comments URL: https://news.ycombinator.com/item?id=50128261 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "0913988ccbedf140c2de2032b60b314c3ea2f641",
+      "url": "https://llmspeed.dev/",
+      "title": "Show HN: Llmspeed \u2013 feel how fast a local LLM runs before you buy the hardware",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T04:36:53+00:00",
+      "summary": "Article URL: https://llmspeed.dev/ Comments URL: https://news.ycombinator.com/item?id=50127979 Points: 42 # Comments: 11",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "3cbac32a302d3af553a52bdc8148752d072d53e0",
+      "url": "https://zeabur.com/changelogs/aihub-shutdown",
+      "title": "Zeabur discontinues AI Hub after its August security breach",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T04:14:58+00:00",
+      "summary": "Article URL: https://zeabur.com/changelogs/aihub-shutdown Comments URL: https://news.ycombinator.com/item?id=50127877 Points: 2 # Comments: 0",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "04fc0dd46ceee6f6a2a5bd45cb9fb7652abcf4e9",
+      "url": "https://economictimes.indiatimes.com/ai/ai-insights/ai-engineers-became-hot-property-now-theyre-targets-for-seduction/articleshow/134998519.cms?from=mdr",
+      "title": "AI engineers became hot property. Now they're targets for seduction",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T03:55:28+00:00",
+      "summary": "Article URL: https://economictimes.indiatimes.com/ai/ai-insights/ai-engineers-became-hot-property-now-theyre-targets-for-seduction/articleshow/134998519.cms?from=mdr Comments URL: https://news.ycombinator.com/item?id=50127771 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "5f962a33c06d107d1519a6ee1ff2d5aebd0d1d8c",
+      "url": "https://www.seangoedecke.com/ai-is-driving-a-boom-in-modestly-successful-software/",
+      "title": "AI is driving a boom in modestly successful software projects",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T03:47:39+00:00",
+      "summary": "Article URL: https://www.seangoedecke.com/ai-is-driving-a-boom-in-modestly-successful-software/ Comments URL: https://news.ycombinator.com/item?id=50127729 Points: 9 # Comments: 1",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "6331aeb9d09b4b17b2f0f8b45790fc1cbd3c066a",
+      "url": "https://github.com/Paraphern/rugsnare/blob/main/docs/blog/2026-10-17-mcp-contract-drift.md",
+      "title": "Show HN: AI agent follows instructions you never approved",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T03:33:00+00:00",
+      "summary": "Article URL: https://github.com/Paraphern/rugsnare/blob/main/docs/blog/2026-10-17-mcp-contract-drift.md Comments URL: https://news.ycombinator.com/item?id=50127659 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "f1073754b8e021e34d4cdc5e5dae8843ac342d51",
+      "url": "https://www.anthropic.com/research/employment-at-anthropic",
+      "title": "How employment is changing at Anthropic",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T03:13:28+00:00",
+      "summary": "Article URL: https://www.anthropic.com/research/employment-at-anthropic Comments URL: https://news.ycombinator.com/item?id=50127555 Points: 6 # Comments: 3",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "11ba6c248bd0412d872c529d76f04268b7be457f",
+      "url": "https://sfist.com/2026/10/15/sf-tech-founders-zombie-shooter-game-turns-tenderloin-residents-into-targets/",
+      "title": "SF AI Founder's Zombie Shooter Game Turns Tenderloin Residents into Targets",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T02:21:55+00:00",
+      "summary": "Article URL: https://sfist.com/2026/10/15/sf-tech-founders-zombie-shooter-game-turns-tenderloin-residents-into-targets/ Comments URL: https://news.ycombinator.com/item?id=50127280 Points: 4 # Comments: 1",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "5ccb45dbc0a7f1cfcb8cf8c6fc7c6284c3e93d97",
+      "url": "https://www.wysebee.com",
+      "title": "Show HN: Let AI order DoorDash for me \u2013 under my watch \u2013 no playwright",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T02:18:56+00:00",
+      "summary": "Article URL: https://www.wysebee.com Comments URL: https://news.ycombinator.com/item?id=50127256 Points: 1 # Comments: 0",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "3ad091c81204d58a1fee9386ef91fc73f048c039",
+      "url": "https://japannews.yomiuri.co.jp/science-nature/technology/20261014-353599/",
+      "title": "Publishers' Trust in Nippan Dented by Unauthorized Book Sales for AI Training",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T02:08:03+00:00",
+      "summary": "Article URL: https://japannews.yomiuri.co.jp/science-nature/technology/20261014-353599/ Comments URL: https://news.ycombinator.com/item?id=50127187 Points: 2 # Comments: 0",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "14676a4e3e0e7329041e9922ac2dbfd1c7d92372",
+      "url": "https://github.com/andunieee/twain",
+      "title": "Show HN: Twain, a diff viewer like Meld, but for the age of AI",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T02:03:40+00:00",
+      "summary": "I love Meld, I've been using it for a while now, it's amazing how many diff viewers exist these days and how they are all awful compared to Meld. But Meld was missing some features that I thought were worth having: - all files from a Git diff shown in the same view, sequentially + a file tree on the side. - show either the full files or only the parts that changed. - tree-sitter-based syntax highlighting. - the ability to comment on sets of changes and lines, and AIs can read these comments. - the ability to search through the entire set of modified files. Twain is in Rust and based on GTK4. Comments URL: https://news.ycombinator.com/item?id=50127157 Points: 2 # Comments: 0",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "759df7f4926763f2d78b9f85005f7b54f9a805ac",
+      "url": "https://www.economist.com/finance-and-economics/2026/09/17/the-trickle-down-economics-of-the-ai-boom",
+      "title": "The trickle-down economics of the AI boom",
+      "source": "Hacker News AI",
+      "published_at": "2026-10-17T01:47:04+00:00",
+      "summary": "Article URL: https://www.economist.com/finance-and-economics/2026/09/17/the-trickle-down-economics-of-the-ai-boom Comments URL: https://news.ycombinator.com/item?id=50127070 Points: 3 # Comments: 0",
+      "ingested_at": "2026-10-17T07:47:00.568003+00:00"
+    },
+    {
+      "id": "e946af68fd7dbe0ee8bcb88db54b31dfc511d4c1",
+      "url": "https://simonwillison.net/2026/Oct/16/code-review/",
+      "title": "Quoting Addy Osmani, Morgan Westlee Lunt, and Qing Wang",
+      "source": "Simon Willison",
+      "published_at": "2026-10-16T22:06:37+00:00",
+      "summary": "We think \"did a human read the code?\" is an imprecise proxy for \"what could go wrong with this change, and which check\u2014automated or human\u2014is the right one to catch it?\" Asking that question also changed when review happens. Before, review was a gate at the end of the road: write the code, open a PR, wait for your colleague. Now, review runs continuously, more like spellcheck while you write. Most changes have been reviewed and fixed by Claude at least once before a human is asked to look. This catches most routine mistakes, and saves team attention for higher-level questions and scrutiny. \u2014 Addy Osmani, Morgan Westlee Lunt, and Qing Wang , How the Claude Code team does code review Tags: anthropic , claude , ai , claude-code , llms , addy-osmani , coding-agents , generative-ai , agentic-engineering , code-review",
+      "ingested_at": "2026-10-17T01:46:00.714855+00:00"
+    },
+    {
+      "id": "b140e0bf691ca1441f987bed3eaece393c425181",
+      "url": "https://arstechnica.com/security/2026/10/openai-models-hacked-a-crypto-wallet-and-breached-more-websites/",
+      "title": "OpenAI models hacked a crypto wallet and breached more websites",
+      "source": "Ars Technica",
+      "published_at": "2026-10-16T20:59:01+00:00",
+      "summary": "The actions could have resulted in criminal charges had humans been behind the keyboard.",
+      "ingested_at": "2026-10-17T01:46:00.714855+00:00"
+    },
+    {
+      "id": "5a8a8cf37871920c154ba756880a5d5b37a1ae71",
+      "url": "https://arstechnica.com/tech-policy/2026/10/thegentlemanpervert-producing-ai-csam-is-a-nj-prosecutor-say-cops/",
+      "title": "\u201cthegentlemanpervert\u201d producing AI CSAM is a NJ prosecutor, say cops",
+      "source": "Ars Technica",
+      "published_at": "2026-10-16T20:20:07+00:00",
+      "summary": "Discord user flagged AI CSAM, triggering arrest of New Jersey deputy AG.",
+      "ingested_at": "2026-10-17T01:46:00.714855+00:00"
+    },
+    {
+      "id": "9eceffc368d52bd87faad87c8183f109894d78ce",
+      "url": "https://arstechnica.com/gaming/2026/10/us-rep-proposes-bill-to-give-video-game-buyers-ownership-not-a-license/",
+      "title": "US Rep proposes bill to give video game buyers \"ownership,\" not \"a license\"",
+      "source": "Ars Technica",
+      "published_at": "2026-10-16T19:41:18+00:00",
+      "summary": "There are still significant hurdles ahead, both technical and legislative.",
+      "ingested_at": "2026-10-17T01:46:00.714855+00:00"
+    },
+    {
+      "id": "0e1dd68546bea7c54a8d187a65ec8db54c98bb1e",
+      "url": "https://arstechnica.com/gadgets/2026/10/ray-ban-meta-smart-glasses-found-recording-audio-without-wearers-consent/",
+      "title": "Bug turns one of the biggest fears about Ray-Ban Meta smart glasses into reality",
+      "source": "Ars Technica",
+      "published_at": "2026-10-16T19:11:50+00:00",
+      "summary": "The bug is fixed, but privacy concerns remain.",
+      "ingested_at": "2026-10-17T01:46:00.714855+00:00"
+    },
+    {
+      "id": "65442e708214c10b88da99a535be852d30396736",
+      "url": "https://openai.com/index/itau-generative-ai",
+      "title": "How Ita\u00fa is building generative AI for its entire customer base",
+      "source": "OpenAI",
+      "published_at": "2026-10-16T19:00:00+00:00",
+      "summary": "With ia.i, a conversational interface, and the IARA governance platform, Ita\u00fa is applying its AI First strategy to customers and employees \u2014 in one of Brazil\u2019s most regulated sectors.",
+      "ingested_at": "2026-10-17T01:46:00.714855+00:00"
+    },
+    {
+      "id": "85ddbdc7a76daa7f1186e7e5eeb58c8997eefbcd",
+      "url": "https://www.technologyreview.com/2026/10/16/1146224/roundtables-a-conversation-with-the-creator-of-ai-designed-viruses/",
+      "title": "Roundtables: A Conversation With the Creator of AI-Designed Viruses",
+      "source": "MIT Tech Review",
+      "published_at": "2026-10-16T18:00:00+00:00",
+      "summary": "Listen to the session or watch below Can AI design new life forms? In 2025, Stanford University PhD student Samuel King came up with a preliminary answer when he used a generative AI model to propose genetic blueprints for microscopic viruses. It isn\u2019t yet an example of AI-generated life, but that could be next. Watch\u2026",
+      "ingested_at": "2026-10-16T19:44:00.687186+00:00"
+    },
+    {
+      "id": "bfa998e6f2bae86e4de03081697a1396fc61f4a8",
+      "url": "https://techcrunch.com/2026/10/16/india-becomes-the-latest-country-to-report-rogue-ai-agent-activity/",
+      "title": "India becomes the latest country to report rogue AI agent activity",
+      "source": "TechCrunch AI",
+      "published_at": "2026-10-16T17:52:24+00:00",
+      "summary": "The agents got in through credentials and connection settings left exposed in app configurations, public code repositories, and overly permissive cloud roles.",
+      "ingested_at": "2026-10-16T19:44:00.687186+00:00"
+    },
+    {
+      "id": "30b89d68562a5b6758ba0cf6cfb067f8981e99d1",
+      "url": "https://arstechnica.com/health/2026/10/rfk-jr-proposes-fda-look-the-other-way-on-unproven-peptides-report-says/",
+      "title": "RFK Jr. proposes FDA look the other way on unproven peptides, report says",
+      "source": "Ars Technica",
+      "published_at": "2026-10-16T17:05:59+00:00",
+      "summary": "FDA scientists said none of the popular drugs have been proven safe or effective.",
+      "ingested_at": "2026-10-16T19:44:00.687186+00:00"
+    },
+    {
+      "id": "1f9b468e86423e359184fc1a9b4ea6856378c003",
+      "url": "https://techcrunch.com/video/a-nvidia-insider-turned-vc-on-why-robotics-hasnt-hit-its-chatgpt-moment-yet/",
+      "title": "An Nvidia insider-turned-VC on why robotics hasn\u2019t hit its ChatGPT moment, yet",
+      "source": "TechCrunch AI",
+      "published_at": "2026-10-16T16:30:00+00:00",
+      "summary": "Amulya Vishwanath, who spent seven years leading product marketing for NVIDIA\u2019s robotics platforms, says robotics is currently in its \u201cLego era,\u201d with the basic building blocks like actuators, robotic hands, software, and safety standards still being rebuilt. This view runs counter to those who believe that robotics, powered by a general foundation model, is about to have [\u2026]",
+      "ingested_at": "2026-10-16T19:44:00.687186+00:00"
+    },
+    {
+      "id": "3ee888866ef9d7e3f3b873dc850d55ab965e5721",
+      "url": "https://techcrunch.com/podcast/physical-ai-is-more-than-robots-says-the-nvidia-veteran-now-investing-in-it/",
+      "title": "Physical AI is more than robots, says the Nvidia veteran now investing in it",
+      "source": "TechCrunch AI",
+      "published_at": "2026-10-16T16:30:00+00:00",
+      "summary": "Amulya Vishwanath, who spent seven years leading product marketing for NVIDIA\u2019s robotics platforms, says robotics is currently in its \u201cLego era,\u201d with the basic building blocks like actuators, robotic hands, software, and safety standards still being rebuilt. This view runs counter to those who believe that robotics, powered by a general foundation model, is about to have [\u2026]",
+      "ingested_at": "2026-10-16T19:44:00.687186+00:00"
+    },
+    {
+      "id": "6f0ec75f9d13aede3ac2b4269c4896bc3781b2b4",
+      "url": "https://techcrunch.com/2026/10/16/elorians-first-ai-model-wants-to-reason-with-images-not-just-about-them/",
+      "title": "Elorian\u2019s first AI model wants to reason with images, not just about them",
+      "source": "TechCrunch AI",
+      "published_at": "2026-10-16T16:01:37+00:00",
+      "summary": "According to Elorian's evaluations, Glimpse outperforms even GPT-6 Astra on scientific chart reasoning and short-form video captioning, with competitive results on other visual reasoning tasks.",
+      "ingested_at": "2026-10-16T19:44:00.687186+00:00"
+    },
+    {
+      "id": "ae8741fad8038911dd747de0cf0f176d7ba1b45e",
+      "url": "https://arstechnica.com/tech-policy/2026/10/meta-may-use-sweeping-new-commercial-tos-to-avoid-millions-in-ai-licensing-fees/",
+      "title": "Meta may use sweeping new commercial TOS to avoid millions in AI licensing fees",
+      "source": "Ars Technica",
+      "published_at": "2026-10-16T15:41:00+00:00",
+      "summary": "Meta \u201cstreamlined\u201d its commercial TOS. Legal experts warn it\u2019s an AI power grab.",
+      "ingested_at": "2026-10-16T19:44:00.687186+00:00"
+    },
+    {
+      "id": "7524c167f0c40ac13a6bc66261093a65ff87e06d",
+      "url": "https://techcrunch.com/2026/10/16/jev-is-vercels-fastest-adopted-ai-model-ever/",
+      "title": "Jev is Vercel\u2019s fastest-adopted AI model ever",
+      "source": "TechCrunch AI",
+      "published_at": "2026-10-16T15:33:49+00:00",
+      "summary": "The data comes from Vercel's AI gateway, a unified API service similar to OpenRouter.",
+      "ingested_at": "2026-10-16T19:44:00.687186+00:00"
+    },
+    {
+      "id": "3d6f16cf09a8486c7ec9ecf469d58c02fd93a4ce",
+      "url": "https://www.theverge.com/tech/1012748/nvidia-rtx-spark-windows-arm-laptops-asus-hp-lenovo-impressions",
+      "title": "A week with RTX Spark: everything we\u2019ve learned using Nvidia\u2019s new laptops",
+      "source": "The Verge AI",
+      "published_at": "2026-10-16T15:00:00+00:00",
+      "summary": "Nvidia's RTX Spark N1X processor is finally here, and we've been collectively testing a small fortune's worth of powerful laptops sporting this new \"superchip.\" RTX Spark is designed to be a high-performing Arm-based SoC for laptops and small desktop computers, rivaling the best from Apple, Intel, AMD, and Qualcomm. It has loads of cores, Nvidia [\u2026]",
+      "ingested_at": "2026-10-16T19:44:00.687186+00:00"
+    },
+    {
+      "id": "9d337093f9bfed1de35aa3d6d00f44858ec63a2f",
+      "url": "https://techcrunch.com/2026/10/16/mark-wahlberg-on-using-ai-in-film-the-right-way-and-being-open-to-an-ai-clone-carrying-on-his-legacy/",
+      "title": "Mark Wahlberg on using AI in film \u2018the right way\u2019 and being open to an AI clone carrying on his legacy",
+      "source": "TechCrunch AI",
+      "published_at": "2026-10-16T14:26:51+00:00",
+      "summary": "Actor and angel investor Mark Wahlberg says he's OK with using AI in filmmaking, provided it's used \"to enhance what you're doing.\"",
+      "ingested_at": "2026-10-16T19:44:00.687186+00:00"
+    },
+    {
+      "id": "ad6a5d3e23385573bc67ee74e87a63d08152bc17",
+      "url": "https://arstechnica.com/cars/2026/10/tesla-turns-to-50-year-old-stunt-technology-as-it-tries-to-roadster-again/",
+      "title": "Tesla turns to 50-year-old stunt technology as it tries to Roadster again",
+      "source": "Ars Technica",
+      "published_at": "2026-10-16T14:03:25+00:00",
+      "summary": "If you want to make a car spin in the air, compressed gas is a good way to do it.",
+      "ingested_at": "2026-10-16T19:44:00.687186+00:00"
+    },
+    {
+      "id": "ad3a47861a304e90929ff5e23fc83f823638b7a6",
+      "url": "https://www.theverge.com/tech/1012846/meta-business-terms-scrape-news-publishers",
+      "title": "Meta\u2019s new terms may allow it to train AI on news sites for free",
+      "source": "The Verge AI",
+      "published_at": "2026-10-16T14:02:40+00:00",
+      "summary": "Meta's new terms appear to give it permission to crawl and scrape websites \"associated\" with the businesses that use its platforms - including online publishers, according to a report from Nieman Lab. The new terms, which go into effect on October 30th, say Meta can use this outside content to \"develop, improve, research,\" and \"train\" [\u2026]",
+      "ingested_at": "2026-10-16T19:44:00.687186+00:00"
+    }
+  ],
+  "ingest": {
+    "feeds": 9,
+    "fetched": 2294,
+    "written": 2294,
+    "stored": 80,
+    "errors": []
+  }
+}

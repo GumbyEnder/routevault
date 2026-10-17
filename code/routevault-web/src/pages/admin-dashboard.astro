@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="Ingest • RouteVault">
+  <Nav active="/admin-dashboard" />
+  <div id="rv-shell" hidden></div>
+  <main class="rv-wrap">
+    <p class="kicker">Internal</p>
+    <h1>Ingest snapshot</h1>
+    <pre id="out" class="mono card" style="padding:1rem;overflow:auto;font-size:.8rem"></pre>
+  </main>
+  <script is:inline src="/legacy.js"></script>
+  <script is:inline>
+    window.mountNav = function() { /* SSR nav */ };
+    window.mountFoot = function() { /* SSR foot */ };
+  </script>
+  <script is:inline>
+loadDataset().then((d) => {
+      $("#out").textContent = JSON.stringify({
+        generated_at: d.generated_at,
+        as_of: d.as_of,
+        honesty: d.honesty,
+        ingest: d.ingest,
+        db_counts: d.db_counts,
+        model_count: d.model_count,
+        equivalence: d.equivalence,
+      }, null, 2);
+    });
+  </script>
+</Base>

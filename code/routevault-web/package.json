@@ -1,0 +1,11 @@
+{
+  "name": "routevault-web",
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": { "dev": "astro dev", "build": "astro build", "start": "node ./dist/server/entry.mjs" },
+  "dependencies": {
+    "astro": "^5.16.0",
+    "@astrojs/node": "^9.4.0",
+    "pg": "^8.16.0"
+  }
+}

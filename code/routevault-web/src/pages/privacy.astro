@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="Privacy • RouteVault">
+  <Nav active="/privacy" />
+  <main class="rv-wrap">
+    <p class="kicker">Privacy</p>
+    <h1>Privacy</h1>
+    <p class="lede">Short version: we collect the minimum needed to run accounts, we don't sell anything, and your API keys never touch our servers.</p>
+
+    <section class="card" style="padding:1.1rem;max-width:760px">
+      <h2>What we collect</h2>
+      <ul>
+        <li>If you register: your email address and a hashed password.</li>
+        <li>If you save a stack or weights: those settings, synced to your account.</li>
+        <li>Anonymous page-view events (no profile, no cross-site tracking).</li>
+      </ul>
+
+      <h2>Cookies</h2>
+      <p>One session cookie, HttpOnly, used only to keep you signed in. No advertising cookies.</p>
+
+      <h2>What we never do</h2>
+      <p>We don't sell data, we don't run ads, and we don't send marketing email. If you registered and want your account deleted, email <a href="mailto:hello@routevault.ai">hello@routevault.ai</a> and we'll remove it.</p>
+    </section>
+  </main>
+</Base>

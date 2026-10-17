@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="Account • RouteVault">
+  <Nav active="/account" />
+  <div id="rv-shell" hidden></div>
+  
+  <script is:inline src="/legacy.js"></script>
+  <script is:inline>
+    window.mountNav = function() { /* SSR nav */ };
+    window.mountFoot = function() { /* SSR foot */ };
+  </script>
+  <main class="rv-wrap" style="max-width:560px">
+    <p class="kicker">Account</p>
+    <h1>Your account</h1>
+    <div id="box" class="card" style="padding:1.2rem;margin-top:1rem"></div>
+  </main>
+  <script is:inline>
+loadDataset().then(async () => {
+      const user = await refreshSession();
+      if (sessionStorage.getItem("rv.merge.pending")) {
+        location.href = "/merge";
+        return;
+      }
+      if (!RV.accountsLive) {
+        $("#box").innerHTML = `<p>Accounts are not live on this host. Use My Stack in this browser.</p>
+          <p><a class="rv-cta" href="/stack">Open My Stack</a></p>`;
+        return;
+      }
+      if (!user) {
+        location.href = "/login";
+        return;
+      }
+      const p = localProfile();
+      $("#box").innerHTML = `
+        <p>You are signed in as <strong>${user.email}</strong>.</p>
+        <p class="muted">${user.waitlist_converted ? "Converted from the old local waitlist." : "Free cloud backup — not Pro."}</p>
+        <ul class="muted">
+          <li>Stack: ${p.stack.length} model(s)</li>
+          <li>Alert rules: ${p.alerts.length}</li>
+          <li>Resolve history: ${p.routes.length}</li>
+        </ul>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem">
+          <a class="rv-cta" href="/stack">Open My Stack</a>
+          <button class="rv-ghost" type="button" id="out">Log out</button>
+        </div>`;
+      $("#out").onclick = () => void logout();
+    });
+  </script>
+</Base>

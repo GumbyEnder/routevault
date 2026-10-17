@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account • RouteVault</title>
+  <link rel="stylesheet" href="assets/rv.css">
+</head>
+<body>
+  <div id="rv-shell"></div>
+  <main class="rv-wrap" style="max-width:640px">
+    <p class="kicker">Signed in</p>
+    <h1>Your account</h1>
+    <p class="lede">Your account backs up your Stack, weights, alerts, and resolve history to the cloud. Free — no card involved.</p>
+    <div id="box" class="card" style="padding:1.1rem"></div>
+  </main>
+  <script src="assets/rv.js"></script>
+  <script>
+    mountNav("pricing.html");
+    mountFoot();
+    loadDataset().then(async () => {
+      const user = await refreshSession();
+      if (sessionStorage.getItem("rv.merge.pending")) {
+        location.href = "merge.html";
+        return;
+      }
+      if (!RV.accountsLive) {
+        $("#box").innerHTML = `<p>Accounts are not live on this host. Use My Stack in this browser.</p>
+          <p><a class="rv-cta" href="stack.html">Open My Stack</a></p>`;
+        return;
+      }
+      if (!user) {
+        location.href = "login.html";
+        return;
+      }
+      const p = localProfile();
+      $("#box").innerHTML = `
+        <p>You are signed in as <strong>${user.email}</strong>.</p>
+        <p class="muted">${user.waitlist_converted ? "Converted from the old local waitlist." : "Free cloud backup — not Pro."}</p>
+        <ul class="muted">
+          <li>Stack: ${p.stack.length} model(s)</li>
+          <li>Alert rules: ${p.alerts.length}</li>
+          <li>Resolve history: ${p.routes.length}</li>
+        </ul>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem">
+          <a class="rv-cta" href="stack.html">Open My Stack</a>
+          <button class="rv-ghost" type="button" id="out">Log out</button>
+        </div>`;
+      $("#out").onclick = () => void logout();
+    });
+  </script>
+</body>
+</html>

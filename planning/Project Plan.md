@@ -48,7 +48,7 @@ We are building this in **two clear phases**.
 
 ### Approach
 
-The site will remain mostly static for now to maximize SEO value while we establish useful, high-quality content. Real data integration is underway. User accounts, authentication, and a smart router are planned for Phase 2+.
+The site will remain mostly static for now to maximize SEO value while we establish useful, high-quality content. Real data integration is underway. **User Management v1a shipped** (`docs/USER-MANAGEMENT-V1A.md`): real accounts + cloud sync of existing local objects. Smart router / proxy stays later. v1b is Pro / Team / billed alerts.
 
 ---
 
@@ -87,7 +87,7 @@ The site will remain mostly static for now to maximize SEO value while we establ
 - Static-first approach for SEO
 - Lightweight SQLite for historical pricing and model data (initially)
 - Local database development environment used to avoid NAS locking
-- Long-term roadmap includes logins, saved stacks, and a smart router
+- Next product cut: User Management v1a (`docs/USER-MANAGEMENT-V1A.md`). Router / proxy stays later.
 
 ---
 

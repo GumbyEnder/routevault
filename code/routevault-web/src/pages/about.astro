@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="About • RouteVault">
+  <Nav active="/about" />
+  <main class="rv-wrap">
+    <p class="kicker">About</p>
+    <h1>About RouteVault</h1>
+    <p class="lede">RouteVault tracks AI model prices and quality scores so you can pick the cheapest model that still clears your bar.</p>
+
+    <section class="card" style="padding:1.1rem;max-width:760px">
+      <h2>What we do</h2>
+      <p>The catalog pulls live provider list prices several times a day and pairs them with quality scores on a 0–100 scale from Artificial Analysis benchmarks. From that, every model gets a plain-English grade, a value score, and a price history you can actually read.</p>
+      <p>The Route tool turns a published quality floor into a concrete pick: state the tier you need, get the cheapest model that meets it, with the math shown.</p>
+
+      <h2>Who runs it</h2>
+      <p>RouteVault is a product of Veanox. We built it because choosing between two hundred models by reading pricing pages was a bad way to spend an afternoon.</p>
+
+      <h2>Contact</h2>
+      <p>Questions, corrections, or a model we're missing: <a href="mailto:hello@routevault.ai">hello@routevault.ai</a>.</p>
+    </section>
+  </main>
+</Base>

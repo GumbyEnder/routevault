@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import { getPool, logInterest } from '../lib/db.js';
+
+void logInterest('page_view', null, { path: '/changelog' });
+
+// Change log: date-stamped events derived from the tick's own tables.
+//  - price changes: consecutive price_history snapshots per model (deltas)
+//  - new models: discovered_models.first_seen
+//  - catalog additions: first price_history appearance per model
+// Day resolution: the tick writes one snapshot per model per day.
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }));
+const money = (n) => (n == null ? '—' : '$' + Number(n).toFixed(Math.abs(n) < 0.1 ? 3 : 2));
+
+const events = [];
+try {
+  const pool = getPool();
+  const { rows: mrows } = await pool.query(`SELECT model_id, display_name, provider FROM models`);
+  const minfo = Object.fromEntries(mrows.map((m) => [m.model_id, m]));
+  const { rows } = await pool.query(`
+    SELECT model_id, date::text AS date, input_price, output_price,
+           LAG(input_price) OVER (PARTITION BY model_id ORDER BY date) AS prev_in,
+           LAG(output_price) OVER (PARTITION BY model_id ORDER BY date) AS prev_out
+    FROM price_history
+    ORDER BY date DESC
+    LIMIT 4000
+  `);
+  // First appearance per model (min date) computed here from the raw rows.
+  const seen = new Map();
+  for (const r of rows) if (!seen.has(r.model_id) || seen.get(r.model_id) > r.date) seen.set(r.model_id, r.date);
+  const firstSeen = new Set();
+  for (const r of rows) {
+    const total = Number(r.input_price) + Number(r.output_price);
+    if (seen.get(r.model_id) === r.date && rows.filter((x) => x.model_id === r.model_id).length === 1) {
+      events.push({ date: r.date, kind: 'added', model: r.model_id, name: minfo[r.model_id]?.display_name, provider: minfo[r.model_id]?.provider, detail: `added to catalog at ${money(total)}/M blended` });
+      continue;
+    }
+    if (r.prev_in == null) continue;
+    const prevTotal = Number(r.prev_in) + Number(r.prev_out);
+    if (total === prevTotal) continue;
+    const delta = total - prevTotal;
+    const pct = prevTotal > 0 ? (delta / prevTotal) * 100 : 0;
+    events.push({
+      date: r.date, kind: delta < 0 ? 'down' : 'up', model: r.model_id, name: minfo[r.model_id]?.display_name, provider: minfo[r.model_id]?.provider,
+      detail: `${money(prevTotal)} → ${money(total)} / M blended (${delta < 0 ? '' : '+'}${delta.toFixed(2)}, ${pct >= 0 ? '+' : ''}${pct.toFixed(1)}%) · in ${money(r.input_price)} / out ${money(r.output_price)}`,
+    });
+  }
+  try {
+    const { rows: disc } = await pool.query(`
+      SELECT openrouter_id, display_name, provider, first_seen::date AS day, promoted, reason
+      FROM discovered_models
+      WHERE first_seen > now() - interval '30 days'
+      ORDER BY first_seen DESC LIMIT 200
+    `);
+    for (const d of disc) {
+      if (firstSeen.has(d.openrouter_id)) continue;
+      firstSeen.add(d.openrouter_id);
+      events.push({ date: String(d.day), kind: 'new', model: d.openrouter_id, name: d.display_name, provider: d.provider, detail: d.promoted ? 'discovered — scored, in catalog' : 'discovered — pending scoring (no AA indexes yet)' });
+    }
+  } catch (_) {}
+} catch (e) { console.error('changelog:', e.message); }
+
+events.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+const byDate = [];
+for (const e of events) {
+  let g = byDate[byDate.length - 1];
+  if (!g || g.date !== e.date) { g = { date: e.date, items: [] }; byDate.push(g); }
+  g.items.push(e);
+}
+const badge = (k) => k === 'down' ? ['drop', '▼ price drop'] : k === 'up' ? ['rise', '▲ price up'] : k === 'new' ? ['pill', 'new discovery'] : ['pill', 'added'];
+---
+<Base title="Change log — every price move and new model · RouteVault" description="Date-stamped feed of every model price change, new discovery, and catalog addition on RouteVault.">
+  <Nav active="/changelog" />
+  <main class="rv-wrap">
+    <p class="kicker">Full transparency</p>
+    <h1>Change log</h1>
+    <p class="lede">Every price move, every new model, as the catalog scanner saw it — four scans a day. Nothing hand-adjusted.</p>
+
+    {byDate.length === 0 ? (
+      <p class="muted">No events recorded yet — the catalog scanner populates this as it runs.</p>
+    ) : byDate.map((g) => (
+      <section style="margin:1.6rem 0">
+        <h2 style="font-size:1.05rem;margin:0 0 .55rem">{g.date}</h2>
+        <div class="card" style="padding:.4rem 0">
+          {g.items.map((e) => {
+            const [cls, label] = badge(e.kind);
+            return (
+              <div style="display:flex;gap:.8rem;align-items:baseline;padding:.55rem 1.1rem;border-bottom:1px solid var(--row-line);flex-wrap:wrap">
+                <span class={cls} style="font-size:.72rem;min-width:7.5rem">{label}</span>
+                <a class="mono" style="font-weight:600" href={`/model/${esc(e.model)}`}>{esc(e.name || e.model)}</a>
+                <span class="dim" style="font-size:.82rem">{esc(e.detail)}</span>
+                <span class="dim" style="font-size:.72rem;margin-left:auto">{esc(e.provider)}</span>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    ))}
+  </main>
+</Base>

@@ -1,0 +1,164 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import { allModels, logInterest } from '../lib/db.js';
+
+let models = [];
+try { models = await allModels(); } catch (e) { console.error(e.message); }
+void logInterest('page_view', null, { path: '/' });
+
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+let fresh = [];
+let refreshedAt = null;
+let equivalence = [];
+try {
+  const disc = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'public', 'data', 'discovered_models.json'), 'utf8'));
+  refreshedAt = disc.generated_at || null;
+  const weekAgo = Date.now() - 7 * 86400_000;
+  fresh = (disc.models || [])
+    .filter((m) => new Date(m.first_seen).getTime() >= weekAgo)
+    .sort((a, b) => new Date(b.first_seen) - new Date(a.first_seen))
+    .slice(0, 6);
+} catch (_) {}
+try {
+  const dataset = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'public', 'data', 'dataset.json'), 'utf8'));
+  equivalence = dataset.equivalence || [];
+  if (dataset.generated_at && !refreshedAt) refreshedAt = dataset.generated_at;
+} catch (_) {}
+const byId = Object.fromEntries(models.map((m) => [m.model_id, m]));
+const heroEq = equivalence.find((t) => t.tier === 'Senior Developer');
+const heroModel = heroEq ? byId[heroEq.pick] : null;
+const agoMinutes = (iso) => { const ms = Date.now() - new Date(iso).getTime(); if (!(ms > 0)) return null; const m = Math.round(ms / 60000); return m < 60 ? `${m} min ago` : m < 1440 ? `${Math.round(m / 60)}h ago` : `${Math.round(m / 1440)}d ago`; };
+const heroPrice = heroModel ? Number(heroModel.total_price ?? (Number(heroModel.input_price) + Number(heroModel.output_price))) : 0;
+// Hero example: a well-known expensive anchor vs the Senior pick that clears a comparable bar.
+const ANCHOR_IDS = ['claude-opus-5', 'claude-opus-4.5', 'gpt-5.5', 'gpt-5.2'];
+const anchor = ANCHOR_IDS.map((id) => byId[id]).find((m) => m && Number(m.total_price ?? (Number(m.input_price) + Number(m.output_price))) > 0) || null;
+const anchorPrice = anchor ? Number(anchor.total_price ?? (Number(anchor.input_price) + Number(anchor.output_price))) : 0;
+let heroSave = null;
+if (anchor && heroModel && heroPrice > 0 && anchorPrice > heroPrice) {
+  heroSave = {
+    anchorName: anchor.display_name || anchor.model_id,
+    anchorPrice,
+    pickName: heroModel.display_name || heroModel.model_id,
+    pickPrice: heroPrice,
+    pct: Math.round((1 - heroPrice / anchorPrice) * 100),
+  };
+}
+---
+<Base title="RouteVault — live AI model prices, scored for humans" ogImage="https://routevault.ai/og/home.png">
+  <Nav active="/" />
+  <main>
+    <div class="wrap">
+      <section class="mv-hero">
+        <div>
+          <div class="kicker">Live catalog · scored for humans</div>
+          <h1>Pick the cheapest model that still clears your bar.</h1>
+          <p class="lede">Live OpenRouter prices. Plain-English quality floors. <strong>Copy the id — we never touch your keys.</strong></p>
+          {heroSave && (
+            <p class="lede" style="margin-top:.4rem">
+              Running {esc(heroSave.anchorName)} at ${heroSave.anchorPrice.toFixed(2)} per M?
+              {esc(heroSave.pickName)} clears a comparable bar for ${heroSave.pickPrice.toFixed(2)} per M — {heroSave.pct}% less.
+            </p>
+          )}
+          <p class="muted" style="font-size:.82rem;margin-top:.4rem" title="Quality scores run 0-100 from Artificial Analysis benchmarks. Prices are blended dollars per million tokens, weighted across input and output.">
+            Scores run 0–100 from Artificial Analysis benchmarks; prices are blended $/M (weighted input + output per million tokens).
+          </p>
+          <div style="display:flex;gap:.65rem;flex-wrap:wrap">
+            <a class="rv-cta" href="/route">Find my model →</a>
+            <a class="rv-ghost" href="/how-we-score">See how we score</a>
+          </div>
+          <div class="mv-proof">
+            <span><b>{models.length}</b> models tracked</span>
+            <span><b>4×</b>/day price refresh</span>
+            <span title="Bring your own key — your API key goes from your browser straight to the provider, never through our servers."><b>BYOK</b> — your keys stay yours</span>
+          </div>
+        </div>
+        <div class="mv-hero-visual">
+          <img class="mv-hero-art" src="/assets/mockup/obsidian-hero.jpg" alt="The RouteVault vault" />
+          {refreshedAt && <div class="mv-stamp">Updated {esc(agoMinutes(refreshedAt))}</div>}
+          {heroModel && heroEq && (
+            <div class="mv-pick">
+              <div>
+                <div class="label">Tonight's {esc(heroEq.tier)} pick</div>
+                <div class="model">{esc(heroModel.model_id)}</div>
+                <div class="dim" style="font-size:.8rem">Cheapest model clearing coding ≥ {heroEq.floors?.coding ?? 65}</div>
+                <span class="pill">{esc(heroModel.rv_label)}</span>
+              </div>
+              <div style="text-align:right">
+                <div class="mv-tier" style="background:none;border:0;padding:0"><div class="amt" style="margin:0">${heroPrice.toFixed(2)}</div></div>
+                <div class="dim" style="font-size:.72rem">per M blended</div>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <div class="wrap section" style="padding-left:0;padding-right:0">
+        <h2>Route a tier in one click</h2>
+        <p class="muted" style="margin-bottom:1.2rem" title="A quality floor is the minimum benchmark score a model must reach for that tier.">Start from a published floor — Explorer stays for power users.</p>
+        <div class="mv-tier-grid">
+          {equivalence.filter((t) => t.pick && byId[t.pick]).slice(0, 3).map((t) => {
+            const m = byId[t.pick];
+            const price = Number(m.total_price ?? (Number(m.input_price) + Number(m.output_price)));
+            const floor = t.floors ? Object.entries(t.floors).map(([k, v]) => `${k} ≥ ${v}`).join(', ') : '';
+            const dup = equivalence.filter((o) => o.pick === t.pick && o.tier !== t.tier).map((o) => o.tier);
+            return (
+              <article class={`mv-tier${t.tier === 'Senior Developer' ? ' featured' : ''}`}>
+                <h3>{esc(t.tier)}{t.tier === 'Senior Developer' ? ' ★' : ''}</h3>
+                <div class="amt">${price.toFixed(2)} / M</div>
+                <p class="muted">{floor ? `Floor: ${esc(floor)}.` : ''}</p>
+                {dup.length > 0 && <p class="muted" style="font-size:.8rem">Same pick as {esc(dup[0])} — one model clears both floors cheapest.</p>}
+                <div class="meta">{esc(m.model_id)} · <a href={`/route`}>route</a></div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+
+      <div class="wrap section mv-lab" style="padding-left:0;padding-right:0">
+        <div class="card" style="padding:1.4rem">
+          <h2 style="margin-top:0">Same models. Your GPU or the API.</h2>
+          <p class="muted">Local Lab recipes with measured decode when tested.</p>
+          <a class="rv-cta" href="/lab">Open Local Lab</a>
+        </div>
+        <img src="/assets/mockup/lab-gpu.jpg" alt="Cloud API vs local GPU" style="border-radius:1rem;border:1px solid var(--line)" />
+      </div>
+    </div>
+
+    <section class="mv-dark">
+      <div class="wrap" style="display:grid;grid-template-columns:1.2fr .8fr;gap:2rem;align-items:center">
+        <div>
+          <h2 style="font-family:'Newsreader',Georgia,serif;font-size:2rem;margin:0 0 .7rem">Free to browse. Pro when you want saved stacks and digests.</h2>
+          <p class="muted">Zero token markup. Optional future proxy 3–5% on routed volume only.</p>
+          <a class="rv-cta" href="/pricing">See pricing</a>
+        </div>
+        <div class="mv-stats">
+          <div class="stat"><strong>Free</strong><span class="muted">Explorer + Route</span></div>
+          <div class="stat"><strong>Pro</strong><span class="muted">Coming Soon</span></div>
+          <div class="stat"><strong>Team</strong><span class="muted">Coming Soon</span></div>
+          <div class="stat"><strong>0%</strong><span class="muted">token markup</span></div>
+        </div>
+      </div>
+    </section>
+
+    {(() => {
+      const scored = fresh.filter((m) => m.promoted);
+      if (scored.length === 0) return null;
+      return (
+        <div class="wrap section" style="padding-left:0;padding-right:0">
+          <h2>🆕 New this week</h2>
+          <div class="mv-tier-grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+            {scored.map((m) => (
+              <article class="mv-tier">
+                <div class="mono" style="font-weight:600">{esc(m.display_name || m.openrouter_id)}</div>
+                <div class="meta">{esc(m.provider)} · scored</div>
+              </article>
+            ))}
+          </div>
+        </div>
+      );
+    })()}
+  </main>
+</Base>

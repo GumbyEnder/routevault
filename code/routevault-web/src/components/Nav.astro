@@ -1,0 +1,55 @@
+---
+const { active = '' } = Astro.props;
+const links = [
+  ['/', 'Home'], ['/models', 'Models'], ['/compare', 'Compare'], ['/route', 'Route'],
+  ['/lab', 'Local Lab'], ['/pricing', 'Pricing'],
+];
+const more = [
+  ['/trends', 'Trends'], ['/changelog', 'Change log'], ['/quiz', 'Quiz'], ['/stack', 'My Stack'], ['/how-we-score', 'Scoring'],
+];
+---
+<div class="live-banner"><span class="pulse" aria-hidden="true"></span><strong>Live</strong> · OpenRouter list prices · refreshed 4×/day</div>
+<nav class="rv-nav"><div class="rv-nav-inner">
+  <a class="rv-brand" href="/"><span class="rv-mark">R</span> RouteVault</a>
+  <div class="rv-links">
+    {links.map(([href, label]) => <a href={href} class={active === href ? 'active' : ''}>{label}</a>)}
+    <div class="rv-more" style="position:relative">
+      <button type="button" id="rv-more-btn" class={more.some(([h]) => h === active) ? 'active' : ''} aria-expanded="false" aria-haspopup="true">More ▾</button>
+      <div id="rv-more-menu" class="card rv-more-menu" hidden role="menu">
+        {more.map(([href, label]) => <a href={href} class={active === href ? 'active' : ''} data-auth={href === '/stack' ? '1' : undefined} hidden={href === '/stack' ? 'hidden' : undefined} role="menuitem" style="padding:.25rem 0">{label}</a>)}
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;gap:.45rem;align-items:center;flex-wrap:wrap">
+    <button class="rv-ghost" type="button" id="rv-skin" title="Change skin">Obsidian</button>
+    <a class="rv-ghost" href="/login">Log in</a>
+  </div>
+</div></nav>
+<style>
+  .rv-more-menu { position:absolute; top:100%; left:0; margin-top:.4rem; display:grid; gap:.2rem; padding:.6rem .8rem; min-width:140px; z-index:50; }
+  .rv-more-menu[hidden] { display:none; }
+</style>
+<script is:inline>
+  // My Stack is account-scoped: reveal the nav link only for signed-in visitors.
+  fetch('/api/me').then(r => r.ok ? r.json() : null).then(d => {
+    if (d && d.user) {
+      document.querySelectorAll('a[data-auth]').forEach(a => a.removeAttribute('hidden'));
+    }
+  }).catch(() => {});
+  var mb = document.getElementById('rv-more-btn'), mm = document.getElementById('rv-more-menu');
+  if (mb && mm) {
+    mb.addEventListener('click', function (e) { e.preventDefault(); mm.hidden = !mm.hidden; mb.setAttribute('aria-expanded', mm.hidden ? 'false' : 'true'); });
+    mb.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); mm.hidden = !mm.hidden; mb.setAttribute('aria-expanded', mm.hidden ? 'false' : 'true'); }
+      if (e.key === 'Escape') { mm.hidden = true; mb.setAttribute('aria-expanded', 'false'); mb.focus(); }
+    });
+    mm.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { mm.hidden = true; mb.setAttribute('aria-expanded', 'false'); mb.focus(); }
+    });
+    mm.addEventListener('blur', function () { mm.hidden = true; mb.setAttribute('aria-expanded', 'false'); });
+    document.addEventListener('click', function (e) {
+      if (!mm.hidden && !e.target.closest('.rv-more')) mm.hidden = true;
+      if (!mm.hidden && !e.target.closest('.rv-more')) mb.setAttribute('aria-expanded', 'false');
+    });
+  }
+</script>

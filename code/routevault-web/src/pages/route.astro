@@ -1,0 +1,187 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="Smart Route • RouteVault">
+  <Nav active="/route" />
+  <div id="rv-shell" hidden></div>
+  <main class="rv-wrap">
+    <p class="kicker">Recommendations</p>
+    <h1>Route a quality floor</h1>
+    <p class="lede">We point you at the cheapest live models that clear a published quality floor. Copy the OpenRouter id and use it in your own tooling — we never touch your tokens or keys.</p>
+
+    <style>
+      .route-split { display:grid; grid-template-columns: minmax(300px, 420px) 1fr; gap:1.2rem; align-items:start; margin:1.2rem 0; }
+      .route-split .picker { display:grid; gap:.75rem; padding:1.1rem; }
+      #out { min-width:0; display:grid; gap:.8rem; align-content:start; }
+      .pick-card { padding:1rem 1.1rem; display:grid; gap:.35rem; position:relative; }
+      .pick-card.best { border-color:var(--accent,#4A90D9); }
+      .pick-rank { position:absolute; top:.8rem; right:.9rem; font-size:.72rem; color:var(--dim,#889); }
+      .pick-head { display:flex; align-items:baseline; gap:.6rem; flex-wrap:wrap; padding-right:3rem; }
+      .pick-head .mono { font-size:1rem; }
+      .pick-why { color:var(--dim,#889); font-size:.8rem; }
+      .pick-actions { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.35rem; }
+      .pick-actions .rv-ghost, .pick-actions .rv-cta { font-size:.8rem; padding:.35rem .7rem; }
+      .rv-ghost, .rv-cta { cursor:pointer; text-decoration:none; display:inline-block; }
+      .rv-cta[hidden] { display:none; }
+      @media (max-width: 900px) { .route-split { grid-template-columns: 1fr; } }
+    </style>
+
+    <div class="route-split">
+      <div class="card picker">
+        <label>Tier
+          <select id="tier" style="width:100%;margin-top:.3rem;background:var(--bg-2);color:var(--ink);border:1px solid var(--line);padding:.5rem"></select>
+        </label>
+        <label>I currently use (optional)
+          <select id="current" style="width:100%;margin-top:.3rem;background:var(--bg-2);color:var(--ink);border:1px solid var(--line);padding:.5rem">
+            <option value="">— none —</option>
+          </select>
+        </label>
+        <label>Budget per 1M tokens (optional)
+          <div style="margin-top:.4rem">
+            <div style="position:relative;height:2rem">
+              <div id="brange-track" style="position:absolute;top:.9rem;left:0;right:0;height:.25rem;background:var(--bg-2);border-radius:.25rem"></div>
+              <div id="brange-fill" style="position:absolute;top:.9rem;left:0;right:0;height:.25rem;background:var(--accent,#4A90D9);border-radius:.25rem"></div>
+              <input id="bmin" type="range" min="0" max="1000" value="0" step="1" onpointerdown="this.style.pointerEvents='auto';this.nextElementSibling.style.pointerEvents='none'" style="position:absolute;top:.45rem;left:0;width:100%;appearance:none;-webkit-appearance:none;background:transparent;pointer-events:none;height:1.2rem;margin:0">
+              <input id="bmax" type="range" min="0" max="1000" value="1000" step="1" onpointerdown="this.style.pointerEvents='auto';this.previousElementSibling.style.pointerEvents='none'" onpointerup="this.style.pointerEvents='none';this.previousElementSibling.style.pointerEvents='auto'" style="position:absolute;top:.45rem;left:0;width:100%;appearance:none;-webkit-appearance:none;background:transparent;pointer-events:none;height:1.2rem;margin:0">
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:.2rem">
+              <span class="mono" id="blabmin">$0</span>
+              <span class="dim" style="font-size:.75rem">drag both ends — full range = all prices</span>
+              <span class="mono" id="blabmax">$750+</span>
+            </div>
+          </div>
+        </label>
+        <button class="rv-cta" id="go" hidden>Resolve route</button>
+      </div>
+      <div id="out"></div>
+    </div>
+    <section style="margin-top:2rem">
+      <h2>Published floors</h2>
+      <div id="floors" class="grid-2"></div>
+    </section>
+  </main>
+  <script is:inline src="/legacy.js"></script>
+  <script is:inline>
+    window.mountNav = function() { /* SSR nav */ };
+    window.mountFoot = function() { /* SSR foot */ };
+  </script>
+  <script is:inline>
+  function clearsFloor(m, floors) {
+    const b = m.benchmarks || {};
+    const intel = b.reasoning || b.general_intelligence || 0;
+    if (floors.intelligence != null && intel < floors.intelligence) return false;
+    if (floors.coding != null && (b.coding || 0) < floors.coding) return false;
+    if (floors.agentic != null && (b.tool_use || 0) < floors.agentic) return false;
+    return true;
+  }
+  function fmtDollar(v) {
+    return v >= 100 ? "$" + Math.round(v) : v >= 1 ? "$" + v.toFixed(2).replace(/\.?0+$/, "") : "$" + v.toFixed(2);
+  }
+  function eligibleFor(eq) {
+    const BMAX = 750;
+    const t2p = (t) => BMAX * Math.pow(t / 1000, 2);
+    const bminT = parseInt($("#bmin").value, 10);
+    const bmaxT = parseInt($("#bmax").value, 10);
+    const hasBudget = bminT > 0 || bmaxT < 1000;
+    const bmin = hasBudget ? t2p(bminT) : null;
+    const bmax = hasBudget ? t2p(bmaxT) : null;
+    const inBudget = (m) =>
+      (bmin != null && m.total_price < bmin ? false : true) &&
+      (bmax != null && m.total_price > bmax ? false : true);
+    return RV.data.models
+      .filter((m) => inBudget(m))
+      .filter((m) => (eq ? clearsFloor(m, eq.floors) : false))
+      .sort((a, b) => (a.total_price - b.total_price) || (-(a.value_score || 0) + (b.value_score || 0)))
+      .slice(0, 6)
+      .map((m) => ({ m, bmin, bmax }));
+  }
+  function renderPicks(ranked) {
+    if (!ranked.length) {
+      $("#out").innerHTML = `<p class="bad">No eligible model in this budget range. Try widening the slider.</p>`;
+      return;
+    }
+    const cur = $("#current").value ? modelById($("#current").value) : null;
+    $("#out").innerHTML = ranked.map(({ m: pick }, i) => {
+      const sav = cur && pick ? savingsVs(cur, pick) : null;
+      return `<div class="card pick-card${i === 0 ? " best" : ""}">
+        ${i === 0 ? '<div class="pill hot">Best pick</div>' : `<span class="pick-rank">#${i + 1}</span>`}
+        <div class="pick-head">
+          <span class="mono">${pick.openrouter_id}</span>
+          <span class="dim" style="font-size:.8rem">${pick.rv_label}</span>
+        </div>
+        <p style="margin:.1rem 0">${fmtMoney(pick.input_price)} in / ${fmtMoney(pick.output_price)} out per 1M · total ${fmtDollar(pick.total_price)} · value ${pick.value_score}</p>
+        <p class="pick-why">Context ${pick.context_k}k · provider ${pick.provider}</p>
+        ${sav ? `<p class="good" style="margin:.1rem 0">Vs ${cur.model_id}: ~${fmtPct(sav.pct)} list-price · ~$${sav.monthly}/mo sketch.</p>` : ""}
+        <div class="pick-actions">
+          <button class="rv-cta" onclick="navigator.clipboard.writeText('${pick.openrouter_id}');toast('Copied ${pick.openrouter_id}')">Copy id</button>
+          <button class="rv-ghost" onclick="addToStack('${pick.model_id}')">Save pick</button>
+          <a class="rv-ghost" href="/model/${encodeURIComponent(pick.model_id)}">Details</a>
+        </div>
+      </div>`;
+    }).join("");
+  }
+  function resolve() {
+    const tier = $("#tier").value;
+    const eq = RV.data.equivalence.find((t) => t.tier === tier);
+    const ranked = eligibleFor(eq);
+    if (ranked.length) {
+      const top = ranked[0].m;
+      addRoute({
+        requested_tier: tier,
+        chosen: top.openrouter_id,
+        chosen_slug: top.model_id,
+        next_cheapest: ranked[1]?.m.openrouter_id || null,
+        vs_current: $("#current").value || null,
+        resolved_at: new Date().toISOString(),
+        proxy: false,
+      });
+    }
+    renderPicks(ranked);
+  }
+  loadDataset().then((d) => {
+    $("#tier").innerHTML = d.equivalence.map((t) => `<option>${t.tier}</option>`).join("");
+    $("#current").innerHTML += d.models.map((m) => `<option value="${m.model_id}">${m.model_id}</option>`).join("");
+    const want = qs("tier");
+    const cur = qs("current");
+    const BMAX = 750, p2t = (p) => Math.round(1000 * Math.sqrt(p / BMAX));
+    const bminP = parseFloat(qs("bmin"));
+    const bmaxP = parseFloat(qs("bmax"));
+    if (want) $("#tier").value = want;
+    if (cur) $("#current").value = cur;
+    if (!isNaN(bminP)) $("#bmin").value = p2t(bminP);
+    if (!isNaN(bmaxP)) $("#bmax").value = p2t(bmaxP);
+    $("#floors").innerHTML = d.equivalence.map((t) => `<div class="card" style="padding:1rem">
+      <strong>${t.tier}</strong>
+      <div class="dim" style="font-size:.8rem;margin:.35rem 0">${JSON.stringify(t.floors)}</div>
+      <div class="mono">${t.pick || "—"}</div>
+    </div>`).join("");
+    $("#go").onclick = resolve;
+    $("#tier").addEventListener("change", resolve);
+    $("#current").addEventListener("change", resolve);
+    // Dual-thumb slider wiring
+    const bminEl = $("#bmin"), bmaxEl = $("#bmax");
+    function refreshSlider() {
+      let lo = parseInt(bminEl.value, 10), hi = parseInt(bmaxEl.value, 10);
+      if (lo > hi) { // whichever thumb was grabbed wins; clamp the other
+        if (document.activeElement === bminEl) { bmaxEl.value = lo; hi = lo; }
+        else { bminEl.value = hi; lo = hi; }
+      }
+      const BMAX = 750, t2p = (t) => BMAX * Math.pow(t / 1000, 2);
+      const fmt = (v) => v >= 100 ? "$" + Math.round(v) : v >= 1 ? "$" + v.toFixed(2).replace(/\.?0+$/, "") : "$" + v.toFixed(2);
+      $("#blabmin").textContent = lo <= 0 ? "any" : fmt(t2p(lo));
+      $("#blabmax").textContent = hi >= 1000 ? "any" : fmt(t2p(hi));
+      $("#brange-fill").style.left = (lo / 10) + "%";
+      $("#brange-fill").style.right = (1000 - hi) / 10 + "%";
+      $("#brange-fill").style.background = (lo <= 0 && hi >= 1000) ? "var(--bg-2)" : "var(--accent,#4A90D9)";
+    }
+    bminEl.addEventListener("input", () => { refreshSlider(); resolve(); });
+    bmaxEl.addEventListener("input", () => { refreshSlider(); resolve(); });
+    refreshSlider();
+    resolve();
+  });
+  </script>
+  <script is:inline>
+    if (new URLSearchParams(location.search).get('current')) fetch('/api/interest', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({type:'route_search', path: location.search})}).catch(function(){});
+  </script>
+</Base>

@@ -1,0 +1,66 @@
+---
+import '../styles/rv.css';
+const { title = 'RouteVault', description = 'Live AI model prices, plain-English scores, and the cheapest model that clears your quality bar.', ogImage = null } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en" data-skin="obsidian">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png" />
+  <meta name="theme-color" content="#0a0d1f" />
+  <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:site_name" content="RouteVault" />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <script is:inline define:vars={{ openpanelClientId: import.meta.env.PUBLIC_OPENPANEL_CLIENT_ID }}>
+    if (openpanelClientId) {
+      window.op = window.op || function(){var n=[];return new Proxy(function(){arguments.length&&n.push([].slice.call(arguments))},{get:function(t,r){return"q"===r?n:function(){n.push([r].concat([].slice.call(arguments)))}},has:function(t,r){return"q"===r}}) }();
+      window.op('init', {
+        clientId: openpanelClientId,
+        trackScreenViews: true,
+        trackOutgoingLinks: true,
+        trackAttributes: true,
+      });
+      var sc = document.createElement('script');
+      sc.src = 'https://openpanel.dev/op1.js';
+      sc.defer = true; sc.async = true;
+      document.head.appendChild(sc);
+    }
+  </script>
+</head>
+<body>
+  <slot />
+  <footer class="rv-foot">
+    RouteVault · live OpenRouter prices · Artificial Analysis indexes via OpenRouter ·
+    history is weekly OpenRouter list prices (OpenRouterList, up to 6 months) ·
+    <br /><br />
+    <a href="/about">About</a> · <a href="/pricing">Pricing</a> · <a href="/security">Security</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a>
+    <br /><br />
+    RouteVault™ 2026 · © 2026 Veanox · A product of Veanox
+  </footer>
+  <script>
+    const SKINS = { obsidian: 'Obsidian', vellum: 'Vellum', neon: 'Neon Grid' };
+    const KEY = 'routevault.skin.v1';
+    const cur = SKINS[localStorage.getItem(KEY)] ? localStorage.getItem(KEY) : 'obsidian';
+    document.documentElement.setAttribute('data-skin', cur);
+    window.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('rv-skin');
+      if (!btn) return;
+      btn.textContent = SKINS[cur];
+      btn.onclick = () => {
+        const order = Object.keys(SKINS);
+        const live = document.documentElement.getAttribute('data-skin') || cur;
+        const next = order[(order.indexOf(live) + 1) % order.length];
+        localStorage.setItem(KEY, next);
+        document.documentElement.setAttribute('data-skin', next);
+        btn.textContent = SKINS[next];
+      };
+    });
+  </script>
+</body>
+</html>

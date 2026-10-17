@@ -1,0 +1,27 @@
+# SQLite live database + journals (data lives on NAS; schema/exports in repo)
+data/routevault.db
+data/routevault.db-shm
+data/routevault.db-wal
+data/cache/
+*.db-shm
+*.db-wal
+
+# Python
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+dist/
+
+# Local env / secrets (never commit)
+.env
+*.env
+publish.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Archives
+.archive-local-*.tgz

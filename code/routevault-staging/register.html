@@ -1,48 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create account • RouteVault</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        body { font-family: 'Inter', system_ui, sans-serif; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create account • RouteVault</title>
+  <link rel="stylesheet" href="assets/rv.css">
 </head>
-<body class="bg-zinc-950 text-zinc-200 flex items-center justify-center min-h-screen">
-    <div class="w-full max-w-md px-6">
-        <div class="flex items-center justify-center gap-x-3 mb-10">
-            <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
-                <i class="fa-solid fa-route text-white text-2xl"></i>
-            </div>
-            <span class="text-3xl font-semibold tracking-tighter">RouteVault</span>
-        </div>
-
-        <div class="dark-card p-8 rounded-3xl border border-zinc-800">
-            <h1 class="text-3xl font-semibold tracking-tight mb-6">Create your account</h1>
-            
-            <div class="space-y-4">
-                <div>
-                    <label class="text-xs text-zinc-400">Full name</label>
-                    <input type="text" value="Gumby Ender" class="w-full mt-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500">
-                </div>
-                <div>
-                    <label class="text-xs text-zinc-400">Email</label>
-                    <input type="email" value="gumbyender@routevault.ai" class="w-full mt-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500">
-                </div>
-                <div>
-                    <label class="text-xs text-zinc-400">Password</label>
-                    <input type="password" value="••••••••" class="w-full mt-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500">
-                </div>
-            </div>
-
-            <button onclick="window.location.href='admin-dashboard.html'" class="mt-8 w-full py-3.5 bg-white text-zinc-950 font-semibold rounded-3xl text-sm">Create account</button>
-            
-            <div class="text-center text-xs text-zinc-500 mt-4">
-                Already have an account? <a href="login.html" class="text-indigo-400 hover:underline">Sign in</a>
-            </div>
-        </div>
-    </div>
+<body>
+  <div id="rv-shell"></div>
+  <main class="rv-wrap" style="max-width:520px">
+    <p class="kicker">Free cloud backup</p>
+    <h1>Create an account</h1>
+    <p class="lede">No card. Signed-in means your Stack, weights, alerts, and resolve history follow you.</p>
+    <form id="form" class="card rv-form" style="padding:1.1rem">
+      <label class="rv-field">Email
+        <input id="email" type="email" required autocomplete="username">
+      </label>
+      <label class="rv-field">Password (8+ characters)
+        <input id="password" type="password" required minlength="8" autocomplete="new-password">
+      </label>
+      <div id="err" class="rv-err"></div>
+      <button class="rv-cta" type="submit">Create account</button>
+    </form>
+    <p class="muted" style="margin-top:1rem">
+      Already have one? <a href="login.html" style="text-decoration:underline">Log in</a>
+      · or <a href="stack.html" style="text-decoration:underline">stay a guest</a>
+    </p>
+  </main>
+  <script src="assets/rv.js"></script>
+  <script>
+    mountNav("pricing.html");
+    mountFoot();
+    loadDataset();
+    refreshSession().then((user) => {
+      if (user && !sessionStorage.getItem("rv.merge.pending")) location.href = "account.html";
+    });
+    $("#email").value = waitlistEmail();
+    $("#form").onsubmit = async (e) => {
+      e.preventDefault();
+      $("#err").textContent = "";
+      try {
+        const email = $("#email").value;
+        const data = await api("/api/register", {
+          method: "POST",
+          body: JSON.stringify({
+            email,
+            password: $("#password").value,
+            waitlist: waitlistEmail() === email.trim().toLowerCase(),
+            local: localProfile(),
+          }),
+        });
+        RV.user = data.user;
+        if (data.local_has_data) {
+          await api("/api/profile/merge", {
+            method: "POST",
+            body: JSON.stringify({ strategy: "local", local: localProfile() }),
+          });
+        }
+        applyProfile(localProfile());
+        toast("Account created. This browser’s stack is now yours in the cloud.");
+        location.href = "account.html";
+      } catch (err) {
+        $("#err").textContent = err.message;
+      }
+    };
+  </script>
 </body>
 </html>

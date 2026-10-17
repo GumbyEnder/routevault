@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Lab • RouteVault</title>
+  <link rel="stylesheet" href="assets/rv.css">
+</head>
+<body>
+  <div id="rv-shell"></div>
+  <main class="rv-wrap">
+    <p class="kicker">Free · self-hosted</p>
+    <h1>Local Lab</h1>
+    <p class="lede">Some models in our catalog also run on your own hardware, at zero API cost. Community recipes from Mia's AI Lab and the Sybil Solutions registry turn a DGX Spark, an Arc/RTX/AMD card, or a cluster into a local server, with measured speeds. A good option when you'd rather own the compute than pay per token.</p>
+    <div class="filters" id="hw-filters">
+      <button class="chip on" data-hw="all">All hardware</button>
+      <button class="chip" data-hw="spark1">1 Spark</button>
+      <button class="chip" data-hw="spark2">2–3 Sparks</button>
+      <button class="chip" data-hw="spark3">3–4 Sparks</button>
+      <button class="chip" data-hw="gpu16">16–32 GB GPU</button>
+      <button class="chip" data-hw="gpu48">48 GB GPU</button>
+      <button class="chip" data-hw="gpu96">RTX PRO 6000 / MI300X</button>
+    </div>
+    <div class="filters" id="src-filters">
+      <button class="chip on" data-src="all">All sources</button>
+      <button class="chip" data-src="sybil">Sybil (tested on card)</button>
+      <button class="chip" data-src="mias-ai-lab">Mia's AI Lab</button>
+    </div>
+    <div class="grid-2" id="recipes" style="margin-top:1rem"></div>
+    <p class="muted" style="margin-top:1.4rem">Status: <span class="pill">tested</span> = the source ran it on the real card (Sybil's checks: loads, answers, thinks, tools, holds context, keeps pace). <span class="pill">reported</span> = published by the source but not independently verified. Speeds are single-stream decode; hardware and quant differ per recipe — treat as indicative, not guarantees.</p>
+  </main>
+  <script src="assets/rv.js"></script>
+  <script>
+    mountNav("lab.html");
+    mountFoot();
+    let RECIPES = [];
+    let HW = "all", SRC = "all";
+
+    function statusBadge(r) {
+      if (r.status === "tested") return `<span class="pill hot" title="${r.status_note || ""}">✓ tested${r.checked_date ? " " + r.checked_date : ""}</span>`;
+      return `<span class="pill" title="${r.status_note || ""}">reported</span>`;
+    }
+
+    function card(r) {
+      const speed = r.decode_tok_s ? `${r.decode_tok_s} tok/s` : "—";
+      return `<section class="card" style="padding:1.1rem">
+        <div style="display:flex;justify-content:space-between;gap:.6rem;align-items:baseline;flex-wrap:wrap">
+          <h2 style="font-size:1.15rem;margin:0">${r.model_name}</h2>
+          ${statusBadge(r)}
+        </div>
+        <p class="muted" style="margin:.5rem 0 .2rem">${r.hardware}${r.memory_bandwidth_gbs ? ` · ${r.memory_bandwidth_gbs} GB/s` : ""}</p>
+        <p style="margin:.3rem 0"><strong class="mono">${speed}</strong> <span class="dim">decode, one stream</span>
+          ${r.peak ? ` · peak ${r.peak}` : ""}${r.prefill ? ` · prefill ${r.prefill}` : ""}</p>
+        <p class="dim" style="margin:.2rem 0;font-size:.85rem">
+          ${r.quant_detail || ""}${r.engine ? ` · ${r.engine}` : ""} · ctx ${r.context || "—"}${r.weights_gib ? ` · weights ~${r.weights_gib} GiB` : ""}</p>
+        ${Object.keys(r.checks || {}).length ? `<p class="dim" style="margin:.2rem 0;font-size:.8rem">${Object.entries(r.checks).filter(([, v]) => v).map(([k]) => `✓ ${k.replace(/_/g, " ")}`).join(" · ")}</p>` : ""}
+        ${r.model_id ? `<p style="margin:.5rem 0"><a class="pill hot" href="model-detail.html?id=${encodeURIComponent(r.model_id)}">Compare API pricing →</a></p>` : ""}
+        <p style="margin:.6rem 0 0"><a class="rv-ghost" href="${r.source_url}" target="_blank" rel="noopener">${r.source === "sybil" ? "Sybil registry ↗" : "Get the recipe ↗"}</a></p>
+      </section>`;
+    }
+
+    function render() {
+      const rows = RECIPES.filter((r) =>
+        (HW === "all" || r.hw_class === HW || (HW === "spark2" && r.hw_class === "spark3")) &&
+        (SRC === "all" || r.source === SRC));
+      $("#recipes").innerHTML = rows.map(card).join("") ||
+        '<p class="muted">No recipe for that setup yet.</p>';
+    }
+
+    $all("#hw-filters .chip").forEach((chip) => {
+      chip.onclick = () => {
+        $all("#hw-filters .chip").forEach((c) => c.classList.remove("on"));
+        chip.classList.add("on");
+        HW = chip.dataset.hw;
+        render();
+      };
+    });
+    $all("#src-filters .chip").forEach((chip) => {
+      chip.onclick = () => {
+        $all("#src-filters .chip").forEach((c) => c.classList.remove("on"));
+        chip.classList.add("on");
+        SRC = chip.dataset.src;
+        render();
+      };
+    });
+
+    fetch("data/local-models.json", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((d) => { RECIPES = d.recipes; render(); });
+  </script>
+</body>
+</html>

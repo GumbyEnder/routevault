@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="How we score • RouteVault">
+  <Nav active="/how-we-score" />
+  <div id="rv-shell" hidden></div>
+  <main class="rv-wrap">
+    <p class="kicker">Rubric v2026-08-14</p>
+    <h1>How we score</h1>
+    <p class="lede">Scores have two layers: raw benchmark numbers, and the RouteVault Scale — a published table that maps those numbers to plain-English grades. Every grade is traceable to the table below; nothing is hand-adjusted.</p>
+
+    <div class="grid-2" style="margin:1.4rem 0">
+      <section class="card" style="padding:1.1rem">
+        <h2>Technical layer</h2>
+        <p>Default value weights (Explorer sliders can change these locally):</p>
+        <div class="weights">
+          <div class="weight"><span>Reasoning</span><div class="wbar"><i style="width:32%"></i></div><span class="num">32%</span></div>
+          <div class="weight"><span>Coding</span><div class="wbar"><i style="width:25%"></i></div><span class="num">25%</span></div>
+          <div class="weight"><span>Tool use</span><div class="wbar"><i style="width:18%"></i></div><span class="num">18%</span></div>
+          <div class="weight"><span>General</span><div class="wbar"><i style="width:15%"></i></div><span class="num">15%</span></div>
+          <div class="weight"><span>Context</span><div class="wbar"><i style="width:7%"></i></div><span class="num">7%</span></div>
+          <div class="weight"><span>Speed</span><div class="wbar"><i style="width:3%"></i></div><span class="num">3%</span></div>
+        </div>
+        <p class="muted" style="font-size:.8rem;margin-top:.5rem">Reasoning — AA intelligence index · Coding — AA coding · Tool use — AA agentic · General — same series, tracked separately · Context — advertised window · Speed — unused until we store latency.</p>
+        <p class="muted">Value score = weighted bench average ÷ (input+output $/M) × 10. Models missing a benchmark are scored without it rather than counted as zero.</p>
+      </section>
+      <section class="card" style="padding:1.1rem">
+        <h2>RouteVault Scale</h2>
+        <ul>
+          <li><strong>Project Planner</strong> — agentic ≥ 45 and intelligence ≥ 50</li>
+          <li><strong>Researcher</strong> — intelligence ≥ 52, or ≥ 45 with ≥ 400k context</li>
+          <li><strong>Senior Developer</strong> — coding ≥ 65 (or ≥ 50 if not cheap)</li>
+          <li><strong>Junior Developer</strong> — coding ≥ 35</li>
+          <li><strong>Budget Everyday</strong> — combined list price under $2.50 / M, or leftover generalists</li>
+          <li><strong>Specialist</strong> — thin bench coverage or narrow models</li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="card" style="padding:1.1rem">
+      <h2>What is live vs accumulated</h2>
+      <p id="honest"></p>
+      <p>Price history is weekly OpenRouter list prices from the public OpenRouterList ledger, from first appearance up to six months. We only show prices from weeks a model actually existed. Capability indexes are last-known AA snapshots held across that price series.</p>
+    </section>
+
+    <section style="margin-top:1.6rem">
+      <h2>Current labels</h2>
+      <div id="counts" class="grid-3"></div>
+    </section>
+  </main>
+  <script is:inline src="/legacy.js"></script>
+  <script is:inline>
+    window.mountNav = function() { /* SSR nav */ };
+    window.mountFoot = function() { /* SSR foot */ };
+  </script>
+  <script is:inline>
+loadDataset().then((d) => {
+      $("#honest").textContent = d.honesty.banner;
+      const tally = {};
+      d.models.forEach((m) => { tally[m.rv_label] = (tally[m.rv_label] || 0) + 1; });
+      $("#counts").innerHTML = Object.entries(tally).map(([k,v]) => `<div class="card" style="padding:1rem">
+        <div class="pill">${k}</div>
+        <div class="display" style="font-size:2rem">${v}</div>
+      </div>`).join("");
+    });
+  </script>
+</Base>

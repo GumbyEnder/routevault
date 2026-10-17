@@ -1,0 +1,154 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="Quiz • RouteVault">
+  <Nav active="/quiz" />
+  <div id="rv-shell" hidden></div>
+  
+  <script is:inline src="/legacy.js"></script>
+  <script is:inline>
+    window.mountNav = function() { /* SSR nav */ };
+    window.mountFoot = function() { /* SSR foot */ };
+  </script>
+  <main class="rv-wrap" style="max-width:760px">
+    <p class="kicker">Onboarding</p>
+    <div id="qbox"></div>
+    <div id="res" hidden></div>
+  </main>
+  <script is:inline>
+const questions = [
+      { id: "use", title: "What are you mostly doing?", opts: [
+        ["research", "Deep research / long analysis"],
+        ["planning", "Agentic planning and projects"],
+        ["coding", "Coding and architecture"],
+        ["chat", "Everyday chat and volume"],
+      ]},
+      { id: "price", title: "How hard should price pull?", opts: [
+        ["cheap", "Keep it cheap"],
+        ["balanced", "Balanced value"],
+        ["premium", "Peak quality first"],
+      ]},
+      { id: "ctx", title: "Do you need huge context?", opts: [
+        ["yes", "Regularly 200k+"],
+        ["sometimes", "Sometimes"],
+        ["no", "Standard chats"],
+      ]},
+      { id: "reason", title: "Reasoning load?", opts: [
+        ["high", "Multi-step / agents"],
+        ["medium", "Some planning"],
+        ["low", "Quick answers"],
+      ]},
+      { id: "run", title: "Where do you want it to run?", opts: [
+        ["cloud", "Cloud API (pay per token)"],
+        ["local-spark", "Locally — I have DGX Spark(s)"],
+        ["local-gpu", "Locally — I have an NVIDIA GPU"],
+      ]},
+    ];
+    const answers = {};
+    let i = 0;
+
+    function drawQ() {
+      const q = questions[i];
+      $("#qbox").hidden = false;
+      $("#res").hidden = true;
+      $("#qbox").innerHTML = `
+        <div class="dim">Question ${i + 1} of ${questions.length}</div>
+        <h1>${q.title}</h1>
+        <div style="display:grid;gap:.55rem;margin:1.2rem 0">
+          ${q.opts.map(([v, lab]) => `<button class="card" style="padding:1rem;text-align:left;cursor:pointer;background:var(--card);color:inherit;border:1px solid var(--line)" data-v="${v}">${lab}</button>`).join("")}
+        </div>
+        <button class="rv-ghost" ${i === 0 ? "disabled" : ""} id="back">Back</button>
+      `;
+      $all("[data-v]").forEach((b) => b.onclick = () => {
+        answers[q.id] = b.dataset.v;
+        if (i < questions.length - 1) { i += 1; drawQ(); }
+        else showRes();
+      });
+      $("#back").onclick = () => { if (i) { i -= 1; drawQ(); } };
+    }
+
+    function scoreModel(m) {
+      let s = 40;
+      const lab = (m.rv_label || "").toLowerCase();
+      const price = m.total_price;
+      const ctx = m.context_k;
+      const intel = (m.benchmarks?.reasoning ?? m.reasoning) || 0;
+      const coding = (m.benchmarks?.coding ?? m.coding) || 0;
+      const tools = (m.benchmarks?.tool_use ?? m.tool_use) || 0;
+      if (answers.use === "research" && (lab.includes("research") || intel >= 50)) s += 22;
+      if (answers.use === "planning" && (lab.includes("planner") || tools >= 40)) s += 24;
+      if (answers.use === "coding" && (lab.includes("dev") || coding >= 45)) s += 24;
+      if (answers.use === "chat" && (lab.includes("budget") || price < 2)) s += 20;
+      if (answers.price === "cheap") s += price < 1 ? 28 : price < 3 ? 12 : -18;
+      if (answers.price === "balanced") s += price >= 1 && price <= 8 ? 10 : 0;
+      if (answers.price === "premium") s += intel >= 55 ? 16 : 0;
+      if (answers.ctx === "yes" && ctx >= 200) s += 16;
+      if (answers.reason === "high") s += (intel + tools) / 6;
+      s += Math.min(15, (m._liveValue || 0) / 80);
+      return s;
+    }
+
+    async function showRes() {
+      const ranked = [...RV.data.models].map((m) => ({ m, s: scoreModel(m) })).sort((a, b) => b.s - a.s);
+      const top = ranked.slice(0, 3);
+      const planner = ranked.find((r) => r.m.rv_label === "Project Planner")?.m;
+      const daily = ranked.find((r) => r.m.rv_label === "Budget Everyday")?.m;
+      $("#qbox").hidden = true;
+      $("#res").hidden = false;
+      $("#res").innerHTML = `
+        <h1>Your stack</h1>
+        <p class="lede">Three fits, then a planner + daily overflow pair you can save locally.</p>
+        ${top.map(({ m, s }, idx) => `<div class="card" style="padding:1rem;margin:.7rem 0;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+          <div>
+            <div class="dim">#${idx + 1} · score ${Math.round(s)}</div>
+            <div class="mono" style="font-size:1.15rem">${m.model_id}</div>
+            <div class="muted">${m.rv_label} · ${fmtMoney(m.input_price)} / ${fmtMoney(m.output_price)} · ${m.context_k}k</div>
+          </div>
+          <div>
+            <a class="rv-ghost" href="/model/${m.model_id}">Open</a>
+            <button class="rv-cta" onclick="addToStack('${m.model_id}')">Save</button>
+          </div>
+        </div>`).join("")}
+        <div class="card" style="padding:1rem;margin-top:1rem">
+          <strong>Suggested pair</strong>
+          <p class="muted">Planner: ${planner?.model_id || "—"} · Daily: ${daily?.model_id || "—"}</p>
+          <button class="rv-cta" id="save-pair">Save pair to My Stack</button>
+        </div>
+        <p style="margin-top:1rem"><a class="rv-ghost" href="/models">Explore all</a>
+        <button class="rv-ghost" id="redo">Retake</button></p>
+      `;
+      $("#save-pair").onclick = () => {
+        if (planner) addToStack(planner.model_id);
+        if (daily) addToStack(daily.model_id);
+      };
+      $("#redo").onclick = () => { i = 0; Object.keys(answers).forEach((k) => delete answers[k]); drawQ(); };
+      // Local run: append matching community recipes for the top picks
+      if (answers.run && answers.run !== "cloud") {
+        try {
+          const loc = await (await fetch("data/local-models.json", { cache: "no-store" })).json();
+          const ids = new Set(ranked.slice(0, 8).map((r) => r.m.model_id));
+          const wantSpark = answers.run === "local-spark";
+          const matches = loc.recipes.filter((r) => r.model_id && ids.has(r.model_id))
+            .filter((r) => wantSpark ? r.hw_class.startsWith("spark") : r.hw_class.startsWith("gpu"));
+          const box = document.createElement("div");
+          box.className = "card";
+          box.style.cssText = "padding:1rem;margin-top:1rem";
+          box.innerHTML = `<strong>Run it yourself instead</strong>
+            <p class="muted">${matches.length
+              ? `Community recipes matching your hardware for models near the top of your results:`
+              : `No recipe matches your hardware + picks yet — <a href="/lab" style="text-decoration:underline">browse the Local Lab</a>.`}</p>
+            ${matches.map((r) => `<p class="mono" style="margin:.4rem 0">
+              <a href="/lab" style="text-decoration:underline">${r.name}</a>
+              · ${r.hardware} · ${r.decode_tok_s ? r.decode_tok_s + " tok/s" : "see recipe"}</p>`).join("")}`;
+          $("#res").appendChild(box);
+        } catch (_) { /* optional */ }
+      }
+    }
+
+    loadDataset().then(drawQ);
+  </script>
+  <script is:inline>
+    document.addEventListener('click', function(e){ var b = e.target.closest('#show-res, .show-res'); if (b) fetch('/api/interest', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({type:'quiz_complete'})}).catch(function(){}); });
+  </script>
+</Base>

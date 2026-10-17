@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="Reset password • RouteVault">
+  <Nav active="/reset" />
+  <div id="rv-shell" hidden></div>
+
+  <script is:inline src="/legacy.js"></script>
+  <script is:inline>
+    window.mountNav = function() { /* SSR nav */ };
+    window.mountFoot = function() { /* SSR foot */ };
+  </script>
+  <main class="rv-wrap" style="max-width:520px">
+    <p class="kicker">Accounts</p>
+    <h1>Reset password</h1>
+    <p class="lede">Password reset codes are issued by the server, but email delivery for resets isn't wired up yet. Magic-link sign-in on the <a href="/login" style="text-decoration:underline">login page</a> works today; this page is for development or pasting a token you already have.</p>
+    <form id="forgot" class="card rv-form" style="padding:1.1rem;margin-bottom:1rem">
+      <label class="rv-field">Email
+        <input id="email" type="email" required>
+      </label>
+      <button class="rv-ghost" type="submit">Request reset</button>
+      <p id="forgot-msg" class="muted"></p>
+    </form>
+    <form id="reset" class="card rv-form" style="padding:1.1rem">
+      <label class="rv-field">Reset token
+        <input id="token" required autocomplete="off">
+      </label>
+      <label class="rv-field">New password (8+ characters)
+        <input id="password" type="password" required minlength="8" autocomplete="new-password">
+      </label>
+      <div id="err" class="rv-err"></div>
+      <button class="rv-cta" type="submit">Set new password</button>
+    </form>
+  </main>
+  <script is:inline>
+    loadDataset();
+    const existing = qs("token");
+    if (existing) $("#token").value = existing;
+    $("#forgot").onsubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const data = await api("/api/password/forgot", {
+          method: "POST",
+          body: JSON.stringify({ email: $("#email").value }),
+        });
+        $("#forgot-msg").textContent = data.reset_token
+          ? `Token (dev only): ${data.reset_token}`
+          : data.message;
+        if (data.reset_token) $("#token").value = data.reset_token;
+      } catch (err) {
+        $("#forgot-msg").textContent = err.message;
+      }
+    };
+    $("#reset").onsubmit = async (e) => {
+      e.preventDefault();
+      $("#err").textContent = "";
+      try {
+        const data = await api("/api/password/reset", {
+          method: "POST",
+          body: JSON.stringify({ token: $("#token").value, password: $("#password").value }),
+        });
+        applyProfile(data.profile);
+        location.href = "/account";
+      } catch (err) {
+        $("#err").textContent = err.message;
+      }
+    };
+  </script>
+</Base>

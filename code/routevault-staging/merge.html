@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merge stack • RouteVault</title>
+  <link rel="stylesheet" href="assets/rv.css">
+</head>
+<body>
+  <div id="rv-shell"></div>
+  <main class="rv-wrap" style="max-width:640px">
+    <p class="kicker">First login on this browser</p>
+    <h1>This browser already has a stack</h1>
+    <p class="lede">Choose what to keep. We will not overwrite one copy with the other unless you say so.</p>
+    <div id="cmp" class="card" style="padding:1.1rem;margin-bottom:1rem"></div>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+      <button class="rv-cta" data-s="local">Keep local and upload</button>
+      <button class="rv-ghost" data-s="cloud">Use cloud</button>
+      <button class="rv-ghost" data-s="union">Merge (union)</button>
+    </div>
+    <p id="err" class="rv-err" style="margin-top:.8rem"></p>
+  </main>
+  <script src="assets/rv.js"></script>
+  <script>
+    mountNav("stack.html");
+    mountFoot();
+    function summarize(p) {
+      const ids = (p.stack || []).join(", ") || "empty";
+      return `${(p.stack || []).length} stacked · ${(p.alerts || []).length} alerts · ${(p.routes || []).length} resolves<br><span class="mono">${ids}</span>`;
+    }
+    loadDataset().then(async () => {
+      const user = await refreshSession();
+      if (!user) { location.href = "login.html"; return; }
+      let cloud = {};
+      try { cloud = JSON.parse(sessionStorage.getItem("rv.merge.cloud") || "{}"); } catch (_) {}
+      const local = localProfile();
+      $("#cmp").innerHTML = `<p><strong>This browser</strong><br>${summarize(local)}</p>
+        <p style="margin-top:.8rem"><strong>Cloud (${user.email})</strong><br>${summarize(cloud)}</p>
+        <p class="muted">Union keeps unique model ids, alert rules, and resolves, capped at 20 / 30 / 50. Weights come from this browser.</p>`;
+      $all("[data-s]").forEach((btn) => {
+        btn.onclick = async () => {
+          $("#err").textContent = "";
+          try {
+            const data = await api("/api/profile/merge", {
+              method: "POST",
+              body: JSON.stringify({ strategy: btn.dataset.s, local: localProfile() }),
+            });
+            applyProfile(data.profile);
+            sessionStorage.removeItem("rv.merge.pending");
+            sessionStorage.removeItem("rv.merge.cloud");
+            location.href = "account.html";
+          } catch (err) {
+            $("#err").textContent = err.message;
+          }
+        };
+      });
+    });
+  </script>
+</body>
+</html>

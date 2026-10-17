@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="Security • RouteVault">
+  <Nav active="/security" />
+  <main class="rv-wrap">
+    <p class="kicker">Security</p>
+    <h1>Security</h1>
+    <p class="lede">The main promise: your API keys go from your browser straight to the provider, and never through RouteVault.</p>
+
+    <section class="card" style="padding:1.1rem;max-width:760px">
+      <h2>BYOK (bring your own key)</h2>
+      <p>When you check a key on the Local Lab or BYOK pages, the request goes from your browser directly to openrouter.ai. The key is not sent to RouteVault, not logged, and not stored anywhere on our side.</p>
+
+      <h2>Accounts</h2>
+      <p>Passwords are stored hashed and never in plain text. Sessions use HttpOnly cookies, so scripts on the page can't read them. Magic-link tokens are single-use and expire.</p>
+
+      <h2>Data sources</h2>
+      <p>All data on the site comes from public sources: provider list prices and Artificial Analysis benchmark indexes. Nothing is scraped from private accounts.</p>
+
+      <h2>Found something?</h2>
+      <p>If you find a security issue, email <a href="mailto:hello@routevault.ai">hello@routevault.ai</a> and we'll fix it. Thanks for the heads-up.</p>
+    </section>
+  </main>
+</Base>

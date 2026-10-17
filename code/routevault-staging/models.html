@@ -1,182 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Models • RouteVault</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        body { font-family: 'Inter', system_ui, sans-serif; }
-        .heading-font { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
-        .dark-card { background-color: #18181b; border: 1px solid #27272a; }
-        .model-row { transition: background-color 0.1s ease; }
-        .model-row:hover { background-color: #18181b; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Models Explorer • RouteVault</title>
+  <link rel="stylesheet" href="assets/rv.css">
 </head>
-<body class="bg-zinc-950 text-zinc-200">
-    <!-- Demo Data Banner -->
-    <div class="bg-indigo-600/20 border-b border-indigo-500/30 px-4 py-2 text-center">
-        <p class="text-sm text-indigo-200">
-            <i class="fa-solid fa-flask mr-2"></i>
-            Demo data: price history is illustrative (synthetic), not live market prices.
-        </p>
-    </div>
-    <!-- Nav -->
-    <nav class="border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-8 flex items-center justify-between h-20">
-            <div class="flex items-center gap-x-3">
-                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
-                    <i class="fa-solid fa-route text-white text-2xl"></i>
-                </div>
-                <a href="index.html" class="text-3xl font-semibold tracking-tighter">RouteVault</a>
-            </div>
-            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
-                <a href="models.html" class="text-white font-semibold">Models</a>
-                <a href="ecosystem.html" class="hover:text-white transition-colors">Tools &amp; Harnesses</a>
-                <a href="how-we-score.html" class="hover:text-white transition-colors">How We Score</a>
-                <a href="#" class="hover:text-white transition-colors">Pricing</a>
-            </div>
-            <div class="flex items-center gap-x-4">
-                <button onclick="window.location.href='index.html'" class="px-5 py-2.5 text-sm font-medium text-zinc-300 hover:text-white">Home</button>
-                <button class="px-5 py-2.5 bg-white text-zinc-950 hover:bg-zinc-100 transition-all text-sm font-semibold rounded-2xl">Start for free</button>
-            </div>
-        </div>
-    </nav>
+<body>
+  <div id="rv-shell"></div>
+  <main class="rv-wrap">
+    <p class="kicker">Explorer</p>
+    <h1>Models explorer</h1>
+    <p class="lede">Compare live list prices against capability. The weighting sliders recompute value scores right in your browser; missing benchmarks are left out rather than guessed.</p>
 
-    <div class="max-w-7xl mx-auto px-8 pt-12 pb-8">
-        <div class="flex items-end justify-between mb-8">
-            <div>
-                <span class="uppercase tracking-[2px] text-xs font-semibold text-indigo-400">187 models tracked</span>
-                <h1 class="text-6xl font-semibold tracking-tighter heading-font">All Models</h1>
-            </div>
-            <div class="text-right text-sm text-zinc-400">Last updated: just now</div>
+    <div class="grid-2" style="margin:1.2rem 0">
+      <section class="card" style="padding:1rem 1.1rem">
+        <strong>Estimate your monthly cost</strong>
+        <p class="muted" style="font-size:.82rem;margin:.3rem 0 .6rem">Enter your typical token volume to add an estimated monthly cost column. Prices are per million tokens.</p>
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center">
+          <label class="dim" style="font-size:.78rem">In (M/mo) <input id="calc-in" type="number" min="0" step="any" style="width:6rem;background:var(--bg-2);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:.35rem"></label>
+          <label class="dim" style="font-size:.78rem">Out (M/mo) <input id="calc-out" type="number" min="0" step="any" style="width:6rem;background:var(--bg-2);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:.35rem"></label>
+          <button class="rv-ghost" id="calc-apply">Apply</button>
+          <button class="rv-ghost" id="calc-clear" style="display:none">Clear</button>
         </div>
-
-        <!-- Search + Filters -->
-        <div class="flex flex-wrap gap-3 mb-6">
-            <div class="flex-1 min-w-[280px]">
-                <input type="text" id="search" placeholder="Search models or providers..." 
-                       class="w-full bg-zinc-900 border border-zinc-800 rounded-2xl px-5 py-3 text-sm focus:outline-none focus:border-indigo-500" onkeyup="filterModels()">
-            </div>
-            <div class="flex gap-2">
-                <button onclick="filterByCategory(this, 'all')" class="active px-4 py-2.5 text-sm bg-white text-zinc-950 rounded-2xl font-medium">All</button>
-                <button onclick="filterByCategory(this, 'Researcher')" class="px-4 py-2.5 text-sm bg-zinc-900 border border-zinc-800 rounded-2xl">Researcher</button>
-                <button onclick="filterByCategory(this, 'Project Planner')" class="px-4 py-2.5 text-sm bg-zinc-900 border border-zinc-800 rounded-2xl">Project Planner</button>
-                <button onclick="filterByCategory(this, 'Junior Developer')" class="px-4 py-2.5 text-sm bg-zinc-900 border border-zinc-800 rounded-2xl">Junior Dev</button>
-                <button onclick="filterByCategory(this, 'Budget')" class="px-4 py-2.5 text-sm bg-zinc-900 border border-zinc-800 rounded-2xl">Budget</button>
-            </div>
+      </section>
+      <section class="card" style="padding:1rem 1.1rem">
+        <strong>Check your OpenRouter key</strong>
+        <p class="muted" style="font-size:.82rem;margin:.3rem 0 .6rem">Validates your key and shows remaining credit. The key is checked directly against OpenRouter from your browser and stored only in this tab — it is never sent to RouteVault.</p>
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center">
+          <input id="byok" type="password" placeholder="sk-or-v1-…" style="flex:1;min-width:12rem;background:var(--bg-2);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:.35rem">
+          <button class="rv-ghost" id="byok-check">Check</button>
         </div>
-
-        <!-- Models Table -->
-        <div class="dark-card rounded-3xl overflow-hidden border border-zinc-800">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-zinc-800 bg-zinc-900">
-                        <th class="px-8 py-4 text-left font-semibold text-xs tracking-wider text-zinc-400">MODEL</th>
-                        <th class="px-4 py-4 text-left font-semibold text-xs tracking-wider text-zinc-400">CATEGORY</th>
-                        <th onclick="sortTable('monthly')" class="px-4 py-4 text-center font-semibold text-xs tracking-wider text-zinc-400 cursor-pointer hover:text-white">MONTHLY <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
-                        <th onclick="sortTable('score')" class="px-4 py-4 text-center font-semibold text-xs tracking-wider text-zinc-400 cursor-pointer hover:text-white">RV SCORE <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
-                        <th class="px-4 py-4 text-center font-semibold text-xs tracking-wider text-zinc-400">SPEED</th>
-                        <th onclick="sortTable('pp')" class="px-4 py-4 text-center font-semibold text-xs tracking-wider text-zinc-400 cursor-pointer hover:text-white">P/P <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
-                        <th class="px-8 py-4 text-right font-semibold text-xs tracking-wider text-zinc-400"></th>
-                    </tr>
-                </thead>
-                <tbody id="model-table" class="divide-y divide-zinc-800">
-                    <!-- Populated by JS -->
-                </tbody>
-            </table>
-        </div>
+        <div id="byok-out" class="muted" style="font-size:.82rem;margin-top:.5rem"></div>
+      </section>
     </div>
 
-    <script>
-        const models = [
-            { name: "grok-4-1-fast-reasoning", provider: "xAI", category: "Budget", monthly: "$12", score: 94, speed: "Very Fast", pp: 9.1, id: "grok-4-1-fast-reasoning" },
-            { name: "claude-4-opus", provider: "Anthropic", category: "Researcher", monthly: "$85", score: 98, speed: "Medium", pp: 7.8, id: "claude-4-opus" },
-            { name: "llama-3.3-70b", provider: "Meta", category: "Project Planner", monthly: "$29", score: 91, speed: "Fast", pp: 8.6, id: "llama-3.3-70b" },
-            { name: "deepseek-r1", provider: "DeepSeek", category: "Budget", monthly: "$8", score: 89, speed: "Very Fast", pp: 9.4, id: "deepseek-r1" },
-            { name: "gpt-4o", provider: "OpenAI", category: "Researcher", monthly: "$72", score: 96, speed: "Fast", pp: 7.5, id: "gpt-4o" },
-            { name: "gemini-2.0-flash", provider: "Google", category: "Junior Developer", monthly: "$19", score: 87, speed: "Very Fast", pp: 9.2, id: "gemini-2.0-flash" },
-            { name: "qwen2.5-72b", provider: "Alibaba", category: "Project Planner", monthly: "$24", score: 88, speed: "Fast", pp: 8.3, id: "qwen2.5-72b" },
-            { name: "mistral-large-2", provider: "Mistral", category: "Researcher", monthly: "$48", score: 93, speed: "Fast", pp: 7.9, id: "mistral-large-2" },
-        ];
+    <div class="card" style="padding:1rem 1.1rem;margin:1.2rem 0">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap">
+        <strong>Your lens</strong>
+        <button class="rv-ghost" id="reset-w">Reset default weights</button>
+      </div>
+      <div id="sliders"></div>
+    </div>
 
-        function renderModels(filtered) {
-            const tbody = document.getElementById('model-table');
-            tbody.innerHTML = '';
-            filtered.forEach(m => {
-                const row = document.createElement('tr');
-                row.className = 'model-row';
-                row.innerHTML = `
-                    <td class="px-8 py-5">
-                        <div class="font-semibold">${m.name}</div>
-                        <div class="text-xs text-zinc-500">${m.provider} • 128k context</div>
-                    </td>
-                    <td class="px-4 py-5">
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-zinc-800 text-zinc-300">${m.category}</span>
-                    </td>
-                    <td class="px-4 py-5 text-center font-medium">${m.monthly}</td>
-                    <td class="px-4 py-5 text-center"><span class="font-semibold text-emerald-400">${m.score}</span></td>
-                    <td class="px-4 py-5 text-center text-emerald-400">${m.speed}</td>
-                    <td class="px-4 py-5 text-center font-medium">${m.pp}</td>
-                    <td class="px-8 py-5 text-right">
-                        <a href="model-detail.html?id=${m.id}" class="px-5 py-1.5 text-xs font-semibold border border-zinc-700 hover:bg-white hover:text-zinc-950 transition-colors rounded-2xl">View details</a>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
+    <div class="filters">
+      <input id="q" type="search" placeholder="Search model or provider" style="min-width:220px">
+      <select id="label"><option value="">All labels</option></select>
+      <select id="provider"><option value="">All providers</option></select>
+      <button class="chip" data-f="improved">Value improved</button>
+      <button class="chip" data-f="cheap">Under $2 / M</button>
+      <button class="chip" data-f="hermes">Hermes recommended</button>
+    </div>
+    <p class="dim" id="count"></p>
+    <div class="card" style="overflow:auto">
+      <table class="explorer" id="tbl"></table>
+    </div>
+  </main>
+  <script src="assets/rv.js"></script>
+  <script>
+    mountNav("models.html");
+    mountFoot();
+    const flags = { improved: false, cheap: false, hermes: false };
+    let sortKey = "value";
+    let sortDir = -1;
+    RV.calc = null;
 
-        function filterModels() {
-            const term = document.getElementById('search').value.toLowerCase();
-            const filtered = models.filter(m => 
-                m.name.toLowerCase().includes(term) || 
-                m.provider.toLowerCase().includes(term)
-            );
-            renderModels(filtered);
-        }
+    const sliderKeys = [
+      ["reasoning", "Reasoning"],
+      ["coding", "Coding"],
+      ["tool_use", "Tool use"],
+      ["general_intelligence", "General"],
+      ["context", "Context"],
+    ];
 
-        function filterByCategory(btn, cat) {
-            document.querySelectorAll('button').forEach(b => b.classList.remove('active', 'bg-white', 'text-zinc-950'));
-            document.querySelectorAll('button').forEach(b => b.classList.add('bg-zinc-900', 'border', 'border-zinc-800'));
-            btn.classList.add('active', 'bg-white', 'text-zinc-950');
-            btn.classList.remove('bg-zinc-900', 'border', 'border-zinc-800');
-
-            let filtered = models;
-            if (cat !== 'all') {
-                filtered = models.filter(m => m.category === cat);
-            }
-            renderModels(filtered);
-        }
-
-        function sortTable(column) {
-            const tbody = document.getElementById('model-table');
-            const rows = Array.from(tbody.querySelectorAll('tr'));
-            
-            rows.sort((a, b) => {
-                let valA, valB;
-                if (column === 'monthly') {
-                    valA = parseFloat(a.cells[2].textContent.replace('$', ''));
-                    valB = parseFloat(b.cells[2].textContent.replace('$', ''));
-                } else if (column === 'score') {
-                    valA = parseInt(a.cells[3].textContent);
-                    valB = parseInt(b.cells[3].textContent);
-                } else if (column === 'pp') {
-                    valA = parseFloat(a.cells[5].textContent);
-                    valB = parseFloat(b.cells[5].textContent);
-                } else {
-                    return 0;
-                }
-                return valB - valA; // descending
-            });
-            
-            tbody.innerHTML = '';
-            rows.forEach(row => tbody.appendChild(row));
-        }
-
-        window.onload = () => {
-            renderModels(models);
+    function drawSliders() {
+      $("#sliders").innerHTML = sliderKeys.map(([k, lab]) => `
+        <div class="slider-row">
+          <label>${lab}</label>
+          <input type="range" min="0" max="50" value="${RV.weights[k]}" data-w="${k}">
+          <span class="num" data-wv="${k}">${RV.weights[k]}</span>
+        </div>`).join("");
+      $all("[data-w]").forEach((el) => {
+        el.oninput = () => {
+          RV.weights[el.dataset.w] = Number(el.value);
+          $(`[data-wv="${el.dataset.w}"]`).textContent = el.value;
+          saveWeights();
+          rescore();
+          render();
         };
-    </script>
+      });
+    }
+
+    function rescore() {
+      RV.data.models.forEach((m) => { m._liveValue = valueScore(m); });
+    }
+
+    function filtered() {
+      const q = $("#q").value.toLowerCase().trim();
+      const lab = $("#label").value;
+      const prov = $("#provider").value;
+      return RV.data.models.filter((m) => {
+        if (q && !(`${m.model_id} ${m.provider} ${m.display_name}`).toLowerCase().includes(q)) return false;
+        if (lab && m.rv_label !== lab) return false;
+        if (prov && m.provider !== prov) return false;
+        if (flags.improved && !m.value_improved) return false;
+        if (flags.cheap && m.total_price >= 2) return false;
+        if (flags.hermes && m.hermes_fit !== "Recommended") return false;
+        return true;
+      }).sort((a, b) => {
+        const map = {
+          name: a.model_id.localeCompare(b.model_id),
+          price: a.total_price - b.total_price,
+          value: (a._liveValue || 0) - (b._liveValue || 0),
+          d30: (a.price_change_30d ?? 0) - (b.price_change_30d ?? 0),
+          intel: (a.benchmarks.reasoning || 0) - (b.benchmarks.reasoning || 0),
+          coding: (a.benchmarks.coding || 0) - (b.benchmarks.coding || 0),
+        };
+        return (map[sortKey] || 0) * sortDir;
+      });
+    }
+
+    function render() {
+      const rows = filtered();
+      $("#count").textContent = `${rows.length} models`;
+      $("#tbl").innerHTML = `<thead><tr>
+        <th data-s="name">Model</th>
+        <th>Label</th>
+        <th data-s="price">In / Out</th>
+        <th>Trend</th>
+        <th data-s="d30">30d Δ</th>
+        <th data-s="intel">Reason</th>
+        <th data-s="coding">Code</th>
+        <th>Tools</th>
+        <th data-s="value">Value</th>
+        <th id="th-cost" class="dim" style="display:none">Est. $/mo</th>
+        <th></th>
+      </tr></thead><tbody>${rows.map((m) => {
+        const badge = m.price_change_30d != null && m.price_change_30d < -5
+          ? `<span class="pill hot">price intel</span>` : "";
+        const monthly = RV.calc ? (m.input_price * RV.calc.in + m.output_price * RV.calc.out) : null;
+        return `<tr>
+          <td><div class="mono">${providerMark(m.provider)}${m.model_id}</div><div class="dim" style="font-size:.75rem">${m.provider} · ${m.context_k}k · ${m.hermes_fit}</div></td>
+          <td><span class="pill">${m.rv_label}</span> ${badge}</td>
+          <td class="num">${fmtMoney(m.input_price)} / ${fmtMoney(m.output_price)}</td>
+          <td>${sparklineSVG(modelHistory(RV.data, m.model_id))}</td>
+          <td class="num ${pctClass(m.price_change_30d)}">${fmtPct(m.price_change_30d)}</td>
+          <td class="num">${m.benchmarks.reasoning ?? "—"}</td>
+          <td class="num">${m.benchmarks.coding ?? "—"}</td>
+          <td class="num">${m.benchmarks.tool_use ?? "—"}</td>
+          <td class="num">${m._liveValue}</td>
+          <td class="num" style="${RV.calc ? "" : "display:none"}">${monthly != null ? "$" + monthly.toFixed(2) : "—"}</td>
+          <td style="white-space:nowrap">
+            <a class="rv-ghost" href="model-detail.html?id=${encodeURIComponent(m.model_id)}">Open</a>
+            <button class="rv-ghost" onclick="addToStack('${m.model_id}')">Stack</button>
+          </td>
+        </tr>`;
+      }).join("")}</tbody>`;
+      const th = document.getElementById("th-cost");
+      if (th) th.style.display = RV.calc ? "" : "none";
+      $all("th[data-s]").forEach((th) => {
+        th.onclick = () => {
+          sortKey = th.dataset.s;
+          sortDir *= -1;
+          render();
+        };
+      });
+    }
+
+    loadDataset().then((d) => {
+      // Cost calculator
+      $("#calc-apply").onclick = () => {
+        const inM = parseFloat($("#calc-in").value) || 0;
+        const outM = parseFloat($("#calc-out").value) || 0;
+        RV.calc = (inM || outM) ? { in: inM, out: outM } : null;
+        $("#calc-clear").style.display = RV.calc ? "" : "none";
+        render();
+      };
+      $("#calc-clear").onclick = () => {
+        RV.calc = null;
+        $("#calc-in").value = ""; $("#calc-out").value = "";
+        $("#calc-clear").style.display = "none";
+        render();
+      };
+      // BYOK check (browser → OpenRouter directly; key never touches RouteVault)
+      $("#byok-check").onclick = async () => {
+        const key = $("#byok").value.trim();
+        const out = $("#byok-out");
+        if (!key) { out.textContent = "Paste a key first."; return; }
+        out.textContent = "Checking…";
+        try {
+          const r = await fetch("https://openrouter.ai/api/v1/key", { headers: { Authorization: `Bearer ${key}` } });
+          if (!r.ok) { out.textContent = r.status === 401 ? "Invalid key." : `OpenRouter returned ${r.status}.`; return; }
+          const d = await r.json();
+          const k = d.data || {};
+          const usage = k.usage != null ? `$${Number(k.usage).toFixed(2)} used` : "usage n/a";
+          const limit = k.limit == null ? "no spend limit" : `$${Number(k.limit).toFixed(2)} limit`;
+          out.innerHTML = `<span class="good">● Valid</span> — ${k.label || "key"} · ${usage} · ${limit}${k.is_free_tier ? " · free tier" : ""}`;
+        } catch (err) {
+          out.textContent = "Could not reach OpenRouter from this browser.";
+        }
+      };
+      $("#byok").addEventListener("keydown", (e) => { if (e.key === "Enter") $("#byok-check").click(); });
+      drawSliders();
+      $("#label").innerHTML += labelOptions(d.models).map((l) => `<option>${l}</option>`).join("");
+      const provs = [...new Set(d.models.map((m) => m.provider))].sort();
+      $("#provider").innerHTML += provs.map((p) => `<option>${p}</option>`).join("");
+      $("#q").oninput = render;
+      $("#label").onchange = render;
+      $("#provider").onchange = render;
+      $all("[data-f]").forEach((btn) => {
+        btn.onclick = () => {
+          flags[btn.dataset.f] = !flags[btn.dataset.f];
+          btn.classList.toggle("on", flags[btn.dataset.f]);
+          render();
+        };
+      });
+      $("#reset-w").onclick = () => {
+        RV.weights = { reasoning: 32, coding: 25, tool_use: 18, general_intelligence: 15, context: 7, speed: 3 };
+        saveWeights();
+        drawSliders();
+        rescore();
+        render();
+      };
+      render();
+    });
+  </script>
 </body>
 </html>

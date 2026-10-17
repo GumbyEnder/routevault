@@ -1,0 +1,174 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import { trendsData, logInterest } from '../lib/db.js';
+
+let data = null;
+try { data = await trendsData(); } catch (e) { console.error('trends:', e.message); }
+const models = data?.models ?? [];
+const movers = data?.movers ?? [];
+const history = data?.history ?? {};
+void logInterest('page_view', null, { path: '/trends' });
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const money = (n, d = 2) => (n == null ? '—' : '$' + Number(n).toFixed(Math.abs(n) < 0.1 ? 3 : d));
+const pct = (n) => (n == null ? '—' : (n > 0 ? '+' : '') + Number(n).toFixed(1) + '%');
+
+// Price movers are the visible value story: benchmarks move slowly, so the
+// biggest 30-day list-price changes are what users can act on.
+const droppers = [...movers].sort((a, b) => a.price_change_30d - b.price_change_30d).slice(0, 8);
+const risers = [...movers].sort((a, b) => b.price_change_30d - a.price_change_30d).slice(0, 5);
+
+const scored = models.filter((m) => m.value_score != null);
+const maxBar = Math.max(...scored.map((m) => m.value_score), 1);
+
+const byLabel = {};
+for (const m of scored) {
+  (byLabel[m.rv_label] = byLabel[m.rv_label] || []).push(m);
+}
+const labels = Object.keys(byLabel).sort();
+
+// Multi-series line chart: each mover's blended price rebased to its own
+// start so very different price levels share one readable chart.
+function moversChart(hist, width = 900, height = 260) {
+  const series = Object.entries(hist)
+    .filter(([, pts]) => pts.length >= 2)
+    .slice(0, 8);
+  if (!series.length) return '<p class="muted">Not enough price history yet — newer than the backfill window.</p>';
+  let min = Infinity, max = -Infinity;
+  const norm = series.map(([id, pts]) => {
+    const base = pts[0].total || 1;
+    const rel = pts.map((p) => ((p.total - base) / base) * 100);
+    for (const v of rel) { if (v < min) min = v; if (v > max) max = v; }
+    return { id, rel };
+  });
+  const span = (max - min) || 1;
+  const pad = 8, colors = ['var(--accent)', 'var(--accent-2)', 'var(--good)', 'var(--bad)', '#c084fc', '#60a5fa', '#fbbf24', '#f472b6'];
+  const paths = norm.map((s, i) => {
+    const step = (width - 2 * pad) / (s.rel.length - 1);
+    const pts = s.rel.map((v, j) =>
+      `${(pad + j * step).toFixed(1)},${(height - pad - ((v - min) / span) * (height - 2 * pad)).toFixed(1)}`);
+    return `<polyline points="${pts.join(' ')}" fill="none" stroke="${colors[i % colors.length]}" stroke-width="2"/>`;
+  }).join('');
+  const legend = norm.map((s, i) =>
+    `<span style="display:inline-flex;align-items:center;gap:.35rem;margin-right:1rem;font-size:.72rem">
+      <span style="width:.9rem;height:3px;background:${colors[i % colors.length]};display:inline-block"></span>
+      <a class="mono" href="/model/${esc(s.id)}">${esc(s.id)}</a></span>`).join('');
+  const zeroY = height - pad - ((0 - min) / span) * (height - 2 * pad);
+  // Time axis: models may start at different dates; label the min/max dates
+  // actually present across the charted series.
+  const dates = series.flatMap(([, pts]) => pts.map((p) => String(p.date)));
+  const fmtDate = (d) => {
+    const t = new Date(d.length === 10 ? d + 'T00:00:00Z' : d);
+    return isNaN(t) ? '—' : t.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+  };
+  const sorted = [...new Set(dates)].sort();
+  const axis = `<div style="display:flex;justify-content:space-between;margin-top:.35rem" class="dim">
+    <span style="font-size:.72rem">${fmtDate(sorted[0])}</span>
+    <span style="font-size:.72rem">${fmtDate(sorted[sorted.length - 1])} (latest)</span>
+  </div>`;
+  return `<div class="card" style="padding:1.2rem;overflow:auto">
+    <svg viewBox="0 0 ${width} ${height}" width="100%" height="${height}" preserveAspectRatio="none" aria-hidden="true">
+      <line x1="${pad}" y1="${zeroY.toFixed(1)}" x2="${width - pad}" y2="${zeroY.toFixed(1)}" stroke="var(--line)" stroke-dasharray="4 4" stroke-width="1"/>
+      ${paths}
+    </svg>
+    ${axis}
+    <div style="margin-top:.6rem">${legend}</div>
+    <p class="dim" style="font-size:.75rem;margin:.4rem 0 0">Each line is a top mover's blended in+out price, rebased to 0% at its earliest point in the window. Below the dashed line means cheaper than the start.</p>
+  </div>`;
+}
+
+function barRow(m, invert = false) {
+  const v = m.price_change_30d;
+  const good = invert ? v < 0 : v > 0;
+  const w = Math.min(Math.abs(v), 100);
+  return `<div style="display:grid;grid-template-columns:1fr auto;gap:.4rem;align-items:center;padding:.4rem 0;border-bottom:1px solid var(--row-line)">
+    <div>
+      <a class="mono" href="/model/${esc(m.model_id)}" style="font-size:.82rem">${esc(m.model_id)}</a>
+      <div class="dim" style="font-size:.7rem">${esc(m.provider)} · ${esc(m.rv_label)} · ${money(m.total_price)}/M</div>
+      <div style="height:5px;background:var(--bg-2);border-radius:3px;margin-top:.25rem;max-width:260px">
+        <div style="height:5px;width:${w}%;background:${good ? 'var(--good)' : 'var(--bad)'};border-radius:3px"></div>
+      </div>
+    </div>
+    <span class="num ${good ? 'drop' : 'rise'}">${pct(v)}</span>
+  </div>`;
+}
+---
+<Base title="Value Trends • RouteVault">
+  <Nav active="/trends" />
+  <main class="rv-wrap">
+    <p class="kicker">Insights</p>
+    <h1>Value trends</h1>
+    <p class="lede">{models.length} models tracked. Charts come from the live catalog: weekly OpenRouter list prices plus daily snapshots, scored against the latest Artificial Analysis indexes.</p>
+
+    {models.length === 0 ? (
+      <p class="muted">Catalog unavailable right now — refresh in a minute.</p>
+    ) : (
+    <>
+    <div class="kpi" style="margin:1.4rem 0">
+      {(() => {
+        const best = scored[0];
+        const biggestDrop = droppers[0];
+        const cheapest = [...scored].sort((a, b) => a.total_price - b.total_price)[0];
+        const tiles = [
+          ['Best value score', best ? String(best.value_score) : '—', best && best.model_id],
+          ['Biggest 30d price drop', biggestDrop ? pct(biggestDrop.price_change_30d) : '—', biggestDrop && biggestDrop.model_id],
+          ['Cheapest per M', cheapest ? money(cheapest.total_price) : '—', cheapest && cheapest.model_id],
+        ];
+        return tiles.map(([k, v, id]) => (
+          <div class="card" style="padding:1rem 1.1rem">
+            <div class="dim" style="font-size:.72rem">{k}</div>
+            <div class="num" style="font-size:1.5rem">{v}</div>
+            {id && <a class="mono dim" style="font-size:.75rem" href={`/model/${esc(id)}`}>{esc(id)}</a>}
+          </div>
+        ));
+      })()}
+    </div>
+
+    <section style="margin-top:1.6rem">
+      <h2>Mover price history</h2>
+      <p class="muted" style="font-size:.85rem;margin:.2rem 0 .8rem">Weekly OpenRouter list prices (OpenRouterList) plus live snapshots, up to 6 months or since the model first appeared.</p>
+      <Fragment set:html={moversChart(history)} />
+    </section>
+
+    <section style="margin-top:1.6rem">
+      <h2>Price movers (30d)</h2>
+      <p class="muted" style="font-size:.85rem;margin:.2rem 0 .8rem">Biggest blended in+out list-price changes over the last 30 days. A drop is a value gain whenever the benchmarks behind the value rating held steady.</p>
+      <div class="grid-2">
+        <section class="card" style="padding:1.1rem">
+          <h3 style="margin:.1rem 0 .4rem;font-size:1rem">Dropping</h3>
+          <Fragment set:html={droppers.length ? droppers.map((m) => barRow(m, true)).join('') : '<p class="muted">No 30-day price drops recorded yet.</p>'} />
+        </section>
+        <section class="card" style="padding:1.1rem">
+          <h3 style="margin:.1rem 0 .4rem;font-size:1rem">Rising</h3>
+          <Fragment set:html={risers.length ? risers.map((m) => barRow(m, true)).join('') : '<p class="muted">No 30-day price increases recorded.</p>'} />
+        </section>
+      </div>
+    </section>
+
+    <section style="margin-top:1.6rem">
+      <h2>By RouteVault Scale</h2>
+      <p class="muted" style="font-size:.85rem;margin:.2rem 0 .8rem">Top value scores within each scale tier. The bar is the value score — weighted benchmark average ÷ blended price — so longer means more capability per dollar.</p>
+      <div class="grid-3">
+        {labels.map((lab) => (
+          <div class="card" style="padding:1rem">
+            <span class="pill hot">{esc(lab)}</span>
+            {byLabel[lab].slice(0, 5).map((m) => (
+              <div style="margin-top:.55rem">
+                <div style="display:flex;justify-content:space-between;gap:.5rem">
+                  <a class="mono" style="font-size:.78rem" href={`/model/${esc(m.model_id)}`}>{esc(m.model_id)}</a>
+                  <span class="num dim">{m.value_score}</span>
+                </div>
+                <div style={`height:5px;background:var(--bg-2);border-radius:3px;margin-top:.2rem`}>
+                  <div style={`height:5px;width:${Math.max(2, (m.value_score / maxBar) * 100).toFixed(1)}%;background:var(--accent);border-radius:3px`}></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </section>
+    </>
+    )}
+  </main>
+</Base>

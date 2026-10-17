@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="Harnesses • RouteVault">
+  <Nav active="/ecosystem" />
+  <div id="rv-shell" hidden></div>
+  <main class="rv-wrap">
+    <p class="kicker">Stacks, not just models</p>
+    <h1>Tools & harnesses</h1>
+    <p class="lede">Which runtime you use changes which model fits. The pairings below come from live tool-use scores and our own labels.</p>
+    <div id="list" class="grid-3" style="margin-top:1.3rem"></div>
+  </main>
+  <script is:inline src="/legacy.js"></script>
+  <script is:inline>
+    window.mountNav = function() { /* SSR nav */ };
+    window.mountFoot = function() { /* SSR foot */ };
+  </script>
+  <script is:inline>
+loadDataset().then((d) => {
+      $("#list").innerHTML = (d.harnesses || []).map((h) => `<div class="card" style="padding:1.1rem">
+        <h2>${h.name}</h2>
+        <p class="muted">${h.blurb}</p>
+        ${(h.recommended || []).slice(0,5).map((m) =>
+          `<div class="mono" style="margin:.35rem 0"><a href="/model/${encodeURIComponent(m.model_id)}">${m.model_id}</a>
+           <span class="dim">${m.hermes_fit || m.rv_label} · ${fmtMoney(m.total_price)}</span></div>`
+        ).join("")}
+        ${h.id === "hermes" ? `<p><a class="rv-cta" href="/ecosystem">Hermes detail</a></p>` : ""}
+      </div>`).join("");
+    });
+  </script>
+</Base>

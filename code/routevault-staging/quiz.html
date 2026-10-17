@@ -1,379 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Your Model • RouteVault</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        body { font-family: 'Inter', system_ui, sans-serif; }
-        .heading-font { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
-        .dark-card { background-color: #18181b; border: 1px solid #27272a; }
-        .quiz-option {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .quiz-option:hover {
-            background-color: #27272a;
-            border-color: #6366f1;
-        }
-        .quiz-option.selected {
-            background-color: #312e81;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 1px #6366f1;
-        }
-        .routevault-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz • RouteVault</title>
+  <link rel="stylesheet" href="assets/rv.css">
 </head>
-<body class="bg-zinc-950 text-zinc-200">
-    <!-- Nav -->
-    <nav class="border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-8 flex items-center justify-between h-20">
-            <div class="flex items-center gap-x-3">
-                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
-                    <i class="fa-solid fa-route text-white text-2xl"></i>
-                </div>
-                <a href="index.html" class="text-3xl font-semibold tracking-tighter">RouteVault</a>
-            </div>
-            <a href="index.html" class="text-sm text-zinc-400 hover:text-white flex items-center gap-x-2">
-                <i class="fa-solid fa-arrow-left"></i>
-                <span>Back to home</span>
-            </a>
+<body>
+  <div id="rv-shell"></div>
+  <main class="rv-wrap" style="max-width:760px">
+    <p class="kicker">Onboarding</p>
+    <div id="qbox"></div>
+    <div id="res" hidden></div>
+  </main>
+  <script src="assets/rv.js"></script>
+  <script>
+    mountNav("quiz.html");
+    mountFoot();
+    const questions = [
+      { id: "use", title: "What are you mostly doing?", opts: [
+        ["research", "Deep research / long analysis"],
+        ["planning", "Agentic planning and projects"],
+        ["coding", "Coding and architecture"],
+        ["chat", "Everyday chat and volume"],
+      ]},
+      { id: "price", title: "How hard should price pull?", opts: [
+        ["cheap", "Keep it cheap"],
+        ["balanced", "Balanced value"],
+        ["premium", "Peak quality first"],
+      ]},
+      { id: "ctx", title: "Do you need huge context?", opts: [
+        ["yes", "Regularly 200k+"],
+        ["sometimes", "Sometimes"],
+        ["no", "Standard chats"],
+      ]},
+      { id: "reason", title: "Reasoning load?", opts: [
+        ["high", "Multi-step / agents"],
+        ["medium", "Some planning"],
+        ["low", "Quick answers"],
+      ]},
+      { id: "run", title: "Where do you want it to run?", opts: [
+        ["cloud", "Cloud API (pay per token)"],
+        ["local-spark", "Locally — I have DGX Spark(s)"],
+        ["local-gpu", "Locally — I have an NVIDIA GPU"],
+      ]},
+    ];
+    const answers = {};
+    let i = 0;
+
+    function drawQ() {
+      const q = questions[i];
+      $("#qbox").hidden = false;
+      $("#res").hidden = true;
+      $("#qbox").innerHTML = `
+        <div class="dim">Question ${i + 1} of ${questions.length}</div>
+        <h1>${q.title}</h1>
+        <div style="display:grid;gap:.55rem;margin:1.2rem 0">
+          ${q.opts.map(([v, lab]) => `<button class="card" style="padding:1rem;text-align:left;cursor:pointer;background:var(--card);color:inherit;border:1px solid var(--line)" data-v="${v}">${lab}</button>`).join("")}
         </div>
-    </nav>
+        <button class="rv-ghost" ${i === 0 ? "disabled" : ""} id="back">Back</button>
+      `;
+      $all("[data-v]").forEach((b) => b.onclick = () => {
+        answers[q.id] = b.dataset.v;
+        if (i < questions.length - 1) { i += 1; drawQ(); }
+        else showRes();
+      });
+      $("#back").onclick = () => { if (i) { i -= 1; drawQ(); } };
+    }
 
-    <div class="max-w-3xl mx-auto px-8 pt-16 pb-12">
-        
-        <!-- Progress -->
-        <div class="mb-8">
-            <div class="flex justify-between text-xs text-zinc-400 mb-2 px-1">
-                <div>Question <span id="current-q">1</span> of 4</div>
-                <div>Find your ideal model match</div>
-            </div>
-            <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
-                <div id="progress-bar" 
-                     class="h-1 bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-300"
-                     style="width: 25%"></div>
-            </div>
+    function scoreModel(m) {
+      let s = 40;
+      const lab = (m.rv_label || "").toLowerCase();
+      const price = m.total_price;
+      const ctx = m.context_k;
+      const intel = m.benchmarks.reasoning || 0;
+      const coding = m.benchmarks.coding || 0;
+      const tools = m.benchmarks.tool_use || 0;
+      if (answers.use === "research" && (lab.includes("research") || intel >= 50)) s += 22;
+      if (answers.use === "planning" && (lab.includes("planner") || tools >= 40)) s += 24;
+      if (answers.use === "coding" && (lab.includes("dev") || coding >= 45)) s += 24;
+      if (answers.use === "chat" && (lab.includes("budget") || price < 2)) s += 20;
+      if (answers.price === "cheap") s += price < 1 ? 28 : price < 3 ? 12 : -18;
+      if (answers.price === "balanced") s += price >= 1 && price <= 8 ? 10 : 0;
+      if (answers.price === "premium") s += intel >= 55 ? 16 : 0;
+      if (answers.ctx === "yes" && ctx >= 200) s += 16;
+      if (answers.reason === "high") s += (intel + tools) / 6;
+      s += Math.min(15, (m._liveValue || 0) / 80);
+      return s;
+    }
+
+    async function showRes() {
+      const ranked = [...RV.data.models].map((m) => ({ m, s: scoreModel(m) })).sort((a, b) => b.s - a.s);
+      const top = ranked.slice(0, 3);
+      const planner = ranked.find((r) => r.m.rv_label === "Project Planner")?.m;
+      const daily = ranked.find((r) => r.m.rv_label === "Budget Everyday")?.m;
+      $("#qbox").hidden = true;
+      $("#res").hidden = false;
+      $("#res").innerHTML = `
+        <h1>Your stack</h1>
+        <p class="lede">Three fits, then a planner + daily overflow pair you can save locally.</p>
+        ${top.map(({ m, s }, idx) => `<div class="card" style="padding:1rem;margin:.7rem 0;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+          <div>
+            <div class="dim">#${idx + 1} · score ${Math.round(s)}</div>
+            <div class="mono" style="font-size:1.15rem">${m.model_id}</div>
+            <div class="muted">${m.rv_label} · ${fmtMoney(m.input_price)} / ${fmtMoney(m.output_price)} · ${m.context_k}k</div>
+          </div>
+          <div>
+            <a class="rv-ghost" href="model-detail.html?id=${encodeURIComponent(m.model_id)}">Open</a>
+            <button class="rv-cta" onclick="addToStack('${m.model_id}')">Save</button>
+          </div>
+        </div>`).join("")}
+        <div class="card" style="padding:1rem;margin-top:1rem">
+          <strong>Suggested pair</strong>
+          <p class="muted">Planner: ${planner?.model_id || "—"} · Daily: ${daily?.model_id || "—"}</p>
+          <button class="rv-cta" id="save-pair">Save pair to My Stack</button>
         </div>
+        <p style="margin-top:1rem"><a class="rv-ghost" href="models.html">Explore all</a>
+        <button class="rv-ghost" id="redo">Retake</button></p>
+      `;
+      $("#save-pair").onclick = () => {
+        if (planner) addToStack(planner.model_id);
+        if (daily) addToStack(daily.model_id);
+      };
+      $("#redo").onclick = () => { i = 0; Object.keys(answers).forEach((k) => delete answers[k]); drawQ(); };
+      // Local run: append matching community recipes for the top picks
+      if (answers.run && answers.run !== "cloud") {
+        try {
+          const loc = await (await fetch("data/local-models.json", { cache: "no-store" })).json();
+          const ids = new Set(ranked.slice(0, 8).map((r) => r.m.model_id));
+          const wantSpark = answers.run === "local-spark";
+          const matches = loc.recipes.filter((r) => r.model_id && ids.has(r.model_id))
+            .filter((r) => wantSpark ? r.hw_class.startsWith("spark") : r.hw_class.startsWith("gpu"));
+          const box = document.createElement("div");
+          box.className = "card";
+          box.style.cssText = "padding:1rem;margin-top:1rem";
+          box.innerHTML = `<strong>Run it yourself instead</strong>
+            <p class="muted">${matches.length
+              ? `Community recipes matching your hardware for models near the top of your results:`
+              : `No recipe matches your hardware + picks yet — <a href="lab.html" style="text-decoration:underline">browse the Local Lab</a>.`}</p>
+            ${matches.map((r) => `<p class="mono" style="margin:.4rem 0">
+              <a href="lab.html" style="text-decoration:underline">${r.name}</a>
+              · ${r.hardware} · ${r.decode_tok_s ? r.decode_tok_s + " tok/s" : "see recipe"}</p>`).join("")}`;
+          $("#res").appendChild(box);
+        } catch (_) { /* optional */ }
+      }
+    }
 
-        <!-- Question Container -->
-        <div id="question-screen">
-            <div id="question-title" class="text-4xl font-semibold tracking-tight mb-3"></div>
-            <p id="question-subtitle" class="text-xl text-zinc-400 mb-8"></p>
-
-            <!-- Options -->
-            <div id="options-container" class="space-y-3"></div>
-
-            <!-- Navigation -->
-            <div class="mt-8 flex items-center justify-between">
-                <button onclick="prevQuestion()" id="prev-btn"
-                        class="px-6 py-3 text-sm font-medium text-zinc-400 hover:text-white flex items-center gap-x-2 disabled:opacity-30">
-                    <i class="fa-solid fa-arrow-left"></i> Back
-                </button>
-                <button onclick="nextQuestion()" id="next-btn"
-                        class="px-8 py-3 bg-white text-zinc-950 font-semibold text-sm rounded-2xl disabled:bg-zinc-800 disabled:text-zinc-400">
-                    Continue
-                </button>
-            </div>
-        </div>
-
-        <!-- Results Screen -->
-        <div id="results-screen" class="hidden">
-            <div class="text-center mb-10">
-                <div class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-3xl bg-emerald-900 text-emerald-400 text-sm mb-4">
-                    <i class="fa-solid fa-check"></i>
-                    <span>Match complete</span>
-                </div>
-                <h1 class="text-5xl tracking-tighter font-semibold">Your 3 best models</h1>
-                <p class="text-xl text-zinc-400 mt-3">Based on your answers, here are the models that fit you best.</p>
-            </div>
-
-            <div id="recommendations" class="grid gap-4"></div>
-
-            <div class="mt-8 flex justify-center gap-x-4">
-                <button onclick="restartQuiz()" 
-                        class="px-8 py-3.5 border border-zinc-700 hover:bg-zinc-900 rounded-2xl text-sm font-medium flex items-center gap-x-2">
-                    <i class="fa-solid fa-redo"></i> Retake quiz
-                </button>
-                <a href="models.html" 
-                   class="px-8 py-3.5 bg-white text-zinc-950 font-semibold rounded-2xl text-sm hover:bg-zinc-200">
-                    Explore all models →
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const questions = [
-            {
-                id: 1,
-                title: "What's your main use case?",
-                subtitle: "Be honest — this changes everything.",
-                options: [
-                    { value: "research", label: "Deep research, analysis & long-form work", icon: "fa-search" },
-                    { value: "planning", label: "Project planning, agentic work & real projects", icon: "fa-tasks" },
-                    { value: "coding", label: "Coding, debugging, architecture", icon: "fa-code" },
-                    { value: "chat", label: "Everyday chat, quick answers & high volume", icon: "fa-comments" }
-                ]
-            },
-            {
-                id: 2,
-                title: "How important is price for you?",
-                subtitle: "We'll heavily weight cost-efficient models if price matters.",
-                options: [
-                    { value: "cheap", label: "Very important — keep me under $10/month", icon: "fa-dollar-sign" },
-                    { value: "balanced", label: "Balanced — good value, not cheapest", icon: "fa-balance-scale" },
-                    { value: "premium", label: "I want the best performance, price secondary", icon: "fa-gem" }
-                ]
-            },
-            {
-                id: 3,
-                title: "Do you work with large context or long documents?",
-                subtitle: "This determines whether we recommend long-context models.",
-                options: [
-                    { value: "yes", label: "Yes — I regularly need 100k+ context", icon: "fa-file-alt" },
-                    { value: "sometimes", label: "Sometimes — a few big files per week", icon: "fa-file" },
-                    { value: "no", label: "Not really — standard conversation is fine", icon: "fa-comment-dots" }
-                ]
-            },
-            {
-                id: 4,
-                title: "How much reasoning & planning do you need?",
-                subtitle: "Higher reasoning = stronger complex-task performance.",
-                options: [
-                    { value: "high", label: "Heavy — multi-step agents, complex planning", icon: "fa-brain" },
-                    { value: "medium", label: "Moderate — some planning + reliable outputs", icon: "fa-cogs" },
-                    { value: "low", label: "Low — quick answers are enough", icon: "fa-bolt" }
-                ]
-            }
-        ];
-
-        let answers = {};
-        let currentQuestion = 1;
-        let allModels = []; // loaded from data/models.json
-
-        function showQuestion(qNum) {
-            const q = questions.find(q => q.id === qNum);
-            document.getElementById("question-title").textContent = q.title;
-            document.getElementById("question-subtitle").textContent = q.subtitle;
-            
-            const container = document.getElementById("options-container");
-            container.innerHTML = "";
-
-            q.options.forEach(opt => {
-                const div = document.createElement("div");
-                div.className = `quiz-option flex items-center gap-x-4 p-6 dark-card border border-zinc-700 rounded-3xl cursor-pointer ${answers[qNum] === opt.value ? 'selected' : ''}`;
-                div.innerHTML = `
-                    <i class="fa-solid ${opt.icon} text-2xl text-indigo-400 w-9"></i>
-                    <div class="flex-1 text-lg">${opt.label}</div>
-                    <i class="fa-solid fa-check text-indigo-400 hidden ${answers[qNum] === opt.value ? '' : 'hidden'}"></i>
-                `;
-                div.onclick = () => selectOption(qNum, opt.value, div);
-                container.appendChild(div);
-            });
-
-            document.getElementById("current-q").textContent = qNum;
-            document.getElementById("progress-bar").style.width = `${(qNum / questions.length) * 100}%`;
-            
-            document.getElementById("prev-btn").disabled = qNum === 1;
-            document.getElementById("next-btn").textContent = qNum === questions.length ? "See my results" : "Continue";
-        }
-
-        function selectOption(qNum, value, element) {
-            answers[qNum] = value;
-            
-            // visually select
-            document.querySelectorAll("#options-container .quiz-option").forEach(el => {
-                el.classList.remove("selected");
-                el.querySelector(".fa-check")?.classList.add("hidden");
-            });
-            element.classList.add("selected");
-            element.querySelector(".fa-check")?.classList.remove("hidden");
-        }
-
-        function nextQuestion() {
-            if (!answers[currentQuestion]) {
-                alert("Please select an answer.");
-                return;
-            }
-            if (currentQuestion < questions.length) {
-                currentQuestion++;
-                showQuestion(currentQuestion);
-            } else {
-                showResults();
-            }
-        }
-
-        function prevQuestion() {
-            if (currentQuestion > 1) {
-                currentQuestion--;
-                showQuestion(currentQuestion);
-            }
-        }
-
-        function showResults() {
-            document.getElementById("question-screen").classList.add("hidden");
-            document.getElementById("results-screen").classList.remove("hidden");
-
-            const recContainer = document.getElementById("recommendations");
-            recContainer.innerHTML = "";
-
-            const recommendations = getRealRecommendations(answers);
-
-            recommendations.forEach(model => {
-                const card = document.createElement("div");
-                card.className = "dark-card p-7 rounded-3xl flex justify-between items-start";
-                card.innerHTML = `
-                    <div class="flex-1">
-                        <div class="flex items-center gap-x-2 flex-wrap">
-                            <span class="font-semibold text-xl">${model.name}</span>
-                            <span class="px-3 py-0.5 text-xs bg-zinc-900 text-indigo-400 rounded-full">${model.label}</span>
-                        </div>
-                        
-                        <div class="text-sm text-zinc-400 mt-1.5">${model.reason}</div>
-                        
-                        <div class="mt-3 flex flex-wrap items-center gap-x-4 text-xs">
-                            <span class="text-emerald-400 font-medium">${model.estCost}</span>
-                            <span class="text-zinc-500">•</span>
-                            <span class="text-zinc-400">${model.context}k context</span>
-                            <span class="text-zinc-500">•</span>
-                            <span class="text-zinc-400">$${model.input}/$${model.output} per M</span>
-                        </div>
-                    </div>
-                    <button onclick="addToStack('${model.name}')" 
-                            class="ml-4 px-6 py-2.5 text-sm font-medium bg-zinc-900 hover:bg-zinc-800 text-zinc-300 rounded-2xl flex-shrink-0 self-start">
-                        Add to my stack
-                    </button>
-                `;
-                recContainer.appendChild(card);
-            });
-        }
-
-        /**
-         * Real scoring engine — aligned with the dual-layer weighting system
-         * from "How do we weight models.md" (Technical + Consumer/RouteVault Scale)
-         */
-        function getRealRecommendations(userAnswers) {
-            if (!allModels || allModels.length === 0) {
-                return [
-                    { name: "claude-3.7-sonnet", label: "Project Planner", reason: "Excellent long reasoning + agentic performance", estCost: "~$28/mo", context: "200", input: 3.00, output: 15.00 },
-                    { name: "gemini-2.5-pro", label: "Researcher", reason: "1000k+ context — perfect for long documents", estCost: "~$21/mo", context: "1000", input: 1.25, output: 5.00 },
-                    { name: "deepseek-v3", label: "Budget Everyday", reason: "Outstanding price-to-performance", estCost: "~$4/mo", context: "128", input: 0.14, output: 0.28 }
-                ];
-            }
-
-            const use = userAnswers[1];
-            const pricePref = userAnswers[2];
-            const contextPref = userAnswers[3];
-            const reasoningPref = userAnswers[4];
-
-            const scored = allModels.map(model => {
-                let score = 45;
-
-                const label = (model.rv_label || "").toLowerCase();
-                const inp = model.current_input_price || 0;
-                const out = model.current_output_price || 0;
-                const totalPrice = inp + out;
-                const ctx = model.context_k || 128;
-
-                // === Consumer Layer (RouteVault Scale) matching ===
-                if (use === "research" || use === "planning") {
-                    if (label.includes("research") || label.includes("planner") || label.includes("thinker")) score += 28;
-                    if (label.includes("dev")) score += 8;
-                }
-                if (use === "coding") {
-                    if (label.includes("dev") || label.includes("coder")) score += 25;
-                    if (label.includes("planner")) score += 10;
-                }
-                if (use === "chat") {
-                    if (label.includes("budget") || label.includes("everyday")) score += 22;
-                }
-
-                // === Technical Layer bonuses ===
-                // Reasoning & Planning
-                if (reasoningPref === "high") {
-                    if (label.includes("research") || label.includes("planner") || label.includes("thinker")) score += 22;
-                    if (ctx >= 128) score += 8;
-                } else if (reasoningPref === "low") {
-                    if (label.includes("budget") || label.includes("everyday")) score += 12;
-                }
-
-                // Context
-                if (contextPref === "yes") {
-                    if (ctx >= 200) score += 18;
-                    else if (ctx >= 128) score += 10;
-                }
-                if (contextPref === "no" && ctx <= 128) score += 12;
-
-                // Price sensitivity (Technical + Consumer)
-                if (pricePref === "cheap") {
-                    if (totalPrice < 1.0) score += 32;
-                    else if (totalPrice < 2.5) score += 18;
-                    else if (totalPrice > 6) score -= 25;
-                } else if (pricePref === "balanced") {
-                    if (totalPrice >= 1.5 && totalPrice <= 5) score += 12;
-                } else if (pricePref === "premium") {
-                    if (totalPrice > 5) score += 14;
-                    if (label.includes("research") || label.includes("planner")) score += 8;
-                }
-
-                // === Build rich reason ===
-                let reasonParts = [];
-                if (label.includes("research") || label.includes("planner")) reasonParts.push("strong reasoning & planning");
-                if (ctx >= 200) reasonParts.push(`${ctx}k context`);
-                if (pricePref === "cheap" && totalPrice < 2) reasonParts.push("excellent value");
-
-                const reason = reasonParts.length > 0 
-                    ? reasonParts.join(" · ") 
-                    : `${model.rv_label || "Solid generalist"} for your profile`;
-
-                // Monthly cost estimate (rough but data-driven)
-                const estMonthly = Math.max(2, Math.round(totalPrice * 3.2));
-
-                return {
-                    name: model.model_id,
-                    label: model.rv_label || "Model",
-                    reason: reason,
-                    estCost: `~$${estMonthly}/mo`,
-                    context: ctx,
-                    input: inp,
-                    output: out,
-                    totalPrice: totalPrice,
-                    score: Math.round(score)
-                };
-            });
-
-            scored.sort((a, b) => b.score - a.score);
-            return scored.slice(0, 3);
-        }
-
-        function addToStack(modelName) {
-            alert(`"${modelName}" added to your stack!\n\n(In a real version this would save to your RouteVault account + Hermes profile)`);
-            // Future: could POST to an API or update localStorage
-        }
-
-        function restartQuiz() {
-            answers = {};
-            currentQuestion = 1;
-            document.getElementById("results-screen").classList.add("hidden");
-            document.getElementById("question-screen").classList.remove("hidden");
-            showQuestion(1);
-        }
-
-        // Boot
-        document.addEventListener("DOMContentLoaded", async () => {
-            try {
-                const res = await fetch('data/models.json');
-                const data = await res.json();
-                allModels = data.models || [];
-                console.log(`[RouteVault Quiz] Loaded ${allModels.length} models from data/models.json`);
-            } catch (e) {
-                console.warn("Could not load models.json, falling back to static recommendations.");
-                allModels = [];
-            }
-            showQuestion(1);
-        });
-    </script>
+    loadDataset().then(drawQ);
+  </script>
 </body>
 </html>

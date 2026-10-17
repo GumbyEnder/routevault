@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Value Trends • RouteVault</title>
+  <link rel="stylesheet" href="assets/rv.css">
+</head>
+<body>
+  <div id="rv-shell"></div>
+  <main class="rv-wrap">
+    <p class="kicker">Insights</p>
+    <h1>Value trends</h1>
+    <p class="lede">Price deltas use weekly OpenRouter list prices (up to 6 months, or since the model launched). Value scores hold the latest Artificial Analysis indexes constant instead of guessing at historical benchmark numbers.</p>
+    <div class="grid-2" style="margin-top:1.4rem">
+      <section class="card" style="padding:1.1rem">
+        <h2>Value improvers</h2>
+        <p class="muted" style="font-size:.85rem;margin:.2rem 0 .6rem">Biggest gains in value score over 90 days. Benchmarks are held constant, so a gain here means the price came down.</p>
+        <div id="up"></div>
+      </section>
+      <section class="card" style="padding:1.1rem">
+        <h2>Regressions</h2>
+        <p class="muted" style="font-size:.85rem;margin:.2rem 0 .6rem">Biggest 90-day declines in value score — usually a price increase on a model whose benchmarks haven't moved.</p>
+        <div id="down"></div>
+      </section>
+    </div>
+    <section style="margin-top:1.6rem">
+      <h2>By RouteVault Scale</h2>
+      <div class="grid-3" id="labs"></div>
+    </section>
+    <section style="margin-top:1.6rem">
+      <h2>Price drops (30d)</h2>
+      <div id="drops" class="card" style="padding:1rem"></div>
+    </section>
+  </main>
+  <script src="assets/rv.js"></script>
+  <script>
+    mountNav("trends.html");
+    mountFoot();
+    function list(rows, empty) {
+      if (!rows.length) return `<p class="muted">${empty}</p>`;
+      return rows.map((m) => `<div style="display:flex;justify-content:space-between;gap:1rem;padding:.45rem 0;border-bottom:1px solid #22242c">
+        <a class="mono" href="model-detail.html?id=${encodeURIComponent(m.model_id)}">${m.model_id}</a>
+        <span class="num ${m.value_change_90d > 0 ? "good" : "bad"}">${m.value_change_90d ?? "—"}</span>
+      </div>`).join("");
+    }
+    loadDataset().then((d) => {
+      $("#up").innerHTML = list(d.insights.value_improvers, "No multi-day value series yet. Re-run ingest tomorrow.");
+      $("#down").innerHTML = list(d.insights.value_regressions, "No regressions recorded.");
+      $("#drops").innerHTML = (d.insights.price_drops_30d.length
+        ? d.insights.price_drops_30d.map((m) => `<div>${m.model_id} <span class="good num">${fmtPct(m.price_change_30d)}</span></div>`).join("")
+        : "<p class='muted'>No 30-day price drop until a second ingest exists.</p>");
+      $("#labs").innerHTML = Object.entries(d.insights.by_label).map(([lab, rows]) => `<div class="card" style="padding:1rem">
+        <div class="pill">${lab}</div>
+        ${rows.map((r) => `<div class="mono" style="margin-top:.45rem"><a href="model-detail.html?id=${encodeURIComponent(r.model_id)}">${r.model_id}</a>
+          <div class="dim">${fmtMoney(r.total_price)} · val ${r.value_score}</div></div>`).join("")}
+      </div>`).join("");
+    });
+  </script>
+</body>
+</html>
